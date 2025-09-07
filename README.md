@@ -1,3 +1,8 @@
+# Requirments
+- [PHP](https://www.php.net/downloads.php)
+- [Node.js](https://nodejs.org/en/download) Download LTS (^ v22)
+- [Composer](https://getcomposer.org/)
+
 # Project Initialisation
 Run following commands:
 1. `npm update`

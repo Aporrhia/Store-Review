@@ -2,6 +2,7 @@
 - [PHP](https://www.php.net/downloads.php)
 - [Node.js](https://nodejs.org/en/download) Download LTS (^ v22)
 - [Composer](https://getcomposer.org/)
+- [MySQL](https://dev.mysql.com/downloads/installer/)
 - In *php* folder open *php.ini* and find this extension and uncomment it (remove ";"): `extension=zip`
 
 # Project Initialisation

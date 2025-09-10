@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="relative h-[640px] bg-cover bg-center bg-no-repeat" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDuMO0bfUV6K1Xx45LlVki52iHIEJ7h5PyhR7H_W8RHZNWqCheZlbeL_BZ9APK29tS0go46yObV2FjuwpVoo2pFkYaYdjksbwBeoorSrWtvo4i-vrGyregO__lx-cEIJ4SVwKs02DZuCd4aboUe2mElFUXR9OF_ekB_et7nQ3IsHuHbhcoYGyrr-fb8VbeHd_ACmBAb_LQlXAjTvVvPd0U0tZfyd10SHBUUiAfqweg8f-mEbfOw8SwRnN_1fT6bTY4y_s8tMQPJND0");'>
+<section class="relative h-[640px] bg-cover bg-center bg-no-repeat" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("{{ asset('images/banner/big-prom-banner.png') }}");'>
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
         <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter drop-shadow-lg">Elevate Your Game</h1>
         <p class="mt-4 max-w-2xl text-lg md:text-xl font-light drop-shadow-md">Shop the latest tennis gear and apparel designed to perform.</p>

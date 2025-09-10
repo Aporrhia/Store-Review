@@ -14,11 +14,11 @@
 <body class="bg-white" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
     <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
-            @include('components.header')
+            @include('store-page.components.header')
             <main class="flex-1">
                 @yield('content')
             </main>
-            @include('components.footer')
+            @include('store-page.components.footer')
         </div>
     </div>
     @stack('scripts')

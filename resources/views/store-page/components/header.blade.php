@@ -3,31 +3,9 @@
 >
   <div class="flex items-center gap-10">
     <!-- Logo -->
-    <div class="flex items-center gap-3 text-gray-900">
-      <svg
-        class="h-8 w-8 text-lime-500"
-        fill="none"
-        viewBox="0 0 48 48"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g clip-path="url(#clip0_6_330)">
-          <path
-            fill="currentColor"
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_6_330">
-            <rect width="48" height="48" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-        Ace Tennis
-      </h2>
-    </div>
+    <a href="/">
+      <img src="{{ asset('images/logo/logo.png') }}" alt="Store Logo" class="h-12 w-auto" />
+    </a>
 
     <!-- Navigation -->
     <nav class="hidden md:flex items-center gap-8">

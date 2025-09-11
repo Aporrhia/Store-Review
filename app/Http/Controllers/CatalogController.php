@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Listing;
 use App\Models\StoreItem;
 
 class CatalogController extends Controller
@@ -12,19 +13,23 @@ class CatalogController extends Controller
      */
     public function catalogView(Request $request)
     {
-        $query = StoreItem::query();
+    $query = Listing::with(['storeItem', 'user']);
 
         // Filter by category
         if ($request->has('category') && is_array($request->input('category')) && count($request->input('category')) > 0) {
-            $query->whereIn('category', $request->input('category'));
+            $query->whereHas('storeItem', function($q) use ($request) {
+                $q->whereIn('category', $request->input('category'));
+            });
         }
 
         // Filter by brand
         if ($request->has('brand') && is_array($request->input('brand')) && count($request->input('brand')) > 0) {
-            $query->whereIn('brand', $request->input('brand'));
+            $query->whereHas('storeItem', function($q) use ($request) {
+                $q->whereIn('brand', $request->input('brand'));
+            });
         }
 
-        // Filter by price range
+        // Filter by price range (on listings)
         $priceMin = $request->input('price_min');
         $priceMax = $request->input('price_max');
         if ($priceMin !== null && $priceMin !== '') {
@@ -41,23 +46,31 @@ class CatalogController extends Controller
         } elseif ($sort === 'price_desc') {
             $query->orderBy('price', 'desc');
         } elseif ($sort === 'title_asc') {
-            $query->orderBy('title', 'asc');
+            $query->orderBy(
+                StoreItem::select('title')
+                    ->whereColumn('store_items.id', 'listings.store_item_id'),
+                'asc'
+            );
         } elseif ($sort === 'title_desc') {
-            $query->orderBy('title', 'desc');
+            $query->orderBy(
+                StoreItem::select('title')
+                    ->whereColumn('store_items.id', 'listings.store_item_id'),
+                'desc'
+            );
         }
 
-        // Per-page option
-        $perPage = $request->input('per_page', 6); // default 6
-        $items = $query->paginate($perPage)->withQueryString();
+    // Per-page option
+    $perPage = $request->input('per_page', 6); // default 6
+    $items = $query->paginate($perPage)->withQueryString();
 
-        // Calculate min and max price from filtered products
-        $minPrice = $query->clone()->min('price');
-        $maxPrice = $query->clone()->max('price');
+    // Calculate min and max price from all listings (filtered)
+    $minPrice = Listing::min('price');
+    $maxPrice = Listing::max('price');
 
-        // Fallback if no items
-        if ($minPrice === null) $minPrice = 0;
-        if ($maxPrice === null) $maxPrice = 1000;
+    // Fallback if no items
+    if ($minPrice === null) $minPrice = 0;
+    if ($maxPrice === null) $maxPrice = 1000;
 
-        return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice', 'perPage'));
+    return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice', 'perPage'));
     }
 }

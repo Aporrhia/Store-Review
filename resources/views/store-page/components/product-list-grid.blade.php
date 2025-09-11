@@ -8,10 +8,11 @@
             <div class="mt-4 flex justify-between">
                 <div>
                     <h3 class="text-base font-semibold text-[#141414]">
-                        <a href="#"> <span aria-hidden="true" class="absolute inset-0"></span> {{ $item->title }} </a>
+                        <a href="#"> <span aria-hidden="true" class="absolute inset-0"></span> {{ $item->storeItem->title ?? '' }} </a>
                     </h3>
-                    <p class="mt-1 text-sm text-gray-500">{{ $item->category ?? '' }}</p>
-                    <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->brand ?? '' }}</p>
+                    <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category ?? '' }}</p>
+                    <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->storeItem->brand ?? '' }}</p>
+                    <p class="text-sm text-gray-500 mb-1">Seller: {{ $item->user->name ?? '' }}</p>
                 </div>
                 <p class="text-base font-medium text-gray-900">${{ $item->price }}</p>
             </div>

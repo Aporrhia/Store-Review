@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Listing;
+
+class ListingDetailsController extends Controller
+{
+    public function show($id)
+    {
+        $item = Listing::with(['storeItem', 'user'])->findOrFail($id);
+        $otherListings = Listing::with(['storeItem', 'user'])
+            ->where('store_item_id', $item->store_item_id)
+            ->where('id', '!=', $item->id)
+            ->get();
+
+        $isLiked = false;
+        if (auth()->check()) {
+            $isLiked = \DB::table('liked_items')
+                ->where('user_id', auth()->user()->id)
+                ->where('listing_id', $item->id)
+                ->exists();
+        }
+
+        return view('store-page.listing-details', compact('item', 'otherListings', 'isLiked'));
+    }
+
+    public function like($id)
+    {
+        if (!auth()->check()) {
+            return redirect()->back()->with('error', 'You must be logged in to like listings.');
+        }
+
+        $userId = auth()->user()->id;
+        $listing = \App\Models\Listing::findOrFail($id);
+
+        $exists = \DB::table('liked_items')
+            ->where('user_id', $userId)
+            ->where('listing_id', $listing->id)
+            ->exists();
+
+        if (!$exists) {
+            \DB::table('liked_items')->insert([
+                'user_id' => $userId,
+                'listing_id' => $listing->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Listing added to your likes.');
+    }
+}

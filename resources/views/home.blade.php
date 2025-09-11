@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Tennis Equipment, Rackets, Strings & Accessories')
+
 @section('content')
 <section class="relative h-[640px] bg-cover bg-center bg-no-repeat" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("{{ asset('images/banner/big-prom-banner.png') }}");'>
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">

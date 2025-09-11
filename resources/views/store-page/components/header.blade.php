@@ -66,11 +66,13 @@
 
     <!-- Icons -->
     <div class="flex gap-2">
-      <button
-        class="flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+      <a
+        href="#"
+        class="flex items-center justify-center rounded-full p-2.5 {{ request()->routeIs('home') ? 'bg-[#84cc16] text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
+        title="Liked Items"
       >
         <span class="material-symbols-outlined">favorite</span>
-      </button>
+      </a>
       <button
         class="flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
       >

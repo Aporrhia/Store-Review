@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Catalog</title>
 @section('content')
 <div class="relative flex size-full min-h-screen flex-col overflow-x-hidden group/design-root bg-white"
     style="--checkbox-tick-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(255,255,255)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3cpath d=%27M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z%27/%3e%3c/svg%3e'); font-family: &quot;Plus Jakarta Sans&quot;, &quot;Noto Sans&quot;, sans-serif;">
@@ -61,20 +61,7 @@
                     </form>
                 </aside>
                 <div class="flex-1 p-8">
-                    <nav aria-label="Breadcrumb" class="text-sm">
-                        <ol class="inline-flex items-center space-x-1 md:space-x-2">
-                            <li class="inline-flex items-center">
-                                <a class="inline-flex items-center text-gray-600 hover:text-[#141414]" href="#"> Shop
-                                </a>
-                            </li>
-                            <li>
-                                <div class="flex items-center">
-                                    <span class="mx-2 text-gray-400">/</span>
-                                    <span class="text-gray-900">All Gear</span>
-                                </div>
-                            </li>
-                        </ol>
-                    </nav>
+                    @include('store-page.components.breadcrumbs')
                     <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-[#141414]">Tennis Gear</h1>
                     <div class="mt-8 flex items-center justify-between">
                         <button

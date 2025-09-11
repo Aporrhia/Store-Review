@@ -3,12 +3,12 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Ace Tennis' }}</title>
+    <title>Tenama | @yield('title', 'Tenama')</title>
     <link crossorigin href="https://fonts.gstatic.com/" rel="preconnect"/>
     <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Noto+Sans:wght@400;500;700;900&family=Plus+Jakarta+Sans:wght@400;500;700;800" onload="this.rel='stylesheet'" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <link rel="icon" type="image/png" href="{{ asset('images/icon/icon.png') }}"/>
     @stack('head')
 </head>
 <body class="bg-white" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>

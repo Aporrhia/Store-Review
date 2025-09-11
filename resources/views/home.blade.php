@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
+@section('title', 'Tennis Equipment, Rackets, Strings & Accessories')
+
 @section('content')
 <section class="relative h-[640px] bg-cover bg-center bg-no-repeat" style='background-image: linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%), url("{{ asset('images/banner/big-prom-banner.png') }}");'>
     <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
         <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter drop-shadow-lg">Elevate Your Game</h1>
         <p class="mt-4 max-w-2xl text-lg md:text-xl font-light drop-shadow-md">Shop the latest tennis gear and apparel designed to perform.</p>
-        <button class="mt-8 inline-flex items-center justify-center rounded-md bg-lime-500 px-8 py-3 text-base font-bold text-gray-900 shadow-lg transition-transform hover:scale-105 hover:bg-lime-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-900">
+        <a href="{{ route('catalog') }}" class="mt-8 inline-flex items-center justify-center rounded-md bg-lime-500 px-8 py-3 text-base font-bold text-gray-900 shadow-lg transition-transform hover:scale-105 hover:bg-lime-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2 focus:ring-offset-gray-900">
             Shop Now
-        </button>
+        </a>
     </div>
 </section>
 <section class="py-16 sm:py-24 bg-gray-50">

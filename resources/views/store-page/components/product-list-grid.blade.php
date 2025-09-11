@@ -8,7 +8,10 @@
             <div class="mt-4 flex justify-between">
                 <div>
                     <h3 class="text-base font-semibold text-[#141414]">
-                        <a href="#"> <span aria-hidden="true" class="absolute inset-0"></span> {{ $item->storeItem->title ?? '' }} </a>
+                        <a href="{{ route('listing.details', $item->id) }}">
+                            <span aria-hidden="true" class="absolute inset-0"></span>
+                            {{ $item->storeItem->title ?? '' }}
+                        </a>
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category ?? '' }}</p>
                     <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->storeItem->brand ?? '' }}</p>

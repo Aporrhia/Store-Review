@@ -46,7 +46,9 @@ class CatalogController extends Controller
             $query->orderBy('title', 'desc');
         }
 
-        $items = $query->get();
+        // Per-page option
+        $perPage = $request->input('per_page', 6); // default 6
+        $items = $query->paginate($perPage)->withQueryString();
 
         // Calculate min and max price from filtered products
         $minPrice = $query->clone()->min('price');
@@ -56,6 +58,6 @@ class CatalogController extends Controller
         if ($minPrice === null) $minPrice = 0;
         if ($maxPrice === null) $maxPrice = 1000;
 
-        return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice'));
+        return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice', 'perPage'));
     }
 }

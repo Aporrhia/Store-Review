@@ -51,7 +51,7 @@
                         </div>
                         <div class="mt-10">
                             <button type="submit"
-                                class="flex h-12 w-full items-center justify-center rounded-md bg-[#141414] px-6 text-sm font-bold text-white hover:bg-gray-800">
+                                class="flex h-12 w-full items-center justify-center rounded-md bg-[#141414] px-6 text-sm font-bold text-white hover:bg-gray-800" style="background-color: #84cc16;">
                                 Apply Filters
                             </button>
                             <a href="{{ route('catalog') }}" class="flex h-12 w-full items-center justify-center rounded-md mt-2 bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-300">
@@ -92,9 +92,9 @@
                                 <span class="material-symbols-outlined"> grid_view </span>
                             </a>
                         </div>
-                        <div class="relative">
-                            <form method="GET" action="{{ route('catalog') }}" id="sortForm">
-                                @foreach(request()->except(['sort', 'page', '_token']) as $key => $value)
+                        <div class="flex items-center gap-4">
+                            <form method="GET" action="{{ route('catalog') }}" id="sortForm" class="flex items-center gap-2">
+                                @foreach(request()->except(['sort', 'page', 'per_page', '_token']) as $key => $value)
                                     @if(is_array($value))
                                         @foreach($value as $v)
                                             <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
@@ -110,6 +110,11 @@
                                     <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title: A-Z</option>
                                     <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title: Z-A</option>
                                 </select>
+                                <select name="per_page" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
+                                    @foreach([6, 12, 24, 48] as $option)
+                                        <option value="{{ $option }}" {{ $perPage == $option ? 'selected' : '' }}>{{ $option }} per page</option>
+                                    @endforeach
+                                </select>
                             </form>
                         </div>
                     </div>
@@ -119,6 +124,9 @@
                         @else
                         @include('store-page.components.product-list-grid', ['items' => $items])
                         @endif
+                        <div class="mt-8 flex justify-center">
+                            {{ $items->onEachSide(1)->links('vendor.pagination.custom') }}
+                        </div>
                     </div>
                 </div>
             </main>
@@ -153,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
             'max': maxPrice
         },
         step: 1,
-        tooltips: [true, true],
+        tooltips: false,
         format: {
             to: function (value) { return Math.round(value); },
             from: function (value) { return Number(value); }

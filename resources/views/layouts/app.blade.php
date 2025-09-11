@@ -14,11 +14,15 @@
 <body class="bg-white" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
     <div class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
         <div class="layout-container flex h-full grow flex-col">
-            @include('store-page.components.header')
+            @if (!request()->routeIs('login') && !request()->routeIs('register'))
+                @include('store-page.components.header')
+            @endif
             <main class="flex-1">
                 @yield('content')
             </main>
-            @include('store-page.components.footer')
+            @if (!request()->routeIs('login') && !request()->routeIs('register'))
+                @include('store-page.components.footer')
+            @endif
         </div>
     </div>
     @stack('scripts')

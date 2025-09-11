@@ -50,7 +50,7 @@
 
   <!-- Right Section -->
   <div class="flex flex-1 justify-end items-center gap-4">
-    <!-- Search -->
+    <!-- Search (hidden on mobile) -->
     <label class="relative hidden lg:block">
       <span class="sr-only">Search</span>
       <span class="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -64,13 +64,15 @@
       />
     </label>
 
-    <!-- Icons -->
+    <!-- Icons: always show on mobile and desktop -->
     <div class="flex gap-2">
-      <button
-        class="flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+      <a
+        href="#"
+        class="flex items-center justify-center rounded-full p-2.5 {{ request()->routeIs('home') ? 'bg-[#84cc16] text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
+        title="Liked Items"
       >
         <span class="material-symbols-outlined">favorite</span>
-      </button>
+      </a>
       <button
         class="flex items-center justify-center rounded-full p-2.5 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
       >
@@ -78,10 +80,13 @@
       </button>
     </div>
 
-    <!-- Profile Image -->
+    <!-- Profile Image: hidden on mobile, show on md+ -->
     <div
-      class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10"
+      class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 hidden md:block"
       style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC93DKUUEzC7lkrBdfWtvmOrAoSa-kYRKKJmoBxVGU24JG6ZH1w_oaTNXsorUpAwYc8XjdpXG_2i0qmYwV2NbZTUH2wyf9lzECPRzvSwE4Pr3Q6_j9rVVcdXRbkkSfcVQH5iiuL2-Rg91CpPejmv7KWmesm3jw-kx6XBxYiv9pq_Y7jZayhLEGpYLdgVWohgy-2BTbCu31r7ayQwvaSPgD7XhbIyNQnIrtaPgYh7kUXgStmFTGBq2cV5oSrtpfwmKyvfTcgwk0SBVs");'
     ></div>
+
+    <!-- Burger Menu: show only on mobile, toggles active/inactive state -->
+  <x-burger-menu-button class="md:hidden" />
   </div>
 </header>

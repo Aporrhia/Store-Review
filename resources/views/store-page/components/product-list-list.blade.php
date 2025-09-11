@@ -7,12 +7,13 @@
             </div>
             <div class="flex-1">
                 <h3 class="text-xl font-semibold text-[#141414] mb-1">
-                    <a href="#">{{ $item->title }}</a>
+                    <a href="#">{{ $item->storeItem->title ?? '' }}</a>
                 </h3>
-                <p class="text-sm text-gray-500 mb-1">Category: {{ $item->category ?? '' }}</p>
-                <p class="text-sm text-gray-500 mb-1">Brand: {{ $item->brand ?? '' }}</p>
-                <p class="text-sm text-gray-500 mb-1">SKU: {{ $item->sku ?? '' }}</p>
-                <p class="text-sm text-gray-500 mb-1">{{ $item->description ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">Category: {{ $item->storeItem->category ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">Brand: {{ $item->storeItem->brand ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">SKU: {{ $item->storeItem->sku ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">{{ $item->storeItem->description ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">Seller: {{ $item->user->name ?? '' }}</p>
             </div>
             <div class="text-lg font-bold text-gray-900">${{ $item->price }}</div>
         </div>

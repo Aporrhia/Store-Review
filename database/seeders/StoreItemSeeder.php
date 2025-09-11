@@ -12,18 +12,28 @@ class StoreItemSeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Rackets', 'Balls', 'Dampeners', 'Overgrips', 'Base Grips', 'Lead Tapes'];
-        $brands = ['Wilson', 'Babolat', 'Head', 'Yonex'];
+    // Ensure a user exists for the listings
+    $user = \App\Models\User::first() ?? \App\Models\User::factory()->create();
 
-        for ($i = 1; $i <= 20; $i++) {
-            StoreItem::create([
-                'user_id' => 1,
+    $categories = ['Rackets', 'Balls', 'Dampeners', 'Overgrips', 'Base Grips', 'Lead Tapes'];
+    $brands = ['Wilson', 'Babolat', 'Head', 'Yonex'];
+    $conditions = ['new', 'like new', 'used', 'for parts'];
+
+        foreach (range(1, 20) as $i) {
+            $storeItem = StoreItem::create([
                 'title' => "Product $i",
                 'description' => "Description for Product $i.",
                 'sku' => "SKU$i",
-                'price' => rand(5, 250),
                 'category' => $categories[array_rand($categories)],
                 'brand' => $brands[array_rand($brands)],
+            ]);
+
+            \App\Models\Listing::create([
+                'store_item_id' => $storeItem->id,
+                'user_id' => $user->id,
+                'price' => rand(5, 250),
+                'condition' => $conditions[array_rand($conditions)],
+                'comment' => "Listing for Product $i."
             ]);
         }
     }

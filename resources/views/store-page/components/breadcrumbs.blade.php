@@ -12,12 +12,18 @@
             @php
                 $url .= '/' . $segment;
                 $isLast = $index === count($segments) - 1;
+                // If on listing details page and segment is an ID, show item name
+                $isListingDetails = request()->routeIs('listing.details') && is_numeric($segment);
             @endphp
             <li>
                 <div class="flex items-center">
                     <span class="mx-2 text-gray-400">/</span>
                     @if($isLast)
-                        <span class="text-gray-900 capitalize">{{ str_replace('-', ' ', $segment) }}</span>
+                        @if($isListingDetails && isset($item) && isset($item->storeItem->title))
+                            <span class="text-gray-900 capitalize">{{ $item->storeItem->title }}</span>
+                        @else
+                            <span class="text-gray-900 capitalize">{{ str_replace('-', ' ', $segment) }}</span>
+                        @endif
                     @else
                         <a href="{{ $url }}" class="text-gray-600 hover:text-[#141414] capitalize">{{ str_replace('-', ' ', $segment) }}</a>
                     @endif

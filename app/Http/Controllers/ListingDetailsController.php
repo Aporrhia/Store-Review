@@ -51,4 +51,27 @@ class ListingDetailsController extends Controller
 
         return redirect()->back()->with('success', 'Listing added to your likes.');
     }
+    public function searchListings(Request $request)
+    {
+        $query = $request->input('q');
+        if (!$query) {
+            return response()->json(['results' => [], 'hasMore' => false]);
+        }
+
+        // Search by title (adjust field as needed)
+        $items = \App\Models\StoreItem::where('title', 'like', "%{$query}%")
+            ->orderBy('title')
+            ->limit(6)
+            ->get(['id', 'title']);
+
+        $results = $items->take(5)->map(function($item) {
+            return [
+                'id' => $item->id,
+                'title' => $item->title,
+            ];
+        })->values();
+        $hasMore = $items->count() > 5;
+
+        return response()->json(['results' => $results, 'hasMore' => $hasMore]);
+    }
 }

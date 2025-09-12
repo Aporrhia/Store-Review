@@ -47,11 +47,67 @@
       </span>
       <input
         type="text"
+        id="header-search"
+        autocomplete="off"
         placeholder="Search"
-        value=""
         class="form-input block w-full min-w-0 flex-1 rounded-md border-gray-300 bg-gray-100 py-2.5 pl-10 pr-4 text-gray-900 placeholder:text-gray-500 focus:border-lime-500 focus:ring-lime-500 sm:text-sm sm:leading-6"
       />
+      <div id="search-dropdown" class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-50 hidden">
+        <ul id="search-results" class="divide-y divide-gray-100"></ul>
+        <div id="search-more" class="px-4 py-2 text-sm text-gray-500 hidden cursor-pointer hover:text-[#84cc16]">Show all results</div>
+      </div>
     </label>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var searchInput = document.getElementById('header-search');
+        var dropdown = document.getElementById('search-dropdown');
+        var resultsList = document.getElementById('search-results');
+        var moreLink = document.getElementById('search-more');
+        var debounceTimeout;
+        searchInput.addEventListener('input', function () {
+          clearTimeout(debounceTimeout);
+          var query = this.value.trim();
+          if (!query) {
+            dropdown.classList.add('hidden');
+            resultsList.innerHTML = '';
+            moreLink.classList.add('hidden');
+            return;
+          }
+          debounceTimeout = setTimeout(function () {
+            fetch('/search-listings?q=' + encodeURIComponent(query))
+              .then(res => res.json())
+              .then(data => {
+                resultsList.innerHTML = '';
+                if (data.results.length) {
+                  data.results.forEach(function(item) {
+                    var li = document.createElement('li');
+                    li.innerHTML = `<a href="/catalog?q=${encodeURIComponent(item.title)}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">${item.title}</a>`;
+                    resultsList.appendChild(li);
+                  });
+                  dropdown.classList.remove('hidden');
+                  if (data.hasMore) {
+                    moreLink.classList.remove('hidden');
+                  } else {
+                    moreLink.classList.add('hidden');
+                  }
+                } else {
+                  dropdown.classList.remove('hidden');
+                  resultsList.innerHTML = '<li class="px-4 py-2 text-gray-500">No results found</li>';
+                  moreLink.classList.add('hidden');
+                }
+              });
+          }, 300);
+        });
+        document.addEventListener('click', function (e) {
+          if (!searchInput.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.add('hidden');
+          }
+        });
+        moreLink.addEventListener('click', function () {
+          window.location.href = '/catalog?q=' + encodeURIComponent(searchInput.value.trim());
+        });
+      });
+    </script>
 
     <!-- Icons: always show on mobile and desktop -->
     <div class="flex gap-2">

@@ -13,7 +13,14 @@ class CatalogController extends Controller
      */
     public function catalogView(Request $request)
     {
-    $query = Listing::with(['storeItem', 'user']);
+        $query = Listing::with(['storeItem', 'user']);
+        // Search by StoreItem title
+        if ($request->has('q') && $request->input('q')) {
+            $search = $request->input('q');
+            $query->whereHas('storeItem', function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%");
+            });
+        }
 
         // Filter by category
         if ($request->has('category') && is_array($request->input('category')) && count($request->input('category')) > 0) {

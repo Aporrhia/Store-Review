@@ -81,10 +81,18 @@
     </div>
 
     <!-- Profile Image: hidden on mobile, show on md+ -->
-    <div
-      class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 hidden md:block"
-      style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC93DKUUEzC7lkrBdfWtvmOrAoSa-kYRKKJmoBxVGU24JG6ZH1w_oaTNXsorUpAwYc8XjdpXG_2i0qmYwV2NbZTUH2wyf9lzECPRzvSwE4Pr3Q6_j9rVVcdXRbkkSfcVQH5iiuL2-Rg91CpPejmv7KWmesm3jw-kx6XBxYiv9pq_Y7jZayhLEGpYLdgVWohgy-2BTbCu31r7ayQwvaSPgD7XhbIyNQnIrtaPgYh7kUXgStmFTGBq2cV5oSrtpfwmKyvfTcgwk0SBVs");'
-    ></div>
+    @auth
+      <a href="{{ route('profile') }}"
+        class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 hidden md:block"
+        style='background-image: url("{{ auth()->user()->profile_photo_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuC93DKUUEzC7lkrBdfWtvmOrAoSa-kYRKKJmoBxVGU24JG6ZH1w_oaTNXsorUpAwYc8XjdpXG_2i0qmYwV2NbZTUH2wyf9lzECPRzvSwE4Pr3Q6_j9rVVcdXRbkkSfcVQH5iiuL2-Rg91CpPejmv7KWmesm3jw-kx6XBxYiv9pq_Y7jZayhLEGpYLdgVWohgy-2BTbCu31r7ayQwvaSPgD7XhbIyNQnIrtaPgYh7kUXgStmFTGBq2cV5oSrtpfwmKyvfTcgwk0SBVs' }}");'
+        title="My Account">
+      </a>
+    @else
+      <a href="{{ route('login') }}" class="hidden md:inline-flex items-center justify-center rounded-md bg-lime-500 px-4 py-2 text-sm font-bold text-gray-900 shadow-sm transition-colors hover:bg-lime-400 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:ring-offset-2">
+        Login
+      </a>
+    @endauth
+
 
     <!-- Burger Menu: show only on mobile, toggles active/inactive state -->
   <x-burger-menu-button class="md:hidden" />

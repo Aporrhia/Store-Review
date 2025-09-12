@@ -16,6 +16,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/catalog', [CatalogController::class, 'catalogView'])->name('catalog');
 
-Route::get('/liked-items', [LikedItemsController::class, 'listLikedItems'])->name('liked.items');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+    Route::get('/liked-items', [LikedItemsController::class, 'listLikedItems'])->name('liked.items');
+    Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController::class, 'like'])->name('listing.like');
+});
+
 Route::get('/catalog/{id}', [\App\Http\Controllers\ListingDetailsController::class, 'show'])->name('listing.details');
-Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController::class, 'like'])->name('listing.like');

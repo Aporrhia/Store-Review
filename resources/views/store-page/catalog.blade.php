@@ -10,6 +10,9 @@
                 <aside class="hidden w-80 border-r border-gray-200 p-8 md:block">
                     <h2 class="text-2xl font-bold tracking-tight text-[#141414]">Filters</h2>
                     <form method="GET" action="{{ route('catalog') }}">
+                        @if(request('q'))
+                            <input type="hidden" name="q" value="{{ request('q') }}">
+                        @endif
                         <input type="hidden" name="view" value="{{ request('view', 'grid') }}">
                         <input type="hidden" name="sort" value="{{ request('sort', '') }}">
                         <input type="hidden" name="per_page" value="{{ request('per_page', $perPage ?? 24) }}">
@@ -56,7 +59,7 @@
                                 class="flex h-12 w-full items-center justify-center rounded-md bg-[#141414] px-6 text-sm font-bold text-white hover:bg-gray-800" style="background-color: #84cc16;">
                                 Apply Filters
                             </button>
-                            <a href="{{ route('catalog') }}" class="flex h-12 w-full items-center justify-center rounded-md mt-2 bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-300">
+                            <a href="{{ route('catalog') }}{{ request('q') ? '?q='.request('q') : '' }}" class="flex h-12 w-full items-center justify-center rounded-md mt-2 bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-300">
                                 Clear Filters
                             </a>
                         </div>
@@ -83,6 +86,9 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <form method="GET" action="{{ route('catalog') }}" id="sortForm" class="flex items-center gap-2">
+                                @if(request('q'))
+                                    <input type="hidden" name="q" value="{{ request('q') }}">
+                                @endif
                                 @foreach(request()->except(['sort', 'page', 'per_page', '_token']) as $key => $value)
                                     @if(is_array($value))
                                         @foreach($value as $v)

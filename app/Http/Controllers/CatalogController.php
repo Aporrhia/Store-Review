@@ -60,7 +60,7 @@ class CatalogController extends Controller
         }
 
     // Per-page option
-    $perPage = $request->input('per_page', 6); // default 6
+    $perPage = $request->input('per_page', 12); // default 12
     $items = $query->paginate($perPage)->withQueryString();
 
     // Calculate min and max price from all listings (filtered)

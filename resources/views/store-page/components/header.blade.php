@@ -16,22 +16,11 @@
         New Arrivals
       </a>
       <a
-        href="#"
-        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
+        href="{{ route('catalog') }}"
+        class="text-base font-medium flex items-center justify-center rounded-lg p-2.5 {{ request()->routeIs('catalog') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
+        title="Catalog"
       >
-        Men
-      </a>
-      <a
-        href="#"
-        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
-      >
-        Women
-      </a>
-      <a
-        href="#"
-        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
-      >
-        Shoes
+        Catalog
       </a>
       <a
         href="#"
@@ -80,11 +69,43 @@
       </button>
     </div>
 
-    <!-- Profile Image: hidden on mobile, show on md+ -->
-    <div
-      class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 hidden md:block"
-      style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC93DKUUEzC7lkrBdfWtvmOrAoSa-kYRKKJmoBxVGU24JG6ZH1w_oaTNXsorUpAwYc8XjdpXG_2i0qmYwV2NbZTUH2wyf9lzECPRzvSwE4Pr3Q6_j9rVVcdXRbkkSfcVQH5iiuL2-Rg91CpPejmv7KWmesm3jw-kx6XBxYiv9pq_Y7jZayhLEGpYLdgVWohgy-2BTbCu31r7ayQwvaSPgD7XhbIyNQnIrtaPgYh7kUXgStmFTGBq2cV5oSrtpfwmKyvfTcgwk0SBVs");'
-    ></div>
+    <!-- Profile/Sign In: hidden on mobile, show on md+ -->
+    @if(auth()->check())
+      <div class="relative hidden md:flex items-center">
+        <button id="profile-avatar" type="button" class="flex items-center justify-center aspect-square rounded-full size-10 bg-[#84cc16] text-white text-xl font-bold focus:outline-none" aria-label="Profile">
+          {{ strtoupper(substr(auth()->user()->name ?? auth()->user()->email, 0, 1)) }}
+        </button>
+        <div id="profile-dropdown" class="absolute left-1/2 -translate-x-1/2 mt-36 w-30 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 hidden">
+          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</button>
+          </form>
+        </div>
+      </div>
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          var avatar = document.getElementById('profile-avatar');
+          var dropdown = document.getElementById('profile-dropdown');
+          if (avatar && dropdown) {
+            avatar.addEventListener('click', function (e) {
+              e.stopPropagation();
+              dropdown.classList.toggle('hidden');
+            });
+            document.addEventListener('click', function (e) {
+              if (!avatar.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+              }
+            });
+          }
+        });
+      </script>
+    @else
+      <a href="{{ route('login') }}" class="hidden md:flex items-center gap-2 text-[#84cc16] font-bold">
+        <span class="material-symbols-outlined">person</span>
+        <span class="hover:underline">Sign In</span>
+      </a>
+    @endif
 
     <!-- Burger Menu: show only on mobile, toggles active/inactive state -->
   <x-burger-menu-button class="md:hidden" />

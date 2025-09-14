@@ -10,7 +10,12 @@
                 <aside class="hidden w-80 border-r border-gray-200 p-8 md:block">
                     <h2 class="text-2xl font-bold tracking-tight text-[#141414]">Filters</h2>
                     <form method="GET" action="{{ route('catalog') }}">
+                        @if(request('q'))
+                            <input type="hidden" name="q" value="{{ request('q') }}">
+                        @endif
                         <input type="hidden" name="view" value="{{ request('view', 'grid') }}">
+                        <input type="hidden" name="sort" value="{{ request('sort', '') }}">
+                        <input type="hidden" name="per_page" value="{{ request('per_page', $perPage ?? 24) }}">
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-[#141414]">Category</h3>
                             <div class="mt-4 space-y-3">
@@ -44,8 +49,8 @@
                             <div class="mt-4">
                                 <div id="price-slider" class="bg-gray-200 rounded h-2 mb-4"></div>
                                 <div class="flex gap-2 mt-2">
-                                    <input type="number" id="price_min" name="price_min" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Min" value="{{ $minPrice }}">
-                                    <input type="number" id="price_max" name="price_max" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Max" value="{{ $maxPrice }}">
+                                    <input type="number" step="0.01" id="price_min" name="price_min" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Min" value="{{ $minPrice }}">
+                                    <input type="number" step="0.01" id="price_max" name="price_max" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Max" value="{{ $maxPrice }}">
                                 </div>
                             </div>
                         </div>
@@ -54,7 +59,7 @@
                                 class="flex h-12 w-full items-center justify-center rounded-md bg-[#141414] px-6 text-sm font-bold text-white hover:bg-gray-800" style="background-color: #84cc16;">
                                 Apply Filters
                             </button>
-                            <a href="{{ route('catalog') }}" class="flex h-12 w-full items-center justify-center rounded-md mt-2 bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-300">
+                            <a href="{{ route('catalog') }}{{ request('q') ? '?q='.request('q') : '' }}" class="flex h-12 w-full items-center justify-center rounded-md mt-2 bg-gray-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-300">
                                 Clear Filters
                             </a>
                         </div>
@@ -81,6 +86,9 @@
                         </div>
                         <div class="flex items-center gap-4">
                             <form method="GET" action="{{ route('catalog') }}" id="sortForm" class="flex items-center gap-2">
+                                @if(request('q'))
+                                    <input type="hidden" name="q" value="{{ request('q') }}">
+                                @endif
                                 @foreach(request()->except(['sort', 'page', 'per_page', '_token']) as $key => $value)
                                     @if(is_array($value))
                                         @foreach($value as $v)
@@ -90,15 +98,15 @@
                                         <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                                     @endif
                                 @endforeach
-                                <select name="sort" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
+                                <select name="sort" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 pr-10 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
                                     <option value="" {{ request('sort') == '' ? 'selected' : '' }}>Sort By</option>
                                     <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price: Low to High</option>
                                     <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
                                     <option value="title_asc" {{ request('sort') == 'title_asc' ? 'selected' : '' }}>Title: A-Z</option>
                                     <option value="title_desc" {{ request('sort') == 'title_desc' ? 'selected' : '' }}>Title: Z-A</option>
                                 </select>
-                                <select name="per_page" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
-                                    @foreach([6, 12, 24, 48] as $option)
+                                <select name="per_page" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 pr-10 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
+                                    @foreach([12, 24, 48] as $option)
                                         <option value="{{ $option }}" {{ $perPage == $option ? 'selected' : '' }}>{{ $option }} per page</option>
                                     @endforeach
                                 </select>
@@ -135,10 +143,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var priceMaxInput = document.getElementById('price_max');
 
     // Get min/max price from backend (filtered products)
-    var minPrice = parseInt(priceMinInput.value) || 0;
-    var maxPrice = parseInt(priceMaxInput.value) || 1000;
-    var startMin = {{ request('price_min', $minPrice) }};
-    var startMax = {{ request('price_max', $maxPrice) }};
+
+    var minPrice = parseFloat(priceMinInput.value) || 0;
+    var maxPrice = parseFloat(priceMaxInput.value) || 1000;
+    var startMin = parseFloat({{ request('price_min', $minPrice) }});
+    var startMax = parseFloat({{ request('price_max', $maxPrice) }});
 
     noUiSlider.create(priceSlider, {
         start: [startMin, startMax],
@@ -147,11 +156,11 @@ document.addEventListener('DOMContentLoaded', function () {
             'min': minPrice,
             'max': maxPrice
         },
-        step: 1,
+        step: 0.01,
         tooltips: false,
         format: {
-            to: function (value) { return Math.round(value); },
-            from: function (value) { return Number(value); }
+            to: function (value) { return value.toFixed(2); },
+            from: function (value) { return parseFloat(value); }
         }
     });
 

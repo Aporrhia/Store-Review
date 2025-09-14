@@ -17,9 +17,13 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->string('sku')->unique();
-
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 
@@ -28,6 +32,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('store_items');
+        Schema::table('store_items', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
+            $table->dropForeign(['brand_id']);
+            $table->dropColumn('category_id');
+            $table->dropColumn('brand_id');
+        });
     }
 };

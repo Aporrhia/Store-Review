@@ -49,18 +49,55 @@ class StoreItemSeeder extends Seeder
             ],
         ];
 
-        foreach ($products as $category => $brands) {
-            foreach ($brands as $brand => $items) {
+        foreach ($products as $categoryName => $brands) {
+
+            // Get category_id
+            $categoryId = DB::table('categories')->where('name', $categoryName)->value('id');
+
+            foreach ($brands as $brandName => $items) {
+
+                // Get brand_id
+                $brandId = DB::table('brands')->where('name', $brandName)->value('id');
+
                 foreach ($items as $item) {
-                    DB::table('store_items')->insert([
-                        'title'       => "{$brand} {$item}",
-                        'description' => "High-quality {$category} by {$brand}, model: {$item}.",
-                        'brand'       => $brand,
-                        'category'    => $category,
-                        'sku'         => strtoupper(Str::slug($brand . '-' . $category . '-' . $item . '-' . Str::random(4))),
+
+                    // Insert store item
+                    $storeItemId = DB::table('store_items')->insertGetId([
+                        'title'       => "{$brandName} {$item}",
+                        'description' => "High-quality {$categoryName} by {$brandName}, model: {$item}.",
+                        'brand_id'    => $brandId,
+                        'category_id' => $categoryId,
+                        'sku'         => strtoupper(Str::slug($brandName . '-' . $categoryName . '-' . $item . '-' . Str::random(4))),
                         'created_at'  => now(),
                         'updated_at'  => now(),
                     ]);
+
+                    // Fetch category-specific attributes
+                    $attributeIds = DB::table('category_attribute')
+                        ->where('category_id', $categoryId)
+                        ->pluck('attribute_id');
+
+                    foreach ($attributeIds as $attrId) {
+
+                        // Get attribute type
+                        $attrType = DB::table('attributes')->where('id', $attrId)->value('input_type');
+
+                        // Generate example value per type
+                        $value = match($attrType) {
+                            'number' => rand(50, 400), // realistic example numbers
+                            'text'   => 'Example ' . Str::random(5),
+                            default  => 'N/A',
+                        };
+
+                        // Insert product attribute
+                        DB::table('store_item_attributes')->insert([
+                            'store_item_id' => $storeItemId,
+                            'attribute_id'  => $attrId,
+                            'value'         => $value,
+                            'created_at'    => now(),
+                            'updated_at'    => now(),
+                        ]);
+                    }
                 }
             }
         }

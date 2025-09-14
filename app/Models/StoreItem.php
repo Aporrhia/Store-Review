@@ -17,17 +17,25 @@ class StoreItem extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
         'title',
         'description',
-        'category',
-        'brand',
+        'category_id',
+        'brand_id',
         'sku',
-        'price'
     ];
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function brand()
     {
-        return $this->belongsToMany(User::class, 'orders', 'store_item_id', 'user_id');
+        return $this->belongsTo(\App\Models\Brand::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(\App\Models\Category::class);
+    }
+
+    public function attributes()
+    {
+        return $this->hasMany(\App\Models\StoreItemAttribute::class);
     }
 }

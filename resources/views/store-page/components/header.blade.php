@@ -164,11 +164,9 @@
     @endif
 
     <!-- Burger Menu: show only on mobile, toggles active/inactive state -->
-    <button id="burger-menu-toggle" class="md:hidden p-2 rounded-md focus:outline-none">
-      <span class="material-symbols-outlined">menu</span>
-    </button>
+  <x-burger-menu-button id="burger-menu-toggle" class="md:hidden" />
     <!-- Mobile Menu Drawer -->
-    <div id="mobile-nav-menu" class="fixed top-0 left-0 w-80 h-full bg-white z-50 p-6 flex flex-col gap-6 shadow-lg transition-transform transform -translate-x-full md:hidden">
+  <div id="mobile-nav-menu" class="fixed inset-0 w-full h-full bg-white z-50 p-6 flex flex-col gap-6 shadow-lg transition-transform transform translate-x-full md:hidden">
       <button id="close-mobile-menu" class="absolute top-6 right-6 p-2 rounded-md">
         <span class="material-symbols-outlined">close</span>
       </button>
@@ -200,12 +198,12 @@
 
     if (burgerBtn && mobileMenu) {
       burgerBtn.addEventListener('click', function () {
-        mobileMenu.classList.toggle('-translate-x-full');
+        mobileMenu.classList.toggle('translate-x-full');
       });
     }
     if (closeBtn && mobileMenu) {
       closeBtn.addEventListener('click', function () {
-        mobileMenu.classList.add('-translate-x-full');
+        mobileMenu.classList.add('translate-x-full');
       });
     }
     document.addEventListener('click', function (e) {
@@ -214,7 +212,7 @@
         !mobileMenu.contains(e.target) &&
         !burgerBtn.contains(e.target)
       ) {
-        mobileMenu.classList.add('-translate-x-full');
+        mobileMenu.classList.add('translate-x-full');
       }
     });
   });

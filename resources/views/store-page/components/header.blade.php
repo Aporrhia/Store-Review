@@ -139,6 +139,56 @@
     @endauth
 
     <!-- Burger Menu: show only on mobile, toggles active/inactive state -->
-  <x-burger-menu-button class="md:hidden" />
+  <x-burger-menu-button id="burger-menu-toggle" class="md:hidden" />
+    <!-- Mobile Menu Drawer -->
+  <div id="mobile-nav-menu" class="fixed inset-0 w-full h-full bg-white z-50 p-6 flex flex-col gap-6 shadow-lg transition-transform transform translate-x-full md:hidden">
+      <button id="close-mobile-menu" class="absolute top-6 right-6 p-2 rounded-md">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <nav class="flex flex-col gap-4">
+        <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">New Arrivals</a>
+        <a href="{{ route('catalog') }}" class="text-base font-medium {{ request()->routeIs('catalog') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Catalog</a>
+        <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Rackets</a>
+        <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Accessories</a>
+        <a href="{{ route('liked.items') }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Liked Items</a>
+        @if(auth()->check())
+          <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Profile</a>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Sign Out</button>
+          </form>
+        @else
+          <a href="{{ route('login') }}" class="text-base font-medium text-[#84cc16] hover:bg-gray-200 hover:text-[#84cc16] font-bold px-4 py-2 rounded-md">Sign In</a>
+        @endif
+      </nav>
+    </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var burgerBtn = document.getElementById('burger-menu-toggle');
+    var mobileMenu = document.getElementById('mobile-nav-menu');
+    var closeBtn = document.getElementById('close-mobile-menu');
+
+    if (burgerBtn && mobileMenu) {
+      burgerBtn.addEventListener('click', function () {
+        mobileMenu.classList.toggle('translate-x-full');
+      });
+    }
+    if (closeBtn && mobileMenu) {
+      closeBtn.addEventListener('click', function () {
+        mobileMenu.classList.add('translate-x-full');
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (
+        mobileMenu &&
+        !mobileMenu.contains(e.target) &&
+        !burgerBtn.contains(e.target)
+      ) {
+        mobileMenu.classList.add('translate-x-full');
+      }
+    });
+  });
+</script>

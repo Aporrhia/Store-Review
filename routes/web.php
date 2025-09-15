@@ -16,8 +16,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/catalog', [CatalogController::class, 'catalogView'])->name('catalog');
 
+Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+    
 Route::get('/liked-items', [LikedItemsController::class, 'listLikedItems'])->name('liked.items');
 Route::get('/catalog/{id}', [\App\Http\Controllers\ListingDetailsController::class, 'show'])->name('listing.details');
 Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController::class, 'like'])->name('listing.like');
 Route::get('/search-listings', [App\Http\Controllers\ListingDetailsController::class, 'searchListings'])->name('search.listings');
+
 Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::class, 'termsAndConditions'])->name('terms.conditions');

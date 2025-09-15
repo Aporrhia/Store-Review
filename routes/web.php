@@ -22,3 +22,5 @@ Route::get('/liked-items', [LikedItemsController::class, 'listLikedItems'])->nam
 Route::get('/catalog/{id}', [\App\Http\Controllers\ListingDetailsController::class, 'show'])->name('listing.details');
 Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController::class, 'like'])->name('listing.like');
 Route::get('/search-listings', [App\Http\Controllers\ListingDetailsController::class, 'searchListings'])->name('search.listings');
+
+Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::class, 'termsAndConditions'])->name('terms.conditions');

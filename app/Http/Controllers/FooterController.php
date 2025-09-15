@@ -6,5 +6,10 @@ use Illuminate\Http\Request;
 
 class FooterController extends Controller
 {
-    // placeholder
+
+    public function termsAndConditions()
+    {
+        return view('footer.terms-and-conditions');
+    }
+
 }

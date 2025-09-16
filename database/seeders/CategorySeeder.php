@@ -10,7 +10,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Rackets', 'Balls', 'Dampeners', 'Overgrips', 'Base Grips', 'Lead Tapes'
+            'Rackets', 'Balls', 'Dampeners', 'Overgrips', 'Base Grips'
         ];
         foreach ($categories as $category) {
             DB::table('categories')->insert([

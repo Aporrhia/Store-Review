@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-2xl mx-auto py-12">
     <h1 class="text-3xl font-bold mb-8 text-center">Create a Listing</h1>
-    <form method="POST" action="{{ route('listing.store') }}" class="bg-white rounded-lg shadow p-8 space-y-8">
+    <form method="POST" action="{{ route('listing.store') }}" enctype="multipart/form-data" class="bg-white rounded-lg shadow p-8 space-y-8">
         @csrf
         <!-- Brand Selection -->
         <div>
@@ -44,6 +44,12 @@
         <!-- Dynamic Attributes -->
         <div id="attributes-section">
             <!-- JS will inject attribute fields here based on selected category -->
+        </div>
+        <!-- Product Image Upload -->
+        <div>
+            <label class="block text-base font-medium mb-2" for="product_image">Product Image (optional)</label>
+            <input type="file" name="product_image" id="product_image" accept="image/*" class="w-full border rounded px-3 py-2">
+            <p class="text-sm text-gray-500 mt-1">Upload an image for this product if it doesn't exist yet. JPG, PNG, GIF up to 2MB.</p>
         </div>
         <!-- Price, Condition, Comment -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

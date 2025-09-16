@@ -19,7 +19,7 @@
                     <h1 class="text-4xl font-extrabold tracking-tight text-[#141414] mb-8">Privacy Policy</h1>
                     
                     <div class="prose prose-lg max-w-none text-gray-700">
-                        <p class="text-lg text-gray-600 mb-8">Last updated: January 2025</p>
+                        <p class="text-lg text-gray-600 mb-8">Last updated: September 2025</p>
                         
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">1. Information We Collect</h2>

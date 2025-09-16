@@ -63,7 +63,7 @@ class StoreItemSeeder extends Seeder
 
                     // Insert store item
                     $storeItemId = DB::table('store_items')->insertGetId([
-                        'title'       => "{$brandName} {$item}",
+                        'title'       => $item, // Only model name
                         'description' => "High-quality {$categoryName} by {$brandName}, model: {$item}.",
                         'brand_id'    => $brandId,
                         'category_id' => $categoryId,

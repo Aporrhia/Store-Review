@@ -10,7 +10,7 @@
                     <h3 class="text-base font-semibold text-[#141414]">
                         <a href="{{ route('listing.details', $item->id) }}">
                             <span aria-hidden="true" class="absolute inset-0"></span>
-                            {{ $item->storeItem->title ?? '' }}
+                            {{ $item->storeItem->brand->name . ' ' . $item->storeItem->title ?? '' }}
                         </a>
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category->name ?? '-' }}</p>

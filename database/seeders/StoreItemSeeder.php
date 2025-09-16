@@ -12,10 +12,10 @@ class StoreItemSeeder extends Seeder
     {
         $products = [
             'Rackets' => [
-                'Wilson'  => ['Blade 98', 'Pro Staff 97', 'Clash 100', 'Ultra 100', 'Burn 100'],
+                'Wilson'  => ['Blade', 'Pro Staff', 'Clash', 'Ultra', 'Burn'],
                 'Babolat' => ['Pure Drive', 'Pure Aero', 'Pure Strike', 'Evo Drive', 'Boost Drive'],
                 'Head'    => ['Speed Pro', 'Radical MP', 'Gravity Pro', 'Extreme MP', 'Boom MP'],
-                'Yonex'   => ['Ezone 100', 'Vcore 95', 'Percept 97', 'Astrel 105', 'Vcore Pro 100'],
+                'Yonex'   => ['Ezone', 'Vcore', 'Percept', 'Astrel', 'Vcore Pro'],
             ],
             'Balls' => [
                 'Wilson'  => ['US Open Extra Duty', 'Trinity Pro', 'Championship Extra Duty', 'Tour Premier', 'Regular Duty'],
@@ -61,13 +61,21 @@ class StoreItemSeeder extends Seeder
 
                 foreach ($items as $item) {
 
+                    // Generate SKU first
+                    $sku = strtoupper(Str::slug($brandName . '-' . $item));
+                    
+                    // Check if image exists for this SKU
+                    $imagePath = "images/products/{$sku}.webp";
+                    $fullImagePath = public_path($imagePath);
+                    
                     // Insert store item
                     $storeItemId = DB::table('store_items')->insertGetId([
                         'title'       => $item, // Only model name
                         'description' => "High-quality {$categoryName} by {$brandName}, model: {$item}.",
                         'brand_id'    => $brandId,
                         'category_id' => $categoryId,
-                        'sku'         => strtoupper(Str::slug($brandName . '-' . $categoryName . '-' . $item . '-' . Str::random(4))),
+                        'sku'         => $sku,
+                        'image_path'  => file_exists($fullImagePath) ? $imagePath : null,
                         'created_at'  => now(),
                         'updated_at'  => now(),
                     ]);

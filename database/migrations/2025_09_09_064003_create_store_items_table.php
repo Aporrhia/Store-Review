@@ -16,14 +16,15 @@ return new class extends Migration
 
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('sku')->unique();
+            $table->string('sku');
+            $table->string('image_path')->nullable(); // Add image path field
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
         });
     }
 
@@ -32,11 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('store_items', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropForeign(['brand_id']);
-            $table->dropColumn('category_id');
-            $table->dropColumn('brand_id');
-        });
+        Schema::dropIfExists('store_items');
     }
 };

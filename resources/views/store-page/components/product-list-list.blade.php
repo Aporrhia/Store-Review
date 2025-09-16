@@ -2,8 +2,8 @@
 <div class="flex flex-col gap-6">
     @forelse($items as $item)
         <div class="flex items-center gap-6 p-4 rounded-md border border-gray-200 bg-white shadow-sm">
-            <div class="w-32 h-40 overflow-hidden rounded bg-cover bg-center"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAROJvHVQcfBZXJ1g2b3ynng1Uo3rts3-boOLuSziQK_JVInDnqIhueCa4fFOx6cJlwFnHINLhMCqKpQVIJozPSSQLlRDS2bSYSnLuQ3XH2w_FKFxQErVwjK0U5StUIbzhBak6EejvRyH7_BevF6u3CxrS8eRpx4Ewzra7OQQHYtwQPt4jK0lzcW8_sU6ZTNVkDZUqRmp6eLrhArfET6ECgxnRs8JQMgctFEoTzWR1IEqBdNHr4o7iX3WUhz_54qPrgaNviksirxU");'>
+            <div class="w-32 h-40 overflow-hidden rounded bg-gray-100">
+                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-cover">
             </div>
             <div class="flex-1">
                 <h3 class="text-xl font-semibold text-[#141414] mb-1">

@@ -6,7 +6,7 @@
     <div class="grid grid-cols-1 mt-4 md:grid-cols-2 gap-12 bg-white rounded-lg shadow border border-gray-200 p-8">
         <div class="flex flex-col gap-6">
             <div class="w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-                <img  class="object-cover w-full h-full" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAROJvHVQcfBZXJ1g2b3ynng1Uo3rts3-boOLuSziQK_JVInDnqIhueCa4fFOx6cJlwFnHINLhMCqKpQVIJozPSSQLlRDS2bSYSnLuQ3XH2w_FKFxQErVwjK0U5StUIbzhBak6EejvRyH7_BevF6u3CxrS8eRpx4Ewzra7OQQHYtwQPt4jK0lzcW8_sU6ZTNVkDZUqRmp6eLrhArfET6ECgxnRs8JQMgctFEoTzWR1IEqBdNHr4o7iX3WUhz_54qPrgaNviksirxU");'>
+                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="object-cover w-full h-full">
             </div>
             <div class="flex flex-col gap-2">
                 <span class="text-base text-gray-500">Seller: {{ $item->user->name ?? '' }}</span>
@@ -54,8 +54,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 @foreach($otherListings as $listing)
                     <div class="group relative">
-                        <div class="w-full aspect-[3/4] overflow-hidden rounded-md bg-cover bg-center bg-no-repeat"
-                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAAROJvHVQcfBZXJ1g2b3ynng1Uo3rts3-boOLuSziQK_JVInDnqIhueCa4fFOx6cJlwFnHINLhMCqKpQVIJozPSSQLlRDS2bSYSnLuQ3XH2w_FKFxQErVwjK0U5StUIbzhBak6EejvRyH7_BevF6u3CxrS8eRpx4Ewzra7OQQHYtwQPt4jK0lzcW8_sU6ZTNVkDZUqRmp6eLrhArfET6ECgxnRs8JQMgctFEoTzWR1IEqBdNHr4o7iX3WUhz_54qPrgaNviksirxU");'>
+                        <div class="w-full aspect-[3/4] overflow-hidden rounded-md bg-gray-100">
+                            <img src="{{ $listing->storeItem->getImageUrl() }}" alt="{{ $listing->storeItem->title }}" class="w-full h-full object-cover">
                         </div>
                         <div class="mt-4 flex justify-between">
                             <div>

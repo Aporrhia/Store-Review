@@ -22,6 +22,7 @@ class StoreItem extends Model
         'category_id',
         'brand_id',
         'sku',
+        'image_path',
     ];
 
     public function brand()
@@ -37,5 +38,15 @@ class StoreItem extends Model
     public function attributes()
     {
         return $this->hasMany(\App\Models\StoreItemAttribute::class);
+    }
+
+    public function getImageUrl()
+    {
+        if ($this->image_path && file_exists(public_path($this->image_path))) {
+            return asset($this->image_path);
+        }
+        
+        // Fallback to default placeholder image
+        return asset('images/placeholder.png');
     }
 }

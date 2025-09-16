@@ -58,6 +58,7 @@ class ListingController extends Controller
             'price' => 'required|numeric|min:0',
             'condition' => 'required|in:new,used,refurbished',
             'attributes' => 'array',
+            'product_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Create or find StoreItem
@@ -69,6 +70,17 @@ class ListingController extends Controller
             'description' => '',
             'sku' => strtoupper(uniqid('SKU-')),
         ]);
+
+        // Handle image upload if provided and store item doesn't have image yet
+        if ($request->hasFile('product_image') && !$storeItem->image_path) {
+            $image = $request->file('product_image');
+            $imageName = $storeItem->sku . '.' . $image->getClientOriginalExtension();
+            $imagePath = 'images/products/' . $imageName;
+            
+            $image->move(public_path('images/products'), $imageName);
+            
+            $storeItem->update(['image_path' => $imagePath]);
+        }
 
         // Save attributes
         if ($request->has('attributes')) {

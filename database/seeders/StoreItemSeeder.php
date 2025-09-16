@@ -12,40 +12,34 @@ class StoreItemSeeder extends Seeder
     {
         $products = [
             'Rackets' => [
-                'Wilson'  => ['Blade 98', 'Pro Staff 97', 'Clash 100', 'Ultra 100', 'Burn 100'],
+                'Wilson'  => ['Blade', 'Pro Staff', 'Clash', 'Ultra', 'Burn'],
                 'Babolat' => ['Pure Drive', 'Pure Aero', 'Pure Strike', 'Evo Drive', 'Boost Drive'],
                 'Head'    => ['Speed Pro', 'Radical MP', 'Gravity Pro', 'Extreme MP', 'Boom MP'],
-                'Yonex'   => ['Ezone 100', 'Vcore 95', 'Percept 97', 'Astrel 105', 'Vcore Pro 100'],
+                'Yonex'   => ['Ezone', 'Vcore', 'Percept'],
             ],
             'Balls' => [
-                'Wilson'  => ['US Open Extra Duty', 'Trinity Pro', 'Championship Extra Duty', 'Tour Premier', 'Regular Duty'],
-                'Babolat' => ['Team', 'Gold', 'French Open', 'Championship', 'Academy'],
-                'Head'    => ['Tour XT', 'Pro', 'Championship', 'ATP', 'No.1'],
-                'Yonex'   => ['Tour', 'Championship', 'Pro Tournament', 'Elite', 'Forte'],
+                'Wilson'  => ['US Open Extra Duty', 'Trinity Pro'],
+                'Babolat' => ['Team', 'Gold'],
+                'Head'    => ['Tour XT', 'Pro', 'Championship'],
+                'Yonex'   => ['Tour', 'Championship'],
             ],
             'Dampeners' => [
-                'Wilson'  => ['Pro Feel', 'Shock Trap', 'Shock Shield', 'Pro Overgrip Dampener', 'Trio'],
-                'Babolat' => ['Custom Damp', 'Loony Damp', 'Vibrakill', 'Air Damp', 'RVS'],
-                'Head'    => ['Smartsorb', 'Djokovic Dampener', 'Pro Damp', 'Zebra', 'Logo'],
-                'Yonex'   => ['Vibration Dampener AC166', 'AC165', 'Polyurethane Dampener', 'Sonic Dampener', 'Logo Dampener'],
+                'Wilson'  => ['Roland Garros Dampener 2 Pack', 'Shift Dampener 2 Pack', 'Clash Pro Feel Clash Dampener 2 Pack', 'RF Dampener 2 Pack'],
+                'Babolat' => ['Drive Damp x2 Dampener', 'Aero Damp x2 Dampener', 'Custom Dampener Black/Yellow', 'Vamos Rafa Dampener'],
+                'Head'    => ['Pro Damp - Black', 'Pro Damp - White', 'Zverev Dampener Blue/Yellow', 'Djokovic Dampener'],
+                'Yonex'   => ['Vibration Stopper 5 Dampener Blue', 'Vibration Stopper 5 Dampener Red', 'Vibration Stopper 5 Dampener Yellow', 'Vibration Stopper 5 Dampener Black'],
             ],
             'Overgrips' => [
-                'Wilson'  => ['Pro Overgrip', 'Advantage Overgrip', 'Cushion-Aire', 'Pro Sensation', 'Ultra Wrap'],
-                'Babolat' => ['Pro Tacky', 'VS Original', 'My Grip', 'Syntec Pro Overgrip', 'Pro Tour'],
-                'Head'    => ['Prime Tour', 'Super Comp', 'XtremeSoft', 'Hydrosorb Comfort', 'Prestige Pro'],
-                'Yonex'   => ['Super Grap', 'Dry Grap', 'Wave Grap', 'Mesh Grap', 'Tacky Fit'],
+                'Wilson'  => ['Pro Overgrip 3 Pack White', 'Pro Overgrip 3 Pack Black', 'Pro Overgrip 3 Pack Blade Green', 'Pro Perforated Overgrip 3 Pack White', 'Pro Overgrip Sensation 3 Pack Black'],
+                'Babolat' => ['VS Original Overgrips White', 'VS Original Overgrip Black', 'Pro Response Overgrip Black', 'Pro Response Overgrip White'],
+                'Head'    => ['Prestige Pro Overgrips 3 Pack White', 'Prestige Pro Overgrips 3 Pack Black', 'Prime Tour Overgrip 3 Pack Orange', 'Prime Tour Overgrip 3 Pack Mint', 'XtremeSoft Overgrips Blue 3 Pack', 'XtremeSoft Overgrips Yellow 3 Pack'],
+                'Yonex'   => ['Super Grap Overgrip 3 Pack Pink', 'Super Grap Overgrip 3 Pack Black', 'Super Grap Overgrip 3 Pack White', 'Super Grap Overgrip 3 Pack Green', 'Ultra Thin Overgrip 3 Pack White', 'Moist Super Overgrip Water 3 Pack Green', 'Strong Grap Overgrip Wine 3 Pack Red'],
             ],
             'Base Grips' => [
-                'Wilson'  => ['Feather Thin', 'Shock Shield Hybrid', 'Comfort Hybrid', 'Sponge Grip', 'Cushion-Aire Perforated'],
-                'Babolat' => ['Skin Feel', 'Syntec Pro', 'Natural Grip', 'Xcel Gel', 'VS Grip'],
-                'Head'    => ['Hydrosorb Pro', 'Hydrosorb Comfort', 'Hydrosorb Tour', 'Hydrosorb XL', 'Leather Tour'],
-                'Yonex'   => ['Synthetic Grip AC126', 'Leather Grip', 'Hi Soft Grap', 'Wave Grip', 'Perforated Grip'],
-            ],
-            'Lead Tapes' => [
-                'Wilson'  => ['Pro Lead Tape 1/4"', 'Pro Lead Tape 1/2"', 'Customization Tape', 'Heavy Duty Lead Tape', 'Pro Balance'],
-                'Babolat' => ['Custom Damp Lead', 'Tungsten Tape', 'Custom Lead Tape', 'Pro Balance Weights', 'Racket Customization'],
-                'Head'    => ['Tour Lead Tape 1/4"', 'Tour Lead Tape 1/2"', 'Weight Strips', 'Heavy Duty Lead Tape', 'Balance Tuning'],
-                'Yonex'   => ['AC126 Lead Tape', 'AC128 Weight Strip', 'Custom Balance Tape', 'Racket Weight Adjuster', 'Tour Balance Tape'],
+                'Wilson'  => ['RF Leather Replacement Grip Brown', 'Shock Shield Replacement Grip', 'Dual Pro Performance Replacement Grip', 'Sublime Replacement Grip Black', 'Sublime Replacement Grip White'],
+                'Babolat' => ['Syntec Pro Replacement Grip Yellow', 'Syntec Pro Replacement Grip White', 'Natural Leather Grip', 'Syntec Evo Replacement Grip Black', 'Syntec Evo Replacement Grip White'],
+                'Head'    => ['HydroSorb Pro Replacement Grip Blue', 'HydroSorb Pro Replacement Grip Black', 'HydroSorb Pro Replacement Grip White', 'HydroSorb Replacement Grip Black', 'HydroSorb Replacement Grip White', 'HydroSorb Comfort Replacement Grip Black', 'HydroSorb Comfort Replacement Grip White'],
+                'Yonex'   => ['Synthetic Leather Excel Pro Replacement Grip Black', 'Synthetic Leather Excel Pro Replacement Grip White'],
             ],
         ];
 
@@ -61,13 +55,21 @@ class StoreItemSeeder extends Seeder
 
                 foreach ($items as $item) {
 
+                    // Generate SKU first
+                    $sku = strtoupper(Str::slug($brandName . '-' . $item));
+                    
+                    // Check if image exists for this SKU
+                    $imagePath = "images/products/{$sku}.webp";
+                    $fullImagePath = public_path($imagePath);
+                    
                     // Insert store item
                     $storeItemId = DB::table('store_items')->insertGetId([
-                        'title'       => "{$brandName} {$item}",
+                        'title'       => $item, // Only model name
                         'description' => "High-quality {$categoryName} by {$brandName}, model: {$item}.",
                         'brand_id'    => $brandId,
                         'category_id' => $categoryId,
-                        'sku'         => strtoupper(Str::slug($brandName . '-' . $categoryName . '-' . $item . '-' . Str::random(4))),
+                        'sku'         => $sku,
+                        'image_path'  => file_exists($fullImagePath) ? $imagePath : null,
                         'created_at'  => now(),
                         'updated_at'  => now(),
                     ]);

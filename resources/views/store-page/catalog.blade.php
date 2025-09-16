@@ -19,7 +19,7 @@
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-[#141414]">Category</h3>
                             <div class="mt-4 space-y-3">
-                                @foreach(['Rackets','Balls','Dampeners','Overgrips','Base Grips','Lead Tapes'] as $cat)
+                                @foreach(['Rackets','Balls','Dampeners','Overgrips','Base Grips'] as $cat)
                                 <label class="flex items-center gap-x-3">
                                     <input
                                         class="h-5 w-5 rounded border-2 border-gray-300 bg-transparent text-[#141414] checked:border-[#141414] checked:bg-[#141414] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0"

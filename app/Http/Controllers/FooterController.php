@@ -12,4 +12,9 @@ class FooterController extends Controller
         return view('footer.terms-and-conditions');
     }
 
+    public function privacyPolicy()
+    {
+        return view('footer.privacy-policy');
+    }
+
 }

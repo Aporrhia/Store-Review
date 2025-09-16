@@ -1,9 +1,9 @@
 {{-- Product List Grid View --}}
-<div class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-6 gap-y-10">
+<div class="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-8 gap-y-12">
     @forelse($items as $item)
         <div class="group relative">
-            <div class="w-full overflow-hidden rounded-md bg-gray-100 bg-center bg-no-repeat aspect-[3/4]">
-                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-cover">
+            <div class="w-full overflow-hidden rounded-md bg-white-100 bg-center bg-no-repeat aspect-[3/4] flex items-center justify-center">
+                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-contain">
             </div>
             <div class="mt-4 flex justify-between">
                 <div>

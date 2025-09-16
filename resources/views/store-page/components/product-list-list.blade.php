@@ -2,8 +2,8 @@
 <div class="flex flex-col gap-6">
     @forelse($items as $item)
         <div class="flex items-center gap-6 p-4 rounded-md border border-gray-200 bg-white shadow-sm">
-            <div class="w-32 h-40 overflow-hidden rounded bg-gray-100">
-                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-cover">
+            <div class="w-32 h-40 overflow-hidden rounded bg-white-100 flex items-center justify-center">
+                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-contain">
             </div>
             <div class="flex-1">
                 <h3 class="text-xl font-semibold text-[#141414] mb-1">

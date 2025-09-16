@@ -36,11 +36,6 @@ class AttributeSeeder extends Seeder
                 ['name' => 'Material', 'input_type' => 'text'],
                 ['name' => 'Color', 'input_type' => 'text'],
             ],
-            'Lead Tapes' => [
-                ['name' => 'Weight', 'input_type' => 'number'],
-                ['name' => 'Length', 'input_type' => 'number'],
-                ['name' => 'Material', 'input_type' => 'text'],
-            ],
         ];
 
         // Store inserted attribute IDs

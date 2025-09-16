@@ -5,8 +5,8 @@
     @include('store-page.components.breadcrumbs')
     <div class="grid grid-cols-1 mt-4 md:grid-cols-2 gap-12 bg-white rounded-lg shadow border border-gray-200 p-8">
         <div class="flex flex-col gap-6">
-            <div class="w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="object-cover w-full h-full">
+            <div class="w-full aspect-[4/3] rounded-lg overflow-hidden bg-white-100 flex items-center justify-center">
+                <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="object-contain w-full h-full">
             </div>
             <div class="flex flex-col gap-2">
                 <span class="text-base text-gray-500">Seller: {{ $item->user->name ?? '' }}</span>

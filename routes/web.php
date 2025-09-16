@@ -24,3 +24,13 @@ Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController
 Route::get('/search-listings', [App\Http\Controllers\ListingDetailsController::class, 'searchListings'])->name('search.listings');
 
 Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::class, 'termsAndConditions'])->name('terms.conditions');
+
+// Listing creation routes
+Route::middleware(['auth'])->group(function () {
+	Route::get('/listing/create', [\App\Http\Controllers\ListingController::class, 'create'])->name('listing.create');
+	Route::post('/listing', [\App\Http\Controllers\ListingController::class, 'store'])->name('listing.store');
+});
+
+// API route for fetching category attributes
+Route::get('/api/category/{id}/attributes', [\App\Http\Controllers\ListingController::class, 'getCategoryAttributes']);
+Route::get('/api/model-suggestions', [\App\Http\Controllers\ListingController::class, 'getModelSuggestions']);

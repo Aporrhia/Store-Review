@@ -34,6 +34,13 @@
       >
         Accessories
       </a>
+      <a
+        href="{{ route('listing.create') }}"
+        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors" {{ request()->routeIs('listing.create')  }}
+        title="Listing"
+      >
+        Listing
+      </a>
     </nav>
   </div>
 

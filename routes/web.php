@@ -24,6 +24,7 @@ Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController
 Route::get('/search-listings', [App\Http\Controllers\ListingDetailsController::class, 'searchListings'])->name('search.listings');
 
 Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::class, 'termsAndConditions'])->name('terms.conditions');
+Route::get('/privacy-policy', [\App\Http\Controllers\FooterController::class, 'privacyPolicy'])->name('privacy.policy');
 
 // Listing creation routes
 Route::middleware(['auth'])->group(function () {

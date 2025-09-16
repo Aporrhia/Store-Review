@@ -13,8 +13,8 @@
                             {{ $item->storeItem->title ?? '' }}
                         </a>
                     </h3>
-                    <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category ?? '' }}</p>
-                    <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->storeItem->brand ?? '' }}</p>
+                    <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category->name ?? '-' }}</p>
+                    <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->storeItem->brand->name ?? '-' }}</p>
                     <p class="text-sm text-gray-500 mb-1">Seller: {{ $item->user->name ?? '' }}</p>
                 </div>
                 <p class="text-base font-medium text-gray-900">${{ $item->price }}</p>

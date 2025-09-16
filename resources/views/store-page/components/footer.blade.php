@@ -44,7 +44,7 @@
         <ul class="mt-4 space-y-2">
           <li><a href="#" class="text-base text-gray-400 hover:text-white">About Us</a></li>
           <li><a href="#" class="text-base text-gray-400 hover:text-white">Careers</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Press</a></li>
+          <li><a href="{{ route('terms.conditions') }}" class="text-base text-gray-400 hover:text-white">Terms and Conditions</a></li>
           <li><a href="#" class="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
         </ul>
       </div>

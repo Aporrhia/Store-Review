@@ -9,8 +9,8 @@
                 <h3 class="text-xl font-semibold text-[#141414] mb-1">
                     <a href="#">{{ $item->storeItem->title ?? '' }}</a>
                 </h3>
-                <p class="text-sm text-gray-500 mb-1">Category: {{ $item->storeItem->category ?? '' }}</p>
-                <p class="text-sm text-gray-500 mb-1">Brand: {{ $item->storeItem->brand ?? '' }}</p>
+                <p class="text-sm text-gray-500 mb-1">Category: {{ $item->storeItem->category->name ?? '-' }}</p>
+                <p class="text-sm text-gray-500 mb-1">Brand: {{ $item->storeItem->brand->name ?? '-' }}</p>
                 <p class="text-sm text-gray-500 mb-1">SKU: {{ $item->storeItem->sku ?? '' }}</p>
                 <p class="text-sm text-gray-500 mb-1">{{ $item->storeItem->description ?? '' }}</p>
                 <p class="text-sm text-gray-500 mb-1">Seller: {{ $item->user->name ?? '' }}</p>

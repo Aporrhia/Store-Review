@@ -25,6 +25,8 @@ Route::get('/search-listings', [App\Http\Controllers\ListingDetailsController::c
 
 Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::class, 'termsAndConditions'])->name('terms.conditions');
 Route::get('/privacy-policy', [\App\Http\Controllers\FooterController::class, 'privacyPolicy'])->name('privacy.policy');
+Route::get('/about-us', [\App\Http\Controllers\FooterController::class, 'aboutUs'])->name('about.us');
+Route::get('/support', [\App\Http\Controllers\FooterController::class, 'support'])->name('support');
 
 // Listing creation routes
 Route::middleware(['auth'])->group(function () {

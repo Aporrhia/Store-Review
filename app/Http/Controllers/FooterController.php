@@ -17,4 +17,14 @@ class FooterController extends Controller
         return view('footer.privacy-policy');
     }
 
+    public function aboutUs()
+    {
+        return view('footer.Abous-us-page');
+    }
+
+    public function support()
+    {
+        return view('footer.Support-page');
+    }
+
 }

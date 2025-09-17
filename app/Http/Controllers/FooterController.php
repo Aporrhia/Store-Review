@@ -19,12 +19,12 @@ class FooterController extends Controller
 
     public function aboutUs()
     {
-        return view('footer.Abous-us-page');
+        return view('footer.about-us');
     }
 
     public function support()
     {
-        return view('footer.Support-page');
+        return view('footer.support');
     }
 
 }

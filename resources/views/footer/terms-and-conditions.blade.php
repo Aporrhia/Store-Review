@@ -24,83 +24,88 @@
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">1. Agreement to Terms</h2>
                             <p class="mb-4">
-                                By accessing and using Tenama ("we," "our," or "us"), you accept and agree to be bound by the terms and provision of this agreement. These Terms and Conditions govern your use of our tennis equipment and accessories store.
+                                By accessing and using Tenama ("we," "our," or "us"), you agree to comply with and be bound by these Terms and Conditions. Tenama operates as a marketplace platform that connects buyers and sellers of tennis gear. We do not own or control the items listed by independent sellers, except where explicitly stated.
                             </p>
                         </section>
 
                         <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">2. Use License</h2>
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">2. Marketplace Role</h2>
                             <p class="mb-4">
-                                Permission is granted to temporarily access and use our website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+                                Tenama provides the technology and services that enable users to create listings, discover products, and complete transactions. While we facilitate payments and communication, the actual contract of sale is between the buyer and the seller. Tenama is not responsible for the quality, legality, or safety of items sold by users.
                             </p>
+                        </section>
+
+                        <section class="mb-8">
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">3. Accounts</h2>
+                            <p class="mb-4">
+                                To buy or sell on Tenama, you must create an account and provide accurate information. You are responsible for maintaining the confidentiality of your login details and for all activities conducted under your account.
+                            </p>
+                        </section>
+
+                        <section class="mb-8">
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">4. Seller Responsibilities</h2>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>modify or copy the materials</li>
-                                <li>use the materials for any commercial purpose or for any public display</li>
-                                <li>attempt to reverse engineer any software contained on our website</li>
-                                <li>remove any copyright or other proprietary notations from the materials</li>
+                                <li>Ensure that items listed are accurately described and lawful to sell.</li>
+                                <li>Ship sold items promptly and provide buyers with relevant tracking information when applicable.</li>
+                                <li>Comply with Tenama’s prohibited items and community guidelines.</li>
                             </ul>
                         </section>
 
                         <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">3. Product Information</h2>
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">5. Buyer Responsibilities</h2>
+                            <ul class="list-disc pl-6 mb-4 space-y-2">
+                                <li>Review item descriptions carefully before purchasing.</li>
+                                <li>Use Tenama’s payment system for all transactions—off-platform transactions are not protected.</li>
+                                <li>Respect seller policies on shipping and returns, as outlined in each listing.</li>
+                            </ul>
+                        </section>
+
+                        <section class="mb-8">
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">6. Payments and Fees</h2>
                             <p class="mb-4">
-                                We strive to provide accurate product descriptions, pricing, and availability information. However, we do not warrant that product descriptions or other content is accurate, complete, reliable, or error-free. All tennis equipment specifications are subject to manufacturer changes.
+                                Buyers agree to pay the listed price plus any applicable taxes and fees. Sellers authorize Tenama to collect payments on their behalf and deduct marketplace service fees before releasing payouts. Payment processing may be handled by third-party providers.
                             </p>
                         </section>
 
                         <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">4. Pricing and Payment</h2>
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">7. Disputes</h2>
                             <p class="mb-4">
-                                All prices displayed on our website are in USD and are subject to change without notice. We reserve the right to modify prices at any time. Payment must be received before shipment of products.
-                            </p>
-                        </section>
-
-                        <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">5. Shipping and Returns</h2>
-                            <p class="mb-4">
-                                We offer shipping to various locations. Shipping times and costs vary by location and shipping method selected. Returns are accepted within 30 days of purchase for unused items in original packaging.
-                            </p>
-                        </section>
-
-                        <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">6. User Account</h2>
-                            <p class="mb-4">
-                                When creating an account on our website, you must provide accurate and complete information. You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.
-                            </p>
-                        </section>
-
-                        <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">7. Privacy Policy</h2>
-                            <p class="mb-4">
-                                Your privacy is important to us. Our Privacy Policy explains how we collect, use, and protect your information when you use our service. By using our service, you agree to the collection and use of information in accordance with our Privacy Policy.
+                                In the event of a disagreement between a buyer and seller, Tenama may assist in resolving the dispute but does not guarantee a particular outcome. Buyers and sellers are encouraged to communicate directly first. Tenama reserves the right to issue refunds or withhold payouts in cases of fraud, misrepresentation, or policy violations.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">8. Prohibited Uses</h2>
-                            <p class="mb-4">You may not use our website:</p>
+                            <p class="mb-4">You may not use Tenama for the following:</p>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>For any unlawful purpose or to solicit others to perform unlawful acts</li>
-                                <li>To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances</li>
-                                <li>To infringe upon or violate our intellectual property rights or the intellectual property rights of others</li>
-                                <li>To submit false or misleading information</li>
+                                <li>Selling counterfeit, stolen, or unsafe goods.</li>
+                                <li>Engaging in fraudulent transactions or chargeback abuse.</li>
+                                <li>Bypassing Tenama’s payment system.</li>
+                                <li>Posting false, misleading, or harmful content.</li>
                             </ul>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">9. Disclaimer</h2>
                             <p class="mb-4">
-                                The materials on Tenama's website are provided on an 'as is' basis. Tenama makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                                Tenama provides the marketplace “as is” without warranties of any kind. We do not guarantee that listings will sell, that buyers will complete a purchase, or that items will meet expectations. To the fullest extent permitted by law, Tenama disclaims liability for damages arising from use of the platform.
                             </p>
                         </section>
 
                         <section class="mb-8">
-                            <h2 class="text-2xl font-bold text-[#141414] mb-4">10. Contact Information</h2>
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">10. Changes to Terms</h2>
+                            <p class="mb-4">
+                                We may update these Terms and Conditions from time to time. Continued use of Tenama after changes are posted constitutes acceptance of the revised terms.
+                            </p>
+                        </section>
+
+                        <section class="mb-8">
+                            <h2 class="text-2xl font-bold text-[#141414] mb-4">11. Contact Information</h2>
                             <p class="mb-4">
                                 If you have any questions about these Terms and Conditions, please contact us at:
                             </p>
                             <div class="bg-gray-50 p-4 rounded-lg">
-                                <p class="font-semibold">Tenama Customer Service</p>
+                                <p class="font-semibold">Tenama Support</p>
                                 <p>Email: support@tenama.com</p>
                                 <p>Phone: 1-800-TENAMA-1</p>
                             </div>

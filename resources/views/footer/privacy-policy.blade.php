@@ -24,61 +24,56 @@
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">1. Information We Collect</h2>
                             <p class="mb-4">
-                                At Tenama, we collect information to provide you with the best tennis equipment shopping experience. We collect information in the following ways:
+                                Tenama collects information to operate our marketplace and provide a safe and efficient platform for buyers and sellers. This includes:
                             </p>
                             <h3 class="text-xl font-semibold text-[#141414] mb-3">Personal Information</h3>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>Name, email address, and contact information when you create an account</li>
-                                <li>Billing and shipping addresses for order processing</li>
-                                <li>Payment information (processed securely through our payment partners)</li>
-                                <li>Communication preferences and marketing subscriptions</li>
+                                <li>Name, email, and contact details when creating an account</li>
+                                <li>Billing or payout information for transactions</li>
+                                <li>Shipping addresses provided by buyers</li>
+                                <li>Seller business information and verification documents</li>
                             </ul>
                             <h3 class="text-xl font-semibold text-[#141414] mb-3">Usage Information</h3>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>Pages visited, products viewed, and search queries</li>
+                                <li>Listings you view, items you purchase, or items you sell</li>
                                 <li>Device information, IP address, and browser type</li>
-                                <li>Shopping cart contents and purchase history</li>
-                                <li>Customer service interactions and feedback</li>
+                                <li>Interactions with other users and marketplace messages</li>
+                                <li>Support inquiries and dispute records</li>
                             </ul>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">2. How We Use Your Information</h2>
-                            <p class="mb-4">We use the information we collect to:</p>
+                            <p class="mb-4">We use your data to:</p>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>Process and fulfill your orders for tennis equipment and accessories</li>
-                                <li>Communicate with you about your orders, account, and customer service</li>
-                                <li>Personalize your shopping experience and product recommendations</li>
-                                <li>Send marketing communications about new products and promotions (with your consent)</li>
-                                <li>Improve our website functionality and user experience</li>
-                                <li>Prevent fraud and ensure the security of our platform</li>
-                                <li>Comply with legal obligations and enforce our terms of service</li>
+                                <li>Facilitate buying and selling transactions on the platform</li>
+                                <li>Verify seller accounts and manage payouts</li>
+                                <li>Communicate about listings, orders, account activity, and support inquiries</li>
+                                <li>Provide personalized marketplace experiences and recommendations</li>
+                                <li>Prevent fraud, abuse, and maintain marketplace security</li>
+                                <li>Comply with legal obligations and enforce our Terms of Service</li>
                             </ul>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">3. Information Sharing</h2>
-                            <p class="mb-4">We do not sell, trade, or rent your personal information to third parties. We may share information in the following circumstances:</p>
+                            <p class="mb-4">We do not sell your personal information. We may share data in the following ways:</p>
                             <h3 class="text-xl font-semibold text-[#141414] mb-3">Service Providers</h3>
                             <p class="mb-4">
-                                We work with trusted third-party service providers who assist us in operating our website, processing payments, fulfilling orders, and providing customer service. These partners are bound by confidentiality agreements.
+                                Trusted third parties help us with payment processing, identity verification, shipping, dispute resolution, and marketplace operations. They are bound to protect your information.
                             </p>
                             <h3 class="text-xl font-semibold text-[#141414] mb-3">Legal Requirements</h3>
                             <p class="mb-4">
-                                We may disclose information when required by law, to protect our rights, or to comply with legal proceedings.
+                                Information may be disclosed to comply with laws, legal proceedings, or to protect rights, safety, or property of Tenama, our users, or others.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">4. Data Security</h2>
-                            <p class="mb-4">
-                                We implement industry-standard security measures to protect your personal information:
-                            </p>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li>SSL encryption for all data transmission</li>
-                                <li>Secure payment processing through certified payment gateways</li>
-                                <li>Regular security audits and updates</li>
-                                <li>Access controls and employee training on data protection</li>
+                                <li>SSL encryption for secure data transmission</li>
+                                <li>Payment processing through certified providers</li>
+                                <li>Access controls, employee training, and regular audits</li>
                                 <li>Regular backups and disaster recovery procedures</li>
                             </ul>
                         </section>
@@ -86,62 +81,50 @@
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">5. Cookies and Tracking</h2>
                             <p class="mb-4">
-                                Our website uses cookies and similar technologies to enhance your browsing experience:
+                                We use cookies to provide core functionality, improve your marketplace experience, and deliver relevant communications (with consent).
                             </p>
-                            <h3 class="text-xl font-semibold text-[#141414] mb-3">Essential Cookies</h3>
-                            <p class="mb-4">Required for basic website functionality, shopping cart, and secure areas.</p>
-                            <h3 class="text-xl font-semibold text-[#141414] mb-3">Analytics Cookies</h3>
-                            <p class="mb-4">Help us understand how visitors use our website to improve user experience.</p>
-                            <h3 class="text-xl font-semibold text-[#141414] mb-3">Marketing Cookies</h3>
-                            <p class="mb-4">Used to show relevant advertisements and track campaign effectiveness (with your consent).</p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">6. Your Rights and Choices</h2>
-                            <p class="mb-4">You have the following rights regarding your personal information:</p>
                             <ul class="list-disc pl-6 mb-4 space-y-2">
-                                <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
-                                <li><strong>Correction:</strong> Update or correct inaccurate personal information</li>
-                                <li><strong>Deletion:</strong> Request deletion of your personal information (subject to legal requirements)</li>
-                                <li><strong>Portability:</strong> Receive your data in a structured, machine-readable format</li>
-                                <li><strong>Marketing Opt-out:</strong> Unsubscribe from marketing communications at any time</li>
-                                <li><strong>Cookie Management:</strong> Control cookie preferences through your browser settings</li>
+                                <li>Access and update your account and personal information</li>
+                                <li>Request deletion of your information, subject to legal or transactional obligations</li>
+                                <li>Manage marketing preferences or unsubscribe</li>
+                                <li>Control cookies through your browser settings</li>
                             </ul>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">7. Children's Privacy</h2>
                             <p class="mb-4">
-                                Our website is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it promptly.
+                                Our marketplace is not directed to children under 13, and we do not knowingly collect personal data from them.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">8. International Data Transfers</h2>
                             <p class="mb-4">
-                                Your information may be transferred to and processed in countries other than your country of residence. We ensure that such transfers comply with applicable data protection laws and provide adequate protection for your personal information.
+                                Your information may be processed outside your country of residence. We ensure compliance with applicable data protection laws.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">9. Data Retention</h2>
                             <p class="mb-4">
-                                We retain your personal information for as long as necessary to provide our services, comply with legal obligations, resolve disputes, and enforce our agreements. When no longer needed, we securely delete or anonymize your information.
+                                Personal information is retained only as long as necessary for transactions, account management, dispute resolution, or legal compliance. Data no longer needed is securely deleted or anonymized.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">10. Changes to This Policy</h2>
                             <p class="mb-4">
-                                We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of significant changes by posting the updated policy on our website and updating the "Last updated" date.
+                                We may update this policy to reflect operational, legal, or technological changes. Significant updates will be posted on the site with a revised "Last updated" date.
                             </p>
                         </section>
 
                         <section class="mb-8">
                             <h2 class="text-2xl font-bold text-[#141414] mb-4">11. Contact Us</h2>
-                            <p class="mb-4">
-                                If you have any questions about this Privacy Policy or our data practices, please contact us:
-                            </p>
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <p class="font-semibold">Tenama Privacy Team</p>
                                 <p>Email: privacy@tenama.com</p>

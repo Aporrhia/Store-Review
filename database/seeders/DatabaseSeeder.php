@@ -16,10 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // Seed users
         if (DB::table('users')->count() === 0) {
-            User::factory()->create([
-                'name' => 'Test User',
-                'email' => 'test@example.com',
-            ]);
+            $this->call(UserSeeder::class);
         }
 
         // Seed categories, brands, attributes

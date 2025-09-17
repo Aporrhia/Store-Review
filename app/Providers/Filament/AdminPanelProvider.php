@@ -19,6 +19,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Hexters\HexaLite\HexaLite;
+use App\Http\Middleware\CheckAdminLevel;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -58,6 +59,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+                CheckAdminLevel::class,
+            ])
+            ->authGuard('web');
     }
 }

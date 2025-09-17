@@ -17,19 +17,20 @@ class Comment extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'user_id',
-        'store_item_id',
+        'comment_writer_id',
+        'comment_receiver_id',
         'title',
         'comment'
     ];
-
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // The user who received the comment
+    public function commentReceiver(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'comment_receiver_id');
     }
 
-    public function storeItem(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    // The user who wrote the comment
+    public function commentWriter(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(StoreItem::class, 'store_item_id');
+        return $this->belongsTo(User::class, 'comment_writer_id');
     }
 }

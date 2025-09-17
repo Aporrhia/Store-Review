@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'level'
     ];
 
     /**
@@ -50,5 +51,18 @@ class User extends Authenticatable
     public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(StoreItem::class, 'orders', 'user_id', 'store_item_id');
+    }
+
+
+    // Comments this user has received from other users
+    public function commentReceiver(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Comment::class, 'comment_receiver_id');
+    }
+
+    // Comments this user has written to other users
+    public function commentWriter(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Comment::class, 'comment_writer_id');
     }
 }

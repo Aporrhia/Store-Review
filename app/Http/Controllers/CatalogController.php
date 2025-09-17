@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Listing;
 use App\Models\StoreItem;
+use App\Models\Category;
 
 class CatalogController extends Controller
 {
@@ -13,7 +14,10 @@ class CatalogController extends Controller
      */
     public function catalogView(Request $request)
     {
-        $query = Listing::with(['storeItem', 'user']);
+    $query = Listing::with(['storeItem', 'user']);
+
+    // Get all categories with their attributes
+    $categories = Category::with('attributes')->get();
         // Search by StoreItem title
         if ($request->has('q') && $request->input('q')) {
             $search = $request->input('q');
@@ -23,9 +27,10 @@ class CatalogController extends Controller
         }
 
         // Filter by category
-        if ($request->has('category') && is_array($request->input('category')) && count($request->input('category')) > 0) {
-            $query->whereHas('storeItem', function($q) use ($request) {
-                $q->whereIn('category', $request->input('category'));
+        $selectedCategories = $request->input('category', []);
+        if (!empty($selectedCategories)) {
+            $query->whereHas('storeItem', function($q) use ($selectedCategories) {
+                $q->whereIn('category', $selectedCategories);
             });
         }
 
@@ -33,6 +38,23 @@ class CatalogController extends Controller
         if ($request->has('brand') && is_array($request->input('brand')) && count($request->input('brand')) > 0) {
             $query->whereHas('storeItem', function($q) use ($request) {
                 $q->whereIn('brand', $request->input('brand'));
+            });
+        }
+
+        // Filter by attributes (nested per category)
+        $attributeFilters = $request->input('attribute', []);
+        if (!empty($selectedCategories) && !empty($attributeFilters)) {
+            $query->whereHas('storeItem', function($q) use ($attributeFilters, $selectedCategories) {
+                foreach ($attributeFilters as $catId => $attrs) {
+                    if (!in_array(optional(Category::find($catId))->name, $selectedCategories)) continue;
+                    foreach ($attrs as $attrId => $value) {
+                        if ($value === null || $value === '') continue;
+                        $q->whereHas('attributes', function($qa) use ($attrId, $value) {
+                            $qa->where('attribute_id', $attrId)
+                               ->where('value', $value);
+                        });
+                    }
+                }
             });
         }
 
@@ -78,6 +100,6 @@ class CatalogController extends Controller
     if ($minPrice === null) $minPrice = 0;
     if ($maxPrice === null) $maxPrice = 1000;
 
-    return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice', 'perPage'));
+    return view('store-page.catalog', compact('items', 'minPrice', 'maxPrice', 'perPage', 'categories'));
     }
 }

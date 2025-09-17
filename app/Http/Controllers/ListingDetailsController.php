@@ -22,7 +22,6 @@ class ListingDetailsController extends Controller
                 ->where('listing_id', $item->id)
                 ->exists();
         }
-
         return view('store-page.listing-details', compact('item', 'otherListings', 'isLiked'));
     }
 
@@ -40,17 +39,25 @@ class ListingDetailsController extends Controller
             ->where('listing_id', $listing->id)
             ->exists();
 
-        if (!$exists) {
+        if ($exists) {
+            // If already liked, remove from liked_items
+            \DB::table('liked_items')
+                ->where('user_id', $userId)
+                ->where('listing_id', $listing->id)
+                ->delete();
+            return redirect()->back()->with('success', 'Listing removed from your likes.');
+        } else {
+            // If not liked, add to liked_items
             \DB::table('liked_items')->insert([
                 'user_id' => $userId,
                 'listing_id' => $listing->id,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            return redirect()->back()->with('success', 'Listing added to your likes.');
         }
-
-        return redirect()->back()->with('success', 'Listing added to your likes.');
     }
+
     public function searchListings(Request $request)
     {
         $query = $request->input('q');

@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
 
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('store_item_id');
-            $table->foreign('store_item_id')->references('id')->on('store_items')->onDelete('cascade');
+            $table->unsignedBigInteger('comment_writer_id');
+            $table->foreign('comment_writer_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('comment_receiver_id');
+            $table->foreign('comment_receiver_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->text('title');
             $table->text('comment')->nullable();

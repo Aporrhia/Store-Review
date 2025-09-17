@@ -19,14 +19,47 @@
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-[#141414]">Category</h3>
                             <div class="mt-4 space-y-3">
-                                @foreach(['Rackets','Balls','Dampeners','Overgrips','Base Grips'] as $cat)
-                                <label class="flex items-center gap-x-3">
-                                    <input
-                                        class="h-5 w-5 rounded border-2 border-gray-300 bg-transparent text-[#141414] checked:border-[#141414] checked:bg-[#141414] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0"
-                                        type="checkbox" name="category[]" value="{{ $cat }}"
-                                        {{ in_array($cat, request('category',[])) ? 'checked' : '' }} />
-                                    <span class="text-base text-gray-800">{{ $cat }}</span>
-                                </label>
+                                @foreach($categories as $category)
+                                <div class="mb-4 border-b pb-2">
+                                    <label class="flex items-center gap-x-3">
+                                        <input
+                                            class="h-5 w-5 rounded border-2 border-gray-300 bg-transparent text-[#141414] checked:border-[#141414] checked:bg-[#141414] checked:bg-[image:--checkbox-tick-svg] focus:ring-0 focus:ring-offset-0"
+                                            type="checkbox" name="category[]" value="{{ $category->name }}"
+                                            {{ in_array($category->name, request('category',[])) ? 'checked' : '' }} />
+                                        <span class="text-base text-gray-800">{{ $category->name }}</span>
+                                    </label>
+                                    @if($category->attributes->count())
+                                    <div class="ml-6 mt-2 space-y-2">
+                                        @foreach($category->attributes as $attribute)
+                                            @php
+                                                $inputName = 'attribute['.$category->id.']['.$attribute->id.']';
+                                                $inputValue = request('attribute')[$category->id][$attribute->id] ?? '';
+                                            @endphp
+                                            <div class="flex flex-col">
+                                                <label class="text-sm text-gray-700 font-medium mb-1">{{ $attribute->name }}</label>
+                                                @if($attribute->input_type === 'number')
+                                                    <input type="number" step="0.01" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                @elseif($attribute->input_type === 'text')
+                                                    <input type="text" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                @elseif($attribute->input_type === 'boolean')
+                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                        <option value="">Any</option>
+                                                        <option value="1" @if($inputValue==='1') selected @endif>Yes</option>
+                                                        <option value="0" @if($inputValue==='0') selected @endif>No</option>
+                                                    </select>
+                                                @elseif($attribute->input_type === 'select' && isset($attribute->options))
+                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                        <option value="">Any</option>
+                                                        @foreach($attribute->options as $option)
+                                                            <option value="{{ $option }}" @if($inputValue==$option) selected @endif>{{ $option }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @endif
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    @endif
+                                </div>
                                 @endforeach
                             </div>
                         </div>

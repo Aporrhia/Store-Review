@@ -9,7 +9,13 @@
                 <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="object-contain w-full h-full">
             </div>
             <div class="flex flex-col gap-2">
-                <span class="text-base text-gray-500">Seller: {{ $item->user->name ?? '' }}</span>
+                <span class="text-base text-gray-500">Seller: 
+                    @if($item->user)
+                        <a href="{{ route('profile', ['id' => $item->user->id]) }}" class="text-[#84cc16] font-bold hover:underline">{{ $item->user->name }}</a>
+                    @else
+                        -
+                    @endif
+                </span>
                 <span class="text-base text-gray-500">Brand: {{ $item->storeItem->brand->name ?? '-' }}</span>
                 <span class="text-base text-gray-500">Category: {{ $item->storeItem->category->name ?? '-' }}</span>
                 <span class="text-base text-gray-500">SKU: {{ $item->storeItem->sku ?? '-' }}</span>
@@ -68,6 +74,13 @@
                                 <p class="mt-1 text-sm text-gray-500">{{ $listing->storeItem->category->name ?? '' }}</p>
                                 <p class="mt-1 text-sm text-gray-500">Brand: {{ $listing->storeItem->brand->name ?? '' }}</p>
                                 <p class="text-sm text-gray-500 mb-1">Seller: {{ $listing->user->name ?? '' }}</p>
+                                <p class="text-sm text-gray-500 mb-1">Seller: 
+                                    @if($listing->user)
+                                        <a href="{{ route('profile', ['id' => $listing->user->id]) }}" class="text-[#84cc16] font-bold hover:underline">{{ $listing->user->name }}</a>
+                                    @else
+                                        -
+                                    @endif
+                                </p>
                             </div>
                             <p class="text-base font-medium text-gray-900">${{ $listing->price }}</p>
                         </div>

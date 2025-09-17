@@ -15,7 +15,13 @@
                     </h3>
                     <p class="mt-1 text-sm text-gray-500">{{ $item->storeItem->category->name ?? '-' }}</p>
                     <p class="mt-1 text-sm text-gray-500">Brand: {{ $item->storeItem->brand->name ?? '-' }}</p>
-                    <p class="text-sm text-gray-500 mb-1">Seller: {{ $item->user->name ?? '' }}</p>
+                    <p class="text-sm text-gray-500 mb-1">Seller: 
+                        @if($item->user)
+                            <a href="{{ route('profile', ['id' => $item->user->id]) }}" class="text-[#84cc16] font-bold hover:underline">{{ $item->user->name }}</a>
+                        @else
+                            -
+                        @endif
+                    </p>
                 </div>
                 <p class="text-base font-medium text-gray-900">${{ $item->price }}</p>
             </div>

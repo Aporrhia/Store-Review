@@ -139,7 +139,7 @@
           {{ strtoupper(substr(auth()->user()->name ?? auth()->user()->email, 0, 1)) }}
         </button>
         <div id="profile-dropdown" class="absolute left-1/2 -translate-x-1/2 mt-36 w-30 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 hidden">
-          <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
+          <a href="{{ route('profile.me') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</button>

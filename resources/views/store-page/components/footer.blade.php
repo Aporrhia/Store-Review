@@ -2,14 +2,6 @@
   <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
       
-      <!-- Logo & Description -->
-      <div class="col-span-2 md:col-span-4 lg:col-span-1">
-        <img src="{{ asset('images/logo/logo.png') }}" alt="Store Logo" class="h-12 w-auto" />
-        <p class="mt-4 text-sm text-gray-400">
-          Your one-stop shop for everything tennis.
-        </p>
-      </div>
-
       <!-- Shop Links -->
       <div>
         <h3 class="text-sm font-semibold uppercase tracking-wider text-gray-300">
@@ -29,10 +21,10 @@
           Support
         </h3>
         <ul class="mt-4 space-y-2">
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Contact Us</a></li>
           <li><a href="#" class="text-base text-gray-400 hover:text-white">FAQ</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Shipping</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Returns</a></li>
+          <li><a href="{{ route('support') }}" class="text-base text-gray-400 hover:text-white">Support</a></li>
+          <li><a href="{{ route('terms.conditions') }}" class="text-base text-gray-400 hover:text-white">Terms and Conditions</a></li>
+          <li><a href="{{ route('privacy.policy') }}" class="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
         </ul>
       </div>
 
@@ -42,13 +34,22 @@
           Company
         </h3>
         <ul class="mt-4 space-y-2">
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">About Us</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Careers</a></li>
-          <li><a href="{{ route('terms.conditions') }}" class="text-base text-gray-400 hover:text-white">Terms and Conditions</a></li>
-          <li><a href="{{ route('privacy.policy') }}" class="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
+          <li><a href="{{ route('about.us') }}" class="text-base text-gray-400 hover:text-white">About Us</a></li>
+          <li><a href="#" class="text-base text-gray-400 hover:text-white">Blog</a></li>
+          <li><a href="#" class="text-base text-gray-400 hover:text-white">Media</a></li>
         </ul>
       </div>
-    </div>
+      
+      <!-- Logo & Description -->
+      <div class="col-span-2 md:col-span-4 lg:col-span-1">
+        <div class="flex items-center space-x-4">
+          <img src="{{ asset('images/logo/logo.png') }}" alt="Store Logo" class="h-12 w-auto" />
+          <p class="text-sm text-gray-400">
+            Your one-stop shop for everything tennis.
+          </p>
+        </div>
+      </div>
+    </div> 
 
     <!-- Bottom Footer -->
     <div class="mt-12 border-t border-gray-800 pt-8 flex flex-col items-center justify-between sm:flex-row">

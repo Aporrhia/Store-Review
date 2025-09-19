@@ -33,8 +33,8 @@ class ProfileController extends Controller
         $request->validate([
             'title' => 'required|string|max:100',
             'comment' => 'nullable|string|max:200',
+        
         ]);
-
         $comment = new \App\Models\Comment();
         $comment->user_id = auth()->user()->id;
         $comment->comment_writer_id = auth()->user()->id;
@@ -44,5 +44,18 @@ class ProfileController extends Controller
         $comment->save();
 
         return back()->with('success', 'Comment added successfully.');
+    }
+
+    public function update(Request $request)
+    {
+        $user = auth()->user();
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|max:100|unique:users,email,' . $user->id,
+        ]);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->save();
+        return back()->with('success', 'Profile updated successfully.');
     }
 }

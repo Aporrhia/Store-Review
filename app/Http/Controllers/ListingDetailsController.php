@@ -9,10 +9,13 @@ class ListingDetailsController extends Controller
 {
     public function show($id)
     {
-        $item = Listing::with(['storeItem', 'user'])->findOrFail($id);
+        $item = Listing::with(['storeItem.attributes.attribute', 'user'])
+            ->where('status', 'approved')
+            ->findOrFail($id);
         $otherListings = Listing::with(['storeItem', 'user'])
             ->where('store_item_id', $item->store_item_id)
             ->where('id', '!=', $item->id)
+            ->where('status', 'approved')
             ->get();
 
         $isLiked = false;

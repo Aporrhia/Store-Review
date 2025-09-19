@@ -34,6 +34,7 @@ Route::get('/support', [\App\Http\Controllers\FooterController::class, 'support'
 Route::middleware(['auth'])->group(function () {
 	Route::get('/listing/create', [\App\Http\Controllers\ListingController::class, 'create'])->name('listing.create');
 	Route::post('/listing', [\App\Http\Controllers\ListingController::class, 'store'])->name('listing.store');
+	Route::get('/listing/success', [\App\Http\Controllers\ListingController::class, 'success'])->name('listing.success');
 });
 
 // API route for fetching category attributes

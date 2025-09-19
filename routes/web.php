@@ -19,7 +19,9 @@ Route::get('/catalog', [CatalogController::class, 'catalogView'])->name('catalog
 Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me'])->middleware('auth')->name('profile.me');
 Route::get('/profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
 Route::post('/profile/{id}/comment', [\App\Http\Controllers\ProfileController::class, 'addComment'])->name('profile.comment');
+Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->middleware('auth')->name('profile.update');    
     
+
 Route::get('/liked-items', [LikedItemsController::class, 'listLikedItems'])->name('liked.items');
 Route::get('/catalog/{id}', [\App\Http\Controllers\ListingDetailsController::class, 'show'])->name('listing.details');
 Route::post('/listing/{id}/like', [App\Http\Controllers\ListingDetailsController::class, 'like'])->name('listing.like');

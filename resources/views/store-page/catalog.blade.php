@@ -9,13 +9,32 @@
             <main class="flex flex-1">
                 <aside class="hidden w-80 border-r border-gray-200 p-8 md:block">
                     <h2 class="text-2xl font-bold tracking-tight text-[#141414]">Filters</h2>
-                    <form method="GET" action="{{ route('catalog') }}">
+                    <form method="GET" action="{{ route('catalog', []) }}" id="catalogFilterForm">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Show/hide attribute fields for each category when its checkbox is toggled
+    document.querySelectorAll('input[type=checkbox][name="category[]"]').forEach(function(checkbox) {
+        var catName = checkbox.value;
+        var attrDiv = checkbox.closest('.mb-4').querySelector('.category-attributes');
+        function updateVisibility() {
+            if (checkbox.checked) {
+                if(attrDiv) attrDiv.style.display = '';
+            } else {
+                if(attrDiv) attrDiv.style.display = 'none';
+            }
+        }
+        checkbox.addEventListener('change', updateVisibility);
+        updateVisibility();
+    });
+});
+</script>
                         @if(request('q'))
-                            <input type="hidden" name="q" value="{{ request('q') }}">
+                            <input type="hidden" name="q" value="{{ is_array(request('q')) ? '' : request('q') }}">
                         @endif
-                        <input type="hidden" name="view" value="{{ request('view', 'grid') }}">
-                        <input type="hidden" name="sort" value="{{ request('sort', '') }}">
-                        <input type="hidden" name="per_page" value="{{ request('per_page', $perPage ?? 24) }}">
+                        <input type="hidden" name="view" value="{{ is_array(request('view')) ? '' : request('view', 'grid') }}">
+                        <input type="hidden" name="sort" value="{{ is_array(request('sort')) ? '' : request('sort', '') }}">
+                        <input type="hidden" name="per_page" value="{{ is_array(request('per_page')) ? ($perPage ?? 24) : request('per_page', $perPage ?? 24) }}">
                         <div class="mt-8">
                             <h3 class="text-lg font-semibold text-[#141414]">Category</h3>
                             <div class="mt-4 space-y-3">
@@ -29,30 +48,36 @@
                                         <span class="text-base text-gray-800">{{ $category->name }}</span>
                                     </label>
                                     @if($category->attributes->count())
-                                    <div class="ml-6 mt-2 space-y-2">
+                                    <div class="ml-6 mt-2 space-y-2 category-attributes" style="display:none;">
                                         @foreach($category->attributes as $attribute)
                                             @php
                                                 $inputName = 'attribute['.$category->id.']['.$attribute->id.']';
-                                                $inputValue = request('attribute')[$category->id][$attribute->id] ?? '';
+                                                $rawValue = request('attribute')[$category->id][$attribute->id] ?? '';
+                                                $inputValue = '';
+                                                if (is_array($rawValue)) {
+                                                    $inputValue = count($rawValue) ? (string)reset($rawValue) : '';
+                                                } else {
+                                                    $inputValue = (string)$rawValue;
+                                                }
                                             @endphp
                                             <div class="flex flex-col">
                                                 <label class="text-sm text-gray-700 font-medium mb-1">{{ $attribute->name }}</label>
-                                                @if($attribute->input_type === 'number')
-                                                    <input type="number" step="0.01" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                @if($attribute->allowed_values && is_array($attribute->allowed_values))
+                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900">
+                                                        <option value="">Any</option>
+                                                        @foreach($attribute->allowed_values as $option)
+                                                            <option value="{{ $option }}" @if($inputValue == $option) selected @endif>{{ $option }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @elseif($attribute->input_type === 'number')
+                                                    <input type="number" step="0.01" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900">
                                                 @elseif($attribute->input_type === 'text')
-                                                    <input type="text" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                    <input type="text" name="{{ $inputName }}" value="{{ $inputValue }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900">
                                                 @elseif($attribute->input_type === 'boolean')
-                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
+                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900">
                                                         <option value="">Any</option>
                                                         <option value="1" @if($inputValue==='1') selected @endif>Yes</option>
                                                         <option value="0" @if($inputValue==='0') selected @endif>No</option>
-                                                    </select>
-                                                @elseif($attribute->input_type === 'select' && isset($attribute->options))
-                                                    <select name="{{ $inputName }}" class="rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" @if(!in_array($category->name, request('category',[]))) disabled @endif>
-                                                        <option value="">Any</option>
-                                                        @foreach($attribute->options as $option)
-                                                            <option value="{{ $option }}" @if($inputValue==$option) selected @endif>{{ $option }}</option>
-                                                        @endforeach
                                                     </select>
                                                 @endif
                                             </div>
@@ -82,8 +107,8 @@
                             <div class="mt-4">
                                 <div id="price-slider" class="bg-gray-200 rounded h-2 mb-4"></div>
                                 <div class="flex gap-2 mt-2">
-                                    <input type="number" step="0.01" id="price_min" name="price_min" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Min" value="{{ $minPrice }}">
-                                    <input type="number" step="0.01" id="price_max" name="price_max" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Max" value="{{ $maxPrice }}">
+                                    <input type="number" step="0.01" id="price_min" name="price_min" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Min" value="{{ is_array(request('price_min')) ? $minPrice : request('price_min', $minPrice) }}">
+                                    <input type="number" step="0.01" id="price_max" name="price_max" class="w-1/2 rounded border-gray-300 px-2 py-1 focus:ring-2 focus:ring-[#141414] focus:border-[#141414] text-gray-900" placeholder="Max" value="{{ is_array(request('price_max')) ? $maxPrice : request('price_max', $maxPrice) }}">
                                 </div>
                             </div>
                         </div>
@@ -125,10 +150,10 @@
                                 @foreach(request()->except(['sort', 'page', 'per_page', '_token']) as $key => $value)
                                     @if(is_array($value))
                                         @foreach($value as $v)
-                                            <input type="hidden" name="{{ $key }}[]" value="{{ $v }}">
+                                            <input type="hidden" name="{{ $key }}[]" value="{{ is_array($v) ? '' : $v }}">
                                         @endforeach
                                     @else
-                                        <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                        <input type="hidden" name="{{ $key }}" value="{{ is_array($value) ? '' : $value }}">
                                     @endif
                                 @endforeach
                                 <select name="sort" class="flex h-10 items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 pr-10 text-sm font-medium text-gray-700 hover:bg-gray-50" onchange="document.getElementById('sortForm').submit()">
@@ -171,23 +196,24 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
     var priceSlider = document.getElementById('price-slider');
     var priceMinInput = document.getElementById('price_min');
     var priceMaxInput = document.getElementById('price_max');
 
-    // Get min/max price from backend (filtered products)
-
-    var minPrice = parseFloat(priceMinInput.value) || 0;
-    var maxPrice = parseFloat(priceMaxInput.value) || 1000;
-    var startMin = parseFloat({{ request('price_min', $minPrice) }});
-    var startMax = parseFloat({{ request('price_max', $maxPrice) }});
+    // Always use global min/max from backend for slider range
+    var globalMinPrice = parseFloat({{ $minPrice }});
+    var globalMaxPrice = parseFloat({{ $maxPrice }});
+    // Use filtered values for slider position
+    var startMin = parseFloat({{ is_array(request('price_min')) ? $minPrice : request('price_min', $minPrice) }});
+    var startMax = parseFloat({{ is_array(request('price_max')) ? $maxPrice : request('price_max', $maxPrice) }});
 
     noUiSlider.create(priceSlider, {
         start: [startMin, startMax],
         connect: true,
         range: {
-            'min': minPrice,
-            'max': maxPrice
+            'min': globalMinPrice,
+            'max': globalMaxPrice
         },
         step: 0.01,
         tooltips: false,

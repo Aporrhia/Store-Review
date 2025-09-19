@@ -16,6 +16,7 @@ class Listing extends Model
         'price',
         'condition',
         'comment',
+        'status',
     ];
 
     public function storeItem()

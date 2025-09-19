@@ -29,6 +29,7 @@ class ListingSeeder extends Seeder
                     'price'        => $faker->randomFloat(2, 10, 300),
                     'condition'    => $faker->randomElement(['new', 'used', 'refurbished']),
                     'comment'      => $faker->optional()->sentence(),
+                    'status'       => 'approved', // All seeded listings are pre-approved
                     'created_at'   => now(),
                     'updated_at'   => now(),
                 ]);

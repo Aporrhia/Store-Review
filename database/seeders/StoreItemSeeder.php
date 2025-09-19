@@ -43,6 +43,35 @@ class StoreItemSeeder extends Seeder
             ],
         ];
 
+        // Predefined attribute values per category + attribute
+        $attributeValues = [
+            'Rackets' => [
+                'Head Size' => [98, 100],
+                'Weight'    => [280, 300, 320],
+                'Length'    => [27],
+            ],
+            'Balls' => [
+                'Amount in Pack' => [3, 4, 12],
+                'Material'       => ['Felt', 'Rubber'],
+                'Color'          => ['Yellow', 'White'],
+            ],
+            'Dampeners' => [
+                'Material' => ['Silicone', 'Rubber'],
+                'Color'    => ['Black', 'White', 'Blue'],
+                'Weight'   => [2, 3],
+            ],
+            'Overgrips' => [
+                'Material' => ['Synthetic', 'Polyurethane'],
+                'Length'   => [1100, 1200],
+                'Color'    => ['White', 'Black', 'Green', 'Pink'],
+            ],
+            'Base Grips' => [
+                'Length'   => [1100, 1200],
+                'Material' => ['Synthetic', 'Leather'],
+                'Color'    => ['Black', 'White', 'Brown'],
+            ],
+        ];
+
         foreach ($products as $categoryName => $brands) {
 
             // Get category_id
@@ -64,7 +93,7 @@ class StoreItemSeeder extends Seeder
                     
                     // Insert store item
                     $storeItemId = DB::table('store_items')->insertGetId([
-                        'title'       => $item, // Only model name
+                        'title'       => $item,
                         'description' => "High-quality {$categoryName} by {$brandName}, model: {$item}.",
                         'brand_id'    => $brandId,
                         'category_id' => $categoryId,
@@ -80,16 +109,22 @@ class StoreItemSeeder extends Seeder
                         ->pluck('attribute_id');
 
                     foreach ($attributeIds as $attrId) {
+                        $attr = DB::table('attributes')->where('id', $attrId)->first();
 
-                        // Get attribute type
-                        $attrType = DB::table('attributes')->where('id', $attrId)->value('input_type');
+                        // Try to fetch predefined values
+                        $allowedValues = $attributeValues[$categoryName][$attr->name] ?? null;
 
-                        // Generate example value per type
-                        $value = match($attrType) {
-                            'number' => rand(50, 400), // realistic example numbers
-                            'text'   => 'Example ' . Str::random(5),
-                            default  => 'N/A',
-                        };
+                        if ($allowedValues) {
+                            // Pick one predefined value
+                            $value = $allowedValues[array_rand($allowedValues)];
+                        } else {
+                            // Fallback if not defined
+                            $value = match($attr->input_type) {
+                                'number' => rand(1, 10),
+                                'text'   => 'Default',
+                                default  => 'N/A',
+                            };
+                        }
 
                         // Insert product attribute
                         DB::table('store_item_attributes')->insert([

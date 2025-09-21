@@ -27,4 +27,9 @@ class FooterController extends Controller
         return view('footer.support');
     }
 
+    public function faq()
+    {
+        return view('footer.faq');
+    }
+
 }

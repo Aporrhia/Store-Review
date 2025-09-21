@@ -21,7 +21,7 @@
           Support
         </h3>
         <ul class="mt-4 space-y-2">
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">FAQ</a></li>
+          <li><a href="{{ route('faq') }}" class="text-base text-gray-400 hover:text-white">FAQ</a></li>
           <li><a href="{{ route('support') }}" class="text-base text-gray-400 hover:text-white">Support</a></li>
           <li><a href="{{ route('terms.conditions') }}" class="text-base text-gray-400 hover:text-white">Terms and Conditions</a></li>
           <li><a href="{{ route('privacy.policy') }}" class="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
@@ -40,13 +40,35 @@
         </ul>
       </div>
       
-      <!-- Logo & Description -->
+      <!-- Logo & Contact Information -->
       <div class="col-span-2 md:col-span-4 lg:col-span-1">
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-3 mb-4">
           <img src="{{ asset('images/logo/logo.png') }}" alt="Store Logo" class="h-12 w-auto" />
           <p class="text-sm text-gray-400">
             Your one-stop shop for everything tennis.
           </p>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="space-y-3">
+          <div class="flex items-center space-x-3">
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <span class="text-sm text-gray-400">info@tenama.com</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            <span class="text-sm text-gray-400">1-800-TENAMA-1</span>
+          </div>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="mt-6">
+          <h4 class="text-sm font-semibold uppercase tracking-wider text-gray-300 mb-3">We Accept</h4>
+          <img src="{{ asset('images/components/logo-row.png') }}" alt="Accepted Payment Methods" class="h-8 w-auto opacity-80" />
         </div>
       </div>
     </div> 

@@ -31,6 +31,7 @@ Route::get('/terms-and-conditions', [\App\Http\Controllers\FooterController::cla
 Route::get('/privacy-policy', [\App\Http\Controllers\FooterController::class, 'privacyPolicy'])->name('privacy.policy');
 Route::get('/about-us', [\App\Http\Controllers\FooterController::class, 'aboutUs'])->name('about.us');
 Route::get('/support', [\App\Http\Controllers\FooterController::class, 'support'])->name('support');
+Route::get('/faq', [\App\Http\Controllers\FooterController::class, 'faq'])->name('faq');
 
 // Listing creation routes
 Route::middleware(['auth'])->group(function () {

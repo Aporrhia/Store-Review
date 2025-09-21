@@ -44,7 +44,7 @@
       <div class="col-span-2 md:col-span-4 lg:col-span-1">
         <div class="flex items-center space-x-3 mb-4">
           <img src="{{ asset('images/logo/logo.png') }}" alt="Store Logo" class="h-12 w-auto" />
-         <p class="text-sm text-gray-400">
+          <p class="text-sm text-gray-400">
             Your one-stop shop for everything tennis.
           </p>
         </div>

@@ -35,7 +35,7 @@
         </h3>
         <ul class="mt-4 space-y-2">
           <li><a href="{{ route('about.us') }}" class="text-base text-gray-400 hover:text-white">About Us</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Blog</a></li>
+          <li><a href="{{ route('blog') }}" class="text-base text-gray-400 hover:text-white">Blog</a></li>
           <li><a href="#" class="text-base text-gray-400 hover:text-white">Media</a></li>
         </ul>
       </div>

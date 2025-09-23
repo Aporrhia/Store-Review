@@ -32,4 +32,9 @@ class FooterController extends Controller
         return view('footer.faq');
     }
 
+    public function blog()
+    {
+        return view('footer.blog');
+    }
+
 }

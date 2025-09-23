@@ -32,6 +32,11 @@ class FooterController extends Controller
         return view('footer.faq');
     }
 
+    public function media()
+    {
+        return view('footer.media-page');
+    }
+
     public function blog()
     {
         return view('footer.blog');

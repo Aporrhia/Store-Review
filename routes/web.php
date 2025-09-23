@@ -32,6 +32,7 @@ Route::get('/privacy-policy', [\App\Http\Controllers\FooterController::class, 'p
 Route::get('/about-us', [\App\Http\Controllers\FooterController::class, 'aboutUs'])->name('about.us');
 Route::get('/support', [\App\Http\Controllers\FooterController::class, 'support'])->name('support');
 Route::get('/faq', [\App\Http\Controllers\FooterController::class, 'faq'])->name('faq');
+Route::get('/media', [\App\Http\Controllers\FooterController::class, 'media'])->name('media');
 Route::get('/blog', [\App\Http\Controllers\FooterController::class, 'blog'])->name('blog');
 
 // Listing creation routes

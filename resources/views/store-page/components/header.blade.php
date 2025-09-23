@@ -47,7 +47,7 @@
   <!-- Right Section -->
   <div class="flex flex-1 justify-end items-center gap-4">
     <!-- Search (hidden on mobile) -->
-    <label class="relative hidden lg:block">
+    <label class="relative hidden lg:block lg:w-96">
       <span class="sr-only">Search</span>
       <span class="absolute inset-y-0 left-0 flex items-center pl-3">
         <span class="material-symbols-outlined text-gray-500">search</span>
@@ -57,9 +57,10 @@
         id="header-search"
         autocomplete="off"
         placeholder="Search"
-        class="form-input block w-full min-w-0 flex-1 rounded-md border-gray-300 bg-gray-100 py-2.5 pl-10 pr-4 text-gray-900 placeholder:text-gray-500 focus:border-lime-500 focus:ring-lime-500 sm:text-sm sm:leading-6"
+        class="form-input block w-full min-w-0 flex-1 rounded-md border-gray-300 bg-gray-100 py-2.5 pl-10 pr-4 text-gray-900 placeholder:text-gray-500 focus:border-lime-500 focus:ring-lime-500 sm:text-sm sm:leading-6 lg:w-96"
+        style="max-width: 100%;"
       />
-      <div id="search-dropdown" class="absolute left-0 mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200 z-50 hidden">
+      <div id="search-dropdown" class="absolute left-0 mt-2 w-full lg:w-96 bg-white rounded-lg shadow-lg border border-gray-200 z-50 hidden">
         <ul id="search-results" class="divide-y divide-gray-100"></ul>
         <div id="search-more" class="px-4 py-2 text-sm text-gray-500 hidden cursor-pointer hover:text-[#84cc16]">Show all results</div>
       </div>
@@ -74,7 +75,7 @@
         searchInput.addEventListener('input', function () {
           clearTimeout(debounceTimeout);
           var query = this.value.trim();
-          if (!query) {
+          if (query.length < 2) {
             dropdown.classList.add('hidden');
             resultsList.innerHTML = '';
             moreLink.classList.add('hidden');
@@ -88,7 +89,7 @@
                 if (data.results.length) {
                   data.results.forEach(function(item) {
                     var li = document.createElement('li');
-                    li.innerHTML = `<a href="/catalog?q=${encodeURIComponent(item.title)}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">${item.title}</a>`;
+                    li.innerHTML = `<a href="/catalog?q=${encodeURIComponent(item.title)}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 whitespace-normal break-words">${item.title}</a>`;
                     resultsList.appendChild(li);
                   });
                   dropdown.classList.remove('hidden');

@@ -14,7 +14,7 @@ class CatalogController extends Controller
      */
     public function catalogView(Request $request)
     {
-        $query = Listing::with(['storeItem', 'user']);
+        $query = Listing::with(['storeItem', 'user'])->where('status', 'approved');
 
         // Predefined attribute values per category + attribute (sync with StoreItemSeeder)
         $attributeValues = [
@@ -128,9 +128,9 @@ class CatalogController extends Controller
         $perPage = $request->input('per_page', 12); // default 12
         $items = $query->paginate($perPage)->withQueryString();
 
-        // Calculate min and max price from all listings (global, not filtered)
-        $minPrice = Listing::query()->min('price');
-        $maxPrice = Listing::query()->max('price');
+        // Calculate min and max price from all approved listings (global, not filtered)
+        $minPrice = Listing::query()->where('status', 'approved')->min('price');
+        $maxPrice = Listing::query()->where('status', 'approved')->max('price');
 
         // Fallback if no items
         if ($minPrice === null) $minPrice = 0;

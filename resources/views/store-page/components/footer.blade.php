@@ -8,10 +8,10 @@
           Shop
         </h3>
         <ul class="mt-4 space-y-2">
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Rackets</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Shoes</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Apparel</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Accessories</a></li>
+          <li><a href="{{ route('catalog', ['category' => ['Rackets']]) }}" class="text-base text-gray-400 hover:text-white">Rackets</a></li>
+          <li><a href="#" class="text-base text-gray-400 hover:text-white">Strings</a></li>
+          <li><a href="{{ route('catalog', ['category' => ['Balls']]) }}" class="text-base text-gray-400 hover:text-white">Balls</a></li>
+          <li><a href="{{ route('catalog', ['category' => ['Dampeners', 'Overgrips', 'Base Grips']]) }}" class="text-base text-gray-400 hover:text-white">Accessories</a></li>
         </ul>
       </div>
 
@@ -35,7 +35,7 @@
         </h3>
         <ul class="mt-4 space-y-2">
           <li><a href="{{ route('about.us') }}" class="text-base text-gray-400 hover:text-white">About Us</a></li>
-          <li><a href="#" class="text-base text-gray-400 hover:text-white">Blog</a></li>
+          <li><a href="{{ route('blog') }}" class="text-base text-gray-400 hover:text-white">Blog</a></li>
           <li><a href="{{ route('media') }}" class="text-base text-gray-400 hover:text-white">Media</a></li>
         </ul>
       </div>

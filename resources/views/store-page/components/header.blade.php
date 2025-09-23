@@ -10,12 +10,6 @@
     <!-- Navigation -->
     <nav class="hidden md:flex items-center gap-8">
       <a
-        href="#"
-        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
-      >
-        New Arrivals
-      </a>
-      <a
         href="{{ route('catalog') }}"
         class="text-base font-medium flex items-center justify-center rounded-lg p-2.5 {{ request()->routeIs('catalog') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
         title="Catalog"
@@ -23,13 +17,19 @@
         Catalog
       </a>
       <a
-        href="#"
+        href="{{ route('catalog', ['category' => ['Rackets']]) }}"
         class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
       >
         Rackets
       </a>
       <a
-        href="#"
+        href="{{ route('catalog', ['category' => ['Balls']]) }}"
+        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
+      >
+        Balls
+      </a>
+      <a
+        href="{{ route('catalog', ['category' => ['Dampeners', 'Overgrips', 'Base Grips']]) }}"
         class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
       >
         Accessories
@@ -181,8 +181,9 @@
       <nav class="flex flex-col gap-4">
         <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">New Arrivals</a>
         <a href="{{ route('catalog') }}" class="text-base font-medium {{ request()->routeIs('catalog') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Catalog</a>
-        <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Rackets</a>
-        <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Accessories</a>
+        <a href="{{ route('catalog', ['category' => ['Rackets']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Rackets</a>
+        <a href="{{ route('catalog', ['category' => ['Balls']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Balls</a>
+        <a href="{{ route('catalog', ['category' => ['Dampeners', 'Overgrips', 'Base Grips']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Accessories</a>
         <a href="{{ route('liked.items') }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Liked Items</a>
         @if(auth()->check())
           <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Profile</a>

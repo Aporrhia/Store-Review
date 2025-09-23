@@ -20,21 +20,21 @@
             <span id="comments-arrow" class="material-symbols-outlined text-[#84cc16] transition-transform duration-300" style="font-size: 2rem;">expand_more</span>
         </div>
         <div id="comments-section" class="transition-all duration-300 overflow-hidden">
-            @if(($showForm ?? true) && auth()->check())
+            @if(($showForm ?? true) && auth()->check() && auth()->id() !== $profileUser->id)
                 <form method="POST" action="{{ route('profile.comment', $profileUser->id) }}" class="mb-6">
                     @csrf
                     <input type="hidden" name="recipient_id" value="{{ $profileUser->id }}">
                     <input type="text" name="title" maxlength="100" class="w-full rounded border-gray-300 px-3 py-2 mb-2 focus:ring-[#84cc16] focus:border-[#84cc16]" placeholder="Title" require>
                     <textarea name="comment" rows="3" maxlength="200" class="w-full rounded border-gray-300 px-3 py-2 focus:ring-[#84cc16] focus:border-[#84cc16]" placeholder="Add your comment..." require></textarea>
-            @if ($errors->any())
-                <div class="mb-4 text-red-600">
-                    <ul class="list-disc pl-5">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+                    @if ($errors->any())
+                        <div class="mb-4 text-red-600">
+                            <ul class="list-disc pl-5">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <button type="submit" class="mt-2 px-4 py-2 rounded bg-[#84cc16] text-white font-bold hover:bg-[#6ca10e]">Submit</button>
                 </form>
             @elseif(($showForm ?? true) && !auth()->check())

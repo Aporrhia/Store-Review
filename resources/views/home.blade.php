@@ -67,5 +67,9 @@
         </div>
     </div>
 </section>
+
+<!-- Brand Carousel Section -->
+@include('components.brand-carousel')
+
 <!-- Additional sections (Promotions, Top Brands, etc.) can be added here as in your provided code -->
 @endsection

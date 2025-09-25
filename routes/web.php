@@ -19,6 +19,7 @@ Route::get('/catalog', [CatalogController::class, 'catalogView'])->name('catalog
 Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me'])->middleware('auth')->name('profile.me');
 Route::get('/profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
 Route::post('/profile/{id}/comment', [\App\Http\Controllers\ProfileController::class, 'addComment'])->name('profile.comment');
+Route::post('/comment/{comment}/reply', [\App\Http\Controllers\ProfileController::class, 'replyToComment'])->name('comment.reply');
 Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->middleware('auth')->name('profile.update');    
     
 

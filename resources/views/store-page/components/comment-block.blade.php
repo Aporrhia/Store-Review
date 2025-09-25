@@ -49,7 +49,7 @@
                     </div>
                 </div>
             @endif
-            <div style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #84cc16 #f3f4f6;" class="custom-scrollbar">
+            <div class="custom-scrollbar">
                 <ul class="space-y-4">
                     @forelse($comments as $comment)
                         <li class="border-b pb-2">
@@ -66,6 +66,63 @@
                                 <div class="text-lg mt-1 font-semibold">{{ $comment->title }}</div>
                             @endif
                             <div class="mt-1 text-gray-700 break-words whitespace-pre-line me-4">{{ $comment->comment }}</div>
+
+                            <!-- Replies Section (recursive, up to 5 levels) -->
+                            <div class="ml-8 mt-2">
+                                @php
+                                    $renderReplies = function($replies, $parentId, $level = 1) use (&$renderReplies) {
+                                        if ($level > 5) return;
+                                        echo '<ul class="space-y-2">';
+                                        foreach ($replies as $reply) {
+                                            $repliesSectionId = 'replies-section-'.$reply->id;
+                                            echo '<li class="bg-gray-100 rounded p-2">';
+                                            echo '<div class="flex items-center gap-2 mb-1">';
+                                            echo '<span class="flex items-center justify-center aspect-square rounded-full size-7 bg-[#84cc16] text-white text-base font-bold" aria-label="Profile">'.strtoupper(substr($reply->user->name ?? $reply->user->email ?? 'U', 0, 1)).'</span>';
+                                            echo '<span class="font-semibold text-gray-700">'.strtoupper(substr($reply->user->name ?? $reply->user->email ?? 'U', 0, 1)).'***</span>';
+                                            echo '<span class="text-xs text-gray-500">'.$reply->created_at->format('M d, Y H:i').'</span>';
+                                            echo '</div>';
+                                            echo '<div class="text-gray-800">'.e($reply->body).'</div>';
+                                            // Reply button and form for this reply
+                                            if(auth()->check() && $level < 5) {
+                                                echo '<button type="button" class="text-xs text-[#84cc16] font-bold hover:underline mt-2 mb-1" data-reply-toggle="reply-form-reply-'.$reply->id.'">Reply</button>';
+                                                echo '<form id="reply-form-reply-'.$reply->id.'" class="hidden mt-2" method="POST" action="'.route('comment.reply', $reply->comment_id).'">';
+                                                echo csrf_field();
+                                                echo '<input type="hidden" name="parent_id" value="'.$reply->id.'">';
+                                                echo '<textarea name="body" rows="2" maxlength="200" class="w-full rounded border-gray-300 px-3 py-1 focus:ring-[#84cc16] focus:border-[#84cc16] text-sm" placeholder="Write a reply..." required></textarea>';
+                                                echo '<button type="submit" class="mt-1 px-3 py-1 rounded bg-[#84cc16] text-white text-xs font-bold hover:bg-[#6ca10e]">Send</button>';
+                                                echo '</form>';
+                                            }
+                                            // Render children recursively, always visible for replies
+                                            if ($reply->children && $reply->children->count()) {
+                                                echo '<div class="ml-8 mt-2">';
+                                                $renderReplies($reply->children, $reply->id, $level + 1);
+                                                echo '</div>';
+                                            }
+                                            echo '</li>';
+                                        }
+                                        echo '</ul>';
+                                    };
+                                @endphp
+                                @if($comment->replies && $comment->replies->count())
+                                    <button type="button" class="text-xs text-gray-500 font-bold hover:underline mb-2" data-toggle-replies="replies-section-{{ $comment->id }}">
+                                        <span class="material-symbols-outlined align-middle">forum</span>
+                                        Show/Hide Replies ({{ $comment->replies->where('parent_id', null)->count() }})
+                                    </button>
+                                    <div id="replies-section-{{ $comment->id }}" style="display:none;">
+                                        {!! $renderReplies($comment->replies->where('parent_id', null), null, 1) !!}
+                                    </div>
+                                @endif
+
+                                <!-- Reply Form for top-level comment -->
+                                @if(auth()->check())
+                                    <button type="button" class="text-xs text-[#84cc16] font-bold hover:underline mt-2 mb-1" data-reply-toggle="reply-form-{{ $comment->id }}">Reply</button>
+                                    <form id="reply-form-{{ $comment->id }}" class="hidden mt-2" method="POST" action="{{ route('comment.reply', $comment->id) }}">
+                                        @csrf
+                                        <textarea name="body" rows="2" maxlength="200" class="w-full rounded border-gray-300 px-3 py-1 focus:ring-[#84cc16] focus:border-[#84cc16] text-sm" placeholder="Write a reply..." required></textarea>
+                                        <button type="submit" class="mt-1 px-3 py-1 rounded bg-[#84cc16] text-white text-xs font-bold hover:bg-[#6ca10e]">Send</button>
+                                    </form>
+                                @endif
+                            </div>
                         </li>
                     @empty
                         <li class="text-gray-500">No comments yet.</li>
@@ -75,6 +132,7 @@
         </div>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                // Toggle comments section (existing)
                 var toggleRow = document.getElementById('comments-toggle-row');
                 var section = document.getElementById('comments-section');
                 var arrow = document.getElementById('comments-arrow');
@@ -92,6 +150,54 @@
                 toggleRow.addEventListener('click', function () {
                     open = !open;
                     setState(open);
+                });
+
+                // Toggle reply forms
+                document.querySelectorAll('button[data-reply-toggle]').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var targetId = btn.getAttribute('data-reply-toggle');
+                        var form = document.getElementById(targetId);
+                        if (form) {
+                            form.classList.toggle('hidden');
+                            if (!form.classList.contains('hidden')) {
+                                form.querySelector('textarea').focus();
+                            }
+                            // Force parent #comments-section to recalculate height if open
+                            var commentsSection = document.getElementById('comments-section');
+                            if (commentsSection && commentsSection.style.maxHeight && commentsSection.style.maxHeight !== '0px') {
+                                commentsSection.style.maxHeight = '';
+                                setTimeout(function() {
+                                    commentsSection.style.maxHeight = commentsSection.scrollHeight + 'px';
+                                }, 10);
+                            }
+                        }
+                    });
+                });
+                // Toggle replies sections
+                document.querySelectorAll('button[data-toggle-replies]').forEach(function(btn) {
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var targetId = btn.getAttribute('data-toggle-replies');
+                        var section = document.getElementById(targetId);
+                        if (section) {
+                            if (section.style.display === 'none' || section.style.display === '') {
+                                section.style.display = 'block';
+                            } else {
+                                section.style.display = 'none';
+                            }
+                            // Force parent #comments-section to recalculate height if open
+                            var commentsSection = document.getElementById('comments-section');
+                            if (commentsSection && commentsSection.style.maxHeight && commentsSection.style.maxHeight !== '0px') {
+                                // Remove maxHeight to allow natural growth, then restore
+                                commentsSection.style.maxHeight = '';
+                                // Next frame, set to scrollHeight
+                                setTimeout(function() {
+                                    commentsSection.style.maxHeight = commentsSection.scrollHeight + 'px';
+                                }, 10);
+                            }
+                        }
+                    });
                 });
             });
         </script>

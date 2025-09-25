@@ -33,4 +33,9 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class, 'comment_writer_id');
     }
+    // Replies to this comment
+    public function replies()
+    {
+        return $this->hasMany(CommentReply::class, 'comment_id');
+    }
 }

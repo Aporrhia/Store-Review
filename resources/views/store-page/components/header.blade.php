@@ -11,8 +11,7 @@
     <nav class="hidden lg:flex items-center gap-8">
       <a
         href="{{ route('catalog') }}"
-        class="text-base font-medium flex items-center justify-center rounded-lg p-2.5 {{ request()->routeIs('catalog') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
-        title="Catalog"
+        class="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
       >
         Catalog
       </a>

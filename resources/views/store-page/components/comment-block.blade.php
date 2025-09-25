@@ -38,7 +38,16 @@
                     <button type="submit" class="mt-2 px-4 py-2 rounded bg-[#84cc16] text-white font-bold hover:bg-[#6ca10e]">Submit</button>
                 </form>
             @elseif(($showForm ?? true) && !auth()->check())
-                <div class="mb-6 text-gray-500">To comment, please <a href="{{ route('login') }}" class="text-[#84cc16] font-bold hover:underline">sign in</a>.</div>
+                <div class="mb-6">
+                    <div class="opacity-50 pointer-events-none">
+                        <input type="text" class="w-full rounded border-gray-300 px-3 py-2 mb-2 bg-gray-100" placeholder="Title" disabled>
+                        <textarea rows="3" class="w-full rounded border-gray-300 px-3 py-2 bg-gray-100" placeholder="Add your comment..." disabled></textarea>
+                        <button type="button" class="mt-2 px-4 py-2 rounded bg-gray-400 text-white font-bold cursor-not-allowed" disabled>Submit</button>
+                    </div>
+                    <div class="mt-3 text-sm text-gray-500 text-center">
+                        Please <a href="{{ route('login') }}" class="text-[#84cc16] font-bold hover:underline">login</a> to leave comments under seller profile
+                    </div>
+                </div>
             @endif
             <div style="max-height: 400px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #84cc16 #f3f4f6;" class="custom-scrollbar">
                 <ul class="space-y-4">

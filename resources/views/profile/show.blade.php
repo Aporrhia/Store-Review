@@ -22,7 +22,7 @@
                             <span class="material-symbols-outlined">dashboard</span>
                             <span>Dashboard</span>
                         </a>
-                        @if ($user->id == auth()->user()->id)
+                        @if (auth()->check() && $user->id == auth()->id())
                             <a href="#orders" class="profile-nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors" data-section="orders">
                                 <span class="material-symbols-outlined">receipt_long</span>
                                 <span>My Orders</span>
@@ -54,7 +54,7 @@
                             window.addEventListener('hashchange', setActiveSidebarLink);
                         });
                         </script>
-                        @if ($user->id == auth()->user()->id)
+                        @if (auth()->check() && $user->id == auth()->id())
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900">
@@ -73,7 +73,7 @@
                 <section id="dashboard" class="bg-white p-6 sm:p-8 rounded-xl shadow-md mb-8">
                     <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-6">Dashboard</h2>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                        @if ($user->id == auth()->user()->id)
+                        @if (auth()->check() && $user->id == auth()->id())
                             <div class="rounded-lg border border-gray-200 bg-gray-50 p-4 text-center">
                                 <p class="text-sm font-medium text-gray-500">Total Orders</p>
                                 <p class="mt-1 text-3xl font-bold text-gray-900">0</p>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </section>
-                @if ($user->id == auth()->user()->id)
+                @if (auth()->check() && $user->id == auth()->id())
                     <!-- My Orders Section -->
                     <section id="orders" class="bg-white p-6 sm:p-8 rounded-xl shadow-md mb-8">
                         <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-6">My Orders</h2>

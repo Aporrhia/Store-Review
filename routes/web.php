@@ -46,3 +46,15 @@ Route::middleware(['auth'])->group(function () {
 // API route for fetching category attributes
 Route::get('/api/category/{id}/attributes', [\App\Http\Controllers\ListingController::class, 'getCategoryAttributes']);
 Route::get('/api/model-suggestions', [\App\Http\Controllers\ListingController::class, 'getModelSuggestions']);
+
+// Cart routes
+Route::middleware(['auth'])->group(function () {
+	Route::get('/cart', [\App\Http\Controllers\CartController::class, 'index'])->name('cart.index');
+	Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+	Route::post('/cart/item/{id}/remove', [\App\Http\Controllers\CartController::class, 'remove'])->name('cart.remove');
+	Route::post('/cart/item/{id}/update', [\App\Http\Controllers\CartController::class, 'update'])->name('cart.update');
+	Route::post('/cart/buy/seller/{seller_id}', [\App\Http\Controllers\CartController::class, 'buyFromSeller'])->name('cart.buy.seller');
+	Route::post('/cart/buy/all', [\App\Http\Controllers\CartController::class, 'buyAll'])->name('cart.buy.all');
+	Route::get('/cart/buy/success', function() { return view('cart.buy-success'); })->name('cart.buy.success');
+	Route::get('/cart/buy/error', function() { return view('cart.buy-error'); })->name('cart.buy.error');
+});

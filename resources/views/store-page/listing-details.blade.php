@@ -18,8 +18,8 @@
                     
                     <!-- Thumbnail Gallery (for future expansion) -->
                     <div class="flex gap-3">
-                        <div class="w-20 h-20 rounded-lg overflow-hidden bg-white shadow-sm border-2 border-lime-500 cursor-pointer">
-                            <img src="{{ $item->storeItem->getImageUrl() }}" alt="Thumbnail" class="w-full h-full object-cover">
+                        <div class="w-20 h-20 rounded-lg overflow-hidden bg-white shadow-sm border-2 border-lime-500 cursor-pointer flex items-center justify-center">
+                            <img src="{{ $item->storeItem->getImageUrl() }}" alt="Thumbnail" class="w-full h-full object-contain">
                         </div>
                         <!-- Additional thumbnails can be added here -->
                     </div>
@@ -163,9 +163,9 @@
                 @foreach($otherListings as $listing)
                     <div class="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                         <div class="relative">
-                            <div class="aspect-square overflow-hidden bg-gray-50">
+                            <div class="aspect-square overflow-hidden bg-white flex items-center justify-center">
                                 <img src="{{ $listing->storeItem->getImageUrl() }}" alt="{{ $listing->storeItem->title }}" 
-                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                     class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
                             </div>
                             <div class="absolute top-3 right-3">
                                 <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">

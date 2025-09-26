@@ -9,19 +9,19 @@ class ProfileController extends Controller
 {
     public function me()
     {
-        $user = auth()->user();
+    $user = auth()->user();
     $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
-        $id = $user->id;
-        // You can pass more data to the view, like recent orders
-        return view('profile.show', compact('user', 'id', 'comments'));
+    $id = $user->id;
+    $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
+    return view('profile.show', compact('user', 'id', 'comments', 'orders'));
     }
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+    $user = User::findOrFail($id);
     $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
-        // You can pass more data to the view, like recent orders
-        return view('profile.show', compact('user', 'id', 'comments'));
+    $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
+    return view('profile.show', compact('user', 'id', 'comments', 'orders'));
     }
 
     public function addComment(Request $request, $id)

@@ -48,9 +48,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function orders()
     {
-        return $this->belongsToMany(StoreItem::class, 'orders', 'user_id', 'store_item_id');
+        return $this->hasMany(\App\Models\Order::class, 'user_id');
     }
 
 

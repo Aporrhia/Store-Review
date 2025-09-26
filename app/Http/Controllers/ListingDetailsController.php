@@ -19,13 +19,19 @@ class ListingDetailsController extends Controller
             ->get();
 
         $isLiked = false;
+        $isInCart = false;
         if (auth()->check()) {
             $isLiked = \DB::table('liked_items')
                 ->where('user_id', auth()->user()->id)
                 ->where('listing_id', $item->id)
                 ->exists();
+            // Check if this listing is in the user's cart
+            $cart = \App\Models\Cart::where('user_id', auth()->user()->id)->first();
+            if ($cart) {
+                $isInCart = $cart->items()->where('listing_id', $item->id)->exists();
+            }
         }
-        return view('store-page.listing-details', compact('item', 'otherListings', 'isLiked'));
+        return view('store-page.listing-details', compact('item', 'otherListings', 'isLiked', 'isInCart'));
     }
 
     public function like($id)

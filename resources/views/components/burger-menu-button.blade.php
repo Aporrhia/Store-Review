@@ -4,7 +4,7 @@
 
 <button
     {{ $attributes->merge([
-        'class' => 'p-2 rounded-2xl transition ' .
+        'class' => 'p-2 rounded-full transition ' .
             ($active
                 ? 'bg-[#84cc16] text-white'
                 : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900')

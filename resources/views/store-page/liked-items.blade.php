@@ -6,9 +6,6 @@
     <div class="relative flex size-full min-h-screen flex-col overflow-x-hidden group/design-root">
         <div class="flex h-full grow flex-col">
             <main class="flex flex-1">
-                <aside class="hidden w-80 border-r border-gray-200 p-8 md:block">
-                    <h2 class="text-2xl font-bold tracking-tight text-[#141414]">Liked Items</h2>
-                </aside>
                 <div class="flex-1 p-8">
                     @include('store-page.components.breadcrumbs')
                     <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-[#141414]">Liked Items</h1>

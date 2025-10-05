@@ -171,35 +171,11 @@
 
     <!-- Profile/Sign In: hidden on mobile, show on lg+ -->
     @if(auth()->check())
-      <div class="relative hidden lg:flex items-center flex-shrink-0">
-        <button id="profile-avatar" type="button" class="flex items-center justify-center aspect-square rounded-full size-10 bg-[#84cc16] text-white text-xl font-bold focus:outline-none" aria-label="Profile">
+      <div class="hidden lg:flex items-center flex-shrink-0">
+        <a href="{{ route('profile.me') }}" class="flex items-center justify-center aspect-square rounded-full size-10 bg-[#84cc16] text-white text-xl font-bold focus:outline-none hover:bg-[#65a30d] transition-colors" aria-label="Profile" title="Go to Profile">
           {{ strtoupper(substr(auth()->user()->name ?? auth()->user()->email, 0, 1)) }}
-        </button>
-        <div id="profile-dropdown" class="absolute left-1/2 -translate-x-1/2 mt-36 w-30 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 hidden">
-          <a href="{{ route('profile.me') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profile</a>
-          <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100">Sign Out</button>
-          </form>
-        </div>
+        </a>
       </div>
-      <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          var avatar = document.getElementById('profile-avatar');
-          var dropdown = document.getElementById('profile-dropdown');
-          if (avatar && dropdown) {
-            avatar.addEventListener('click', function (e) {
-              e.stopPropagation();
-              dropdown.classList.toggle('hidden');
-            });
-            document.addEventListener('click', function (e) {
-              if (!avatar.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
-              }
-            });
-          }
-        });
-      </script>
     @else
       <a href="{{ route('login') }}" class="hidden lg:flex items-center gap-2 text-[#84cc16] font-bold flex-shrink-0">
         <span class="material-symbols-outlined">person</span>
@@ -223,10 +199,10 @@
   <a href="{{ route('liked.items') }}" class="text-base font-medium {{ request()->routeIs('liked.items') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Liked Items</a>
   <a href="{{ route('cart.index') }}" class="text-base font-medium {{ request()->routeIs('cart.index') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Cart</a>
         @if(auth()->check())
-          <a href="#" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Profile</a>
+          <a href="{{ route('profile.me') }}" class="text-base font-medium {{ request()->routeIs('profile.me') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Profile</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Sign Out</button>
+            <button type="submit" class="w-full text-left text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Sign Out</button>
           </form>
         @else
           <a href="{{ route('login') }}" class="text-base font-medium text-[#84cc16] hover:bg-gray-200 hover:text-[#84cc16] font-bold px-4 py-2 rounded-md">Sign In</a>
@@ -262,4 +238,27 @@
       }
     });
   });
+
+    var mobileMenu = document.getElementById('mobile-nav-menu');
+    var closeBtn = document.getElementById('close-mobile-menu');
+
+    if (burgerBtn && mobileMenu) {
+      burgerBtn.addEventListener('click', function () {
+        mobileMenu.classList.toggle('translate-x-full');
+      });
+    }
+    if (closeBtn && mobileMenu) {
+      closeBtn.addEventListener('click', function () {
+        mobileMenu.classList.add('translate-x-full');
+      });
+    }
+    document.addEventListener('click', function (e) {
+      if (
+        mobileMenu &&
+        !mobileMenu.contains(e.target) &&
+        !burgerBtn.contains(e.target)
+      ) {
+        mobileMenu.classList.add('translate-x-full');
+      }
+    });
 </script>

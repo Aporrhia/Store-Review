@@ -9,24 +9,20 @@ class ProfileController extends Controller
 {
     public function me()
     {
-    $user = auth()->user();
-    $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
-    $id = $user->id;
-    $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
-    return view('profile.show', compact('user', 'id', 'comments', 'orders'));
+        $user = Auth::user();
+        // Redirect to the user's dashboard
+        return redirect()->route('profile.dashboard', $user->id);
     }
 
     public function show($id)
     {
-    $user = User::findOrFail($id);
-    $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
-    $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
-    return view('profile.show', compact('user', 'id', 'comments', 'orders'));
+        $user = User::findOrFail($id);
+        return view('profile.sections.dashboard', compact('user'));
     }
 
     public function addComment(Request $request, $id)
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to comment.');
         }
 
@@ -36,8 +32,8 @@ class ProfileController extends Controller
         
         ]);
         $comment = new \App\Models\Comment();
-        $comment->user_id = auth()->user()->id;
-        $comment->comment_writer_id = auth()->user()->id;
+        $comment->user_id = Auth::user()->id;
+        $comment->comment_writer_id = Auth::user()->id;
         $comment->comment_receiver_id = $request->input('recipient_id');
         $comment->title = $request->input('title');
         $comment->comment = $request->input('comment');
@@ -48,7 +44,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $validated = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|max:100|unique:users,email,' . $user->id,
@@ -60,7 +56,7 @@ class ProfileController extends Controller
     }
     public function replyToComment(Request $request, $commentId)
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to reply.');
         }
 
@@ -88,11 +84,58 @@ class ProfileController extends Controller
 
         $reply = new \App\Models\CommentReply();
         $reply->comment_id = $comment->id;
-        $reply->user_id = auth()->id();
+        $reply->user_id = Auth::id();
         $reply->body = $request->input('body');
         $reply->parent_id = $parentId;
         $reply->save();
 
         return back()->with('success', 'Reply added successfully.');
+    }
+
+    public function dashboard($id)
+    {
+        // Redirect to main profile page
+        return redirect()->route('profile', $id);
+    }
+
+    public function orders($id)
+    {
+        // Check if user can access orders (only own orders)
+        if (!Auth::check() || Auth::id() != $id) {
+            return redirect()->route('profile.dashboard', $id);
+        }
+        
+        $user = User::findOrFail($id);
+        $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
+        return view('profile.sections.orders', compact('user', 'orders'));
+    }
+
+    public function listings($id)
+    {
+        // Check if user can access listings (only own listings)
+        if (!Auth::check() || Auth::id() != $id) {
+            return redirect()->route('profile.dashboard', $id);
+        }
+        
+        $user = User::findOrFail($id);
+        return view('profile.sections.listings', compact('user'));
+    }
+
+    public function edit($id)
+    {
+        // Check if user can edit (only own profile)
+        if (!Auth::check() || Auth::id() != $id) {
+            return redirect()->route('profile.dashboard', $id);
+        }
+        
+        $user = User::findOrFail($id);
+        return view('profile.sections.edit', compact('user'));
+    }
+
+    public function comments($id)
+    {
+        $user = User::findOrFail($id);
+        $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
+        return view('profile.sections.comments', compact('user', 'comments'));
     }
 }

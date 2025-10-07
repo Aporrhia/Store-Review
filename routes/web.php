@@ -16,8 +16,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/catalog', [CatalogController::class, 'catalogView'])->name('catalog');
 
+// Profile routes
 Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'me'])->middleware('auth')->name('profile.me');
 Route::get('/profile/{id}', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+Route::get('/profile/{id}/dashboard', [\App\Http\Controllers\ProfileController::class, 'dashboard'])->name('profile.dashboard');
+Route::get('/profile/{id}/orders', [\App\Http\Controllers\ProfileController::class, 'orders'])->middleware('auth')->name('profile.orders');
+Route::get('/profile/{id}/listings', [\App\Http\Controllers\ProfileController::class, 'listings'])->middleware('auth')->name('profile.listings');
+Route::get('/profile/{id}/edit', [\App\Http\Controllers\ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
+Route::get('/profile/{id}/comments', [\App\Http\Controllers\ProfileController::class, 'comments'])->name('profile.comments');
 Route::post('/profile/{id}/comment', [\App\Http\Controllers\ProfileController::class, 'addComment'])->name('profile.comment');
 Route::post('/comment/{comment}/reply', [\App\Http\Controllers\ProfileController::class, 'replyToComment'])->name('comment.reply');
 Route::post('/profile/update', [\App\Http\Controllers\ProfileController::class, 'update'])->middleware('auth')->name('profile.update');    

@@ -43,13 +43,15 @@
                         @if(auth()->check())
                             <form method="POST" action="{{ route('listing.like', $item->id) }}">
                                 @csrf
-                                <button type="submit" class="p-3 rounded-full border border-gray-200 hover:border-lime-500 hover:bg-lime-50 transition-all duration-200 group">
+                                <button type="submit" class="w-12 h-12 rounded-full border border-gray-200 hover:border-lime-500 hover:bg-lime-50 transition-all duration-200 group flex items-center justify-center">
                                     <span class="material-symbols-outlined text-2xl {{ $isLiked ? 'text-lime-500' : 'text-gray-400 group-hover:text-lime-500' }}">favorite</span>
                                 </button>
                             </form>
                         @else
                             <div class="text-sm text-gray-500 text-center">
-                                <span class="material-symbols-outlined text-2xl text-gray-300 mb-1 block">favorite</span>
+                                <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center mb-1">
+                                    <span class="material-symbols-outlined text-2xl text-gray-300">favorite</span>
+                                </div>
                                 <a href="{{ route('login') }}" class="text-lime-600 hover:text-lime-700 font-medium">Sign in to like</a>
                             </div>
                         @endif

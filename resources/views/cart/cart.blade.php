@@ -17,7 +17,7 @@
                 @php
                     $seller = $block['seller'];
                     $items = $block['items'];
-                    $sellerTotal = $items->sum(fn($item) => ($item->listing->price ?? 0) * $item->quantity);
+                    $sellerTotal = $items->sum(fn($item) => ($item->listing->price ?? 0));
                     $grandTotal += $sellerTotal;
                 @endphp
                 <div class="bg-white rounded shadow p-4">
@@ -40,19 +40,8 @@
                                     <div class="text-sm text-gray-500 truncate">Brand: {{ $item->listing->storeItem->brand->name ?? 'N/A' }}</div>
                                 </div>
                                 <div class="text-lg font-bold text-gray-900 whitespace-nowrap">
-                                    ${{ number_format(($item->listing->price ?? 0) * $item->quantity, 2) }}
+                                    ${{ number_format($item->listing->price ?? 0, 2) }}
                                 </div>
-                                <form method="POST" action="{{ route('cart.update', $item->id) }}" class="flex items-center gap-2">
-                                    @csrf
-                                    <div class="flex items-center border rounded-lg overflow-hidden bg-gray-50 shadow-sm">
-                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="px-2 py-1 text-gray-500 hover:text-lime-600 focus:outline-none">-</button>
-                                        <input name="quantity" type="number" min="1" max="99" value="{{ $item->quantity }}" class="w-14 text-center bg-transparent border-0 focus:ring-0 text-lg font-semibold text-gray-900" style="appearance: textfield;" />
-                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="px-2 py-1 text-gray-500 hover:text-lime-600 focus:outline-none">+</button>
-                                    </div>
-                                    <button type="submit" title="Update Quantity" class="ml-1 inline-flex items-center justify-center p-2 rounded-full bg-lime-50 hover:bg-lime-100 transition-colors">
-                                        <span class="material-symbols-outlined text-lime-600">refresh</span>
-                                    </button>
-                                </form>
                                 <a href="{{ route('listing.details', $item->listing->id) }}" title="View Listing" class="inline-flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors">
                                     <span class="material-symbols-outlined text-lime-600">visibility</span>
                                 </a>
@@ -79,13 +68,6 @@
             @endforeach
             <div class="flex justify-between items-center mt-4">
                 <div class="text-right font-bold text-lg">Grand Total: {{ number_format($grandTotal, 2) }}</div>
-                <form method="POST" action="{{ route('cart.buy.all') }}">
-                    @csrf
-                    <button type="submit" class="ml-4 bg-lime-600 hover:bg-lime-700 text-white font-bold py-3 px-8 rounded-lg transition-colors duration-200 flex items-center gap-2 shadow-lg">
-                        <span class="material-symbols-outlined">shopping_bag</span>
-                        Buy All
-                    </button>
-                </form>
             </div>
         </div>
     @endif

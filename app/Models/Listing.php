@@ -10,6 +10,11 @@ class Listing extends Model
 {
     use HasFactory, SoftDeletes;
 
+    // Status constants
+    const STATUS_LISTED = 'listed';
+    const STATUS_PLACED = 'placed';
+    const STATUS_SOLD = 'sold';
+
     protected $fillable = [
         'store_item_id',
         'user_id',

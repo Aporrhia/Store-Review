@@ -131,7 +131,7 @@
                                         <tbody class="bg-white divide-y divide-gray-100">
                                             @foreach($orders as $order)
                                                 <tr>
-                                                    <td class="px-4 py-2 font-mono text-sm text-lime-700">{{ $order->order_code }}</td>
+                                                    <td class="px-4 py-2 font-mono text-sm text-lime-700">{{ $order->order_id  }}</td>
                                                     <td class="px-4 py-2 text-sm text-gray-700">{{ $order->created_at->format('Y-m-d H:i') }}</td>
                                                     <td class="px-4 py-2 text-gray-900 font-semibold">{{ $order->storeItem->title ?? '-' }}</td>
                                                     <td class="px-4 py-2 text-gray-700">{{ $order->storeItem->brand->name ?? '-' }}</td>

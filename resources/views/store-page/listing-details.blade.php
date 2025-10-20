@@ -148,14 +148,6 @@
                             <form method="POST" action="{{ route('cart.add') }}" class="flex flex-col gap-2">
                                 @csrf
                                 <input type="hidden" name="listing_id" value="{{ $item->id }}">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <label for="quantity" class="text-gray-700 font-medium">Quantity:</label>
-                                    <div class="flex items-center border rounded-lg overflow-hidden bg-gray-50 shadow-sm">
-                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="px-2 py-1 text-gray-500 hover:text-lime-600 focus:outline-none">-</button>
-                                        <input name="quantity" id="quantity" type="number" min="1" max="99" value="1" class="w-14 text-center bg-transparent border-0 focus:ring-0 text-lg font-semibold text-gray-900" style="appearance: textfield;" />
-                                        <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="px-2 py-1 text-gray-500 hover:text-lime-600 focus:outline-none">+</button>
-                                    </div>
-                                </div>
                                 <button type="submit" class="w-full bg-lime-500 hover:bg-lime-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
                                     <span class="material-symbols-outlined">shopping_cart</span>
                                     Add to Cart

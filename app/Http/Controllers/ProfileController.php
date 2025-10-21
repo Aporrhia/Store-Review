@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\PaymentCard;
 
 class ProfileController extends Controller
 {
@@ -169,5 +170,12 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
         $comments = $user->commentReceiver()->with(['commentWriter', 'replies.user'])->orderByDesc('created_at')->get();
         return view('profile.sections.comments', compact('user', 'comments'));
+    }
+
+    public function paymentCards($id)
+    {
+        $user = User::findOrFail($id);
+        $cards = PaymentCard::where('user_id', Auth::id())->get();
+        return view('profile.sections.payment_cards', compact('user', 'cards'));
     }
 }

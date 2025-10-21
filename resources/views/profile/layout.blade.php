@@ -35,6 +35,11 @@
                                 <span class="material-symbols-outlined">person</span>
                                 <span>Edit Profile</span>
                             </a>
+
+                            <a href="{{ route('profile.paymentCards', $user->id) }}" class="profile-nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('profile.paymentCards') ? 'bg-lime-100 text-lime-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                                <span class="material-symbols-outlined">credit_card</span>
+                                <span>Payment Cards</span>
+                            </a>
                         @endif
                         <a href="{{ route('profile.comments', $user->id) }}" class="profile-nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors {{ request()->routeIs('profile.comments') ? 'bg-lime-100 text-lime-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                             <span class="material-symbols-outlined">comment</span>

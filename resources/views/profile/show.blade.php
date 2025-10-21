@@ -35,6 +35,10 @@
                                 <span class="material-symbols-outlined">person</span>
                                 <span>Edit Profile</span>
                             </a>
+                            <a href="#payment-cards" class="profile-nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors" data-section="payment-cards">
+                                <span class="material-symbols-outlined">credit_card</span>
+                                <span>Payment Cards</span>
+                            </a>
                         @endif
                         <a href="#comments" class="profile-nav-link flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors" data-section="comments">
                             <span class="material-symbols-outlined">comment</span>
@@ -366,6 +370,12 @@
                         'listingUsers' => [],
                         'showForm' => true
                     ])
+                </section>
+
+                <!-- Payment Cards Section -->
+                <section id="payment-cards" class="bg-white p-6 sm:p-8 rounded-xl shadow-md mb-8">
+                    <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-6">Payment Cards</h2>
+                    @include('profile.payment_cards', ['cards' => $user->paymentCards])
                 </section>
             </main>
 

@@ -84,3 +84,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/payment-cards/{paymentCard}', [PaymentCardController::class, 'update'])->name('payment-cards.update');
     Route::delete('/payment-cards/{paymentCard}', [PaymentCardController::class, 'destroy'])->name('payment-cards.destroy');
 });
+
+Route::get('/checkout', [OrderController::class, 'showCheckoutForm'])->name('checkout');

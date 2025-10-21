@@ -98,4 +98,11 @@ class OrderController extends Controller
             'shipping' => $shipping,
         ]);
     }
+
+    public function showCheckoutForm()
+    {
+        // Example: get the latest order for the user (for placeholder)
+        $order = \App\Models\Order::where('user_id', auth()->id())->latest()->first();
+        return view('order.check-out-page', compact('order'));
+    }
 }

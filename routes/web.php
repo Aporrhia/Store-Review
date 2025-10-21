@@ -75,7 +75,11 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Order routes
-Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', [OrderController::class, 'showCheckoutForm'])->name('checkout');
+    Route::post('/checkout', [OrderController::class, 'processCheckout'])->name('checkout.process');
+    Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+});
 
 // Payment Card Routes
 Route::middleware(['auth'])->group(function () {
@@ -84,5 +88,3 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/payment-cards/{paymentCard}', [PaymentCardController::class, 'update'])->name('payment-cards.update');
     Route::delete('/payment-cards/{paymentCard}', [PaymentCardController::class, 'destroy'])->name('payment-cards.destroy');
 });
-
-Route::get('/checkout', [OrderController::class, 'showCheckoutForm'])->name('checkout');

@@ -11,6 +11,7 @@ use App\Http\Controllers\ListingDetailsController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentCardController;
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -30,6 +31,7 @@ Route::get('/profile/{id}/dashboard', [ProfileController::class, 'dashboard'])->
 Route::get('/profile/{id}/orders', [ProfileController::class, 'orders'])->middleware('auth')->name('profile.orders');
 Route::get('/profile/{id}/listings', [ProfileController::class, 'listings'])->middleware('auth')->name('profile.listings');
 Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->middleware('auth')->name('profile.edit');
+Route::get('/profile/{id}/payment-cards', [ProfileController::class, 'paymentCards'])->middleware('auth')->name('profile.paymentCards');
 Route::get('/profile/{id}/comments', [ProfileController::class, 'comments'])->name('profile.comments');
 Route::post('/profile/{id}/comment', [ProfileController::class, 'addComment'])->name('profile.comment');
 Route::post('/comment/{comment}/reply', [ProfileController::class, 'replyToComment'])->name('comment.reply');
@@ -75,3 +77,10 @@ Route::middleware(['auth'])->group(function () {
 // Order routes
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
 
+// Payment Card Routes
+Route::middleware(['auth'])->group(function () {
+    Route::post('/payment-cards', [PaymentCardController::class, 'store'])->name('payment-cards.store');
+    Route::get('/payment-cards/{paymentCard}/edit', [PaymentCardController::class, 'edit'])->name('payment-cards.edit');
+    Route::put('/payment-cards/{paymentCard}', [PaymentCardController::class, 'update'])->name('payment-cards.update');
+    Route::delete('/payment-cards/{paymentCard}', [PaymentCardController::class, 'destroy'])->name('payment-cards.destroy');
+});

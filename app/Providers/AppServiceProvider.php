@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
             if (auth()->check()) {
                 $cart = \App\Models\Cart::where('user_id', auth()->id())->first();
                 if ($cart) {
-                    $cartCount = $cart->items()->sum('quantity');
+                    $cartCount = $cart->items()->count();
                 }
             }
             $view->with('cartCount', $cartCount);

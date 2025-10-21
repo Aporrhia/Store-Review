@@ -19,35 +19,15 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'seller_id',
-        'store_item_id',
-        'order_code',
-        'price',
-        'quantity',
+        'total_amount',
+        'status',
+        'shipping_address',
+        'payment_method',
     ];
+
     public function seller()
     {
         return $this->belongsTo(\App\Models\User::class, 'seller_id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-        static::creating(function ($order) {
-            if (empty($order->order_code)) {
-                // Generate a short unique code (base62, 10 chars)
-                $order->order_code = self::generateShortCode();
-            }
-        });
-    }
-
-    public static function generateShortCode($length = 10)
-    {
-        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $code = '';
-        for ($i = 0; $i < $length; $i++) {
-            $code .= $pool[random_int(0, strlen($pool) - 1)];
-        }
-        return $code;
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -55,8 +35,8 @@ class Order extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function storeItem(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function items()
     {
-        return $this->belongsTo(StoreItem::class, 'store_item_id');
+        return $this->hasMany(\App\Models\OrderItem::class, 'order_id');
     }
 }

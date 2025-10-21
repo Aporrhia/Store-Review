@@ -106,8 +106,40 @@ class ProfileController extends Controller
         }
         
         $user = User::findOrFail($id);
-        $orders = $user->orders()->with(['storeItem.brand', 'storeItem'])->orderByDesc('created_at')->paginate(10);
-        return view('profile.sections.orders', compact('user', 'orders'));
+        
+        // Get orders where user is the buyer
+        $buyerOrdersPending = $user->orders()
+            ->with(['items.listing.storeItem', 'seller'])
+            ->whereIn('status', ['invoice_sent', 'paid', 'in_progress', 'shipped'])
+            ->orderByDesc('created_at')
+            ->get();
+            
+        $buyerOrdersCompleted = $user->orders()
+            ->with(['items.listing.storeItem', 'seller'])
+            ->whereIn('status', ['delivered', 'cancelled'])
+            ->orderByDesc('created_at')
+            ->get();
+        
+        // Get orders where user is the seller
+        $sellerOrdersPending = \App\Models\Order::where('seller_id', $user->id)
+            ->with(['items.listing.storeItem', 'user'])
+            ->whereIn('status', ['invoice_sent', 'paid', 'in_progress', 'shipped'])
+            ->orderByDesc('created_at')
+            ->get();
+            
+        $sellerOrdersCompleted = \App\Models\Order::where('seller_id', $user->id)
+            ->with(['items.listing.storeItem', 'user'])
+            ->whereIn('status', ['delivered', 'cancelled'])
+            ->orderByDesc('created_at')
+            ->get();
+        
+        return view('profile.sections.orders', compact(
+            'user',
+            'buyerOrdersPending',
+            'buyerOrdersCompleted',
+            'sellerOrdersPending',
+            'sellerOrdersCompleted'
+        ));
     }
 
     public function listings($id)

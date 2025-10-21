@@ -32,10 +32,8 @@ class CartController extends Controller
         return view('cart.cart', compact('cart', 'sellers'));
     }
 
-    // ...existing code...
-
     // Buy all items from a specific seller
-    public function buyFromSeller($seller_id)
+    public function buyFromSeller($seller_id, Request $request)
     {
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
         $items = $cart->items()->with('listing')->get();
@@ -45,62 +43,43 @@ class CartController extends Controller
         if ($sellerItems->isEmpty()) {
             return redirect()->route('cart.buy.error');
         }
-        // Create an order for each item
+        // Calculate subtotal
+        $subtotal = $sellerItems->sum(function($item) {
+            return $item->listing->price ?? 0;
+        });
+        $shipping = $request->input('shipping_cost', 0);
+        $total = $subtotal + $shipping;
+        // Create order
+        $order = \App\Models\Order::create([
+            'user_id' => Auth::id(),
+            'seller_id' => $seller_id,
+            'total_amount' => $total,
+            'status' => 'invoice_sent',
+            'shipping_address' => $request->input('shipping_address', ''),
+            'payment_method' => $request->input('payment_method', 'unknown'),
+        ]);
         foreach ($sellerItems as $item) {
-            if ($item->listing && $item->listing->store_item_id) {
-                \App\Models\Order::create([
-                    'user_id' => \Illuminate\Support\Facades\Auth::id(),
-                    'seller_id' => $item->listing->user_id,
-                    'store_item_id' => $item->listing->store_item_id,
-                    'price' => ($item->listing->price ?? 0) * $item->quantity,
-                    'quantity' => $item->quantity,
-                ]);
-            }
+            $order->items()->create([
+                'listing_id' => $item->listing->id,
+                'price' => $item->listing->price ?? 0,
+            ]);
             $item->delete();
         }
-        return redirect()->route('cart.buy.success');
+        return redirect()->route('order.show', ['id' => $order->id]);
     }
 
-    // Buy all items from all sellers
-    public function buyAll()
-    {
-        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
-        $items = $cart->items()->with('listing')->get();
-        if ($items->isEmpty()) {
-            return redirect()->route('cart.buy.error');
-        }
-        // Create an order for each item
-        foreach ($items as $item) {
-            if ($item->listing && $item->listing->store_item_id) {
-                \App\Models\Order::create([
-                    'user_id' => \Illuminate\Support\Facades\Auth::id(),
-                    'seller_id' => $item->listing->user_id,
-                    'store_item_id' => $item->listing->store_item_id,
-                    'price' => ($item->listing->price ?? 0) * $item->quantity,
-                    'quantity' => $item->quantity,
-                ]);
-            }
-            $item->delete();
-        }
-        return redirect()->route('cart.buy.success');
-    }
-    // ...existing code...
+    // Remove buyAll functionality
 
     public function add(Request $request)
     {
         $request->validate([
             'listing_id' => 'required|exists:store_items,id',
-            'quantity' => 'nullable|integer|min:1|max:99',
         ]);
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
         $item = $cart->items()->where('listing_id', $request->listing_id)->first();
-        if ($item) {
-            $item->quantity += $request->input('quantity', 1);
-            $item->save();
-        } else {
+        if (!$item) {
             $cart->items()->create([
                 'listing_id' => $request->listing_id,
-                'quantity' => $request->input('quantity', 1),
             ]);
         }
         return back()->with('success', 'Item added to cart.');
@@ -115,13 +94,7 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'quantity' => 'required|integer|min:1|max:99',
-        ]);
-        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
-        $item = $cart->items()->where('id', $id)->firstOrFail();
-        $item->quantity = $request->quantity;
-        $item->save();
+        // Quantity adjustment not supported
         return back()->with('success', 'Cart updated.');
     }
 }

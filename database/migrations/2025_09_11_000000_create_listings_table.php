@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->string('condition');
             $table->text('comment')->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->enum('status', ['pending', 'approved', 'rejected', 'listed', 'placed', 'sold'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
 

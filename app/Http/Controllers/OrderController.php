@@ -11,66 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    // Create order after user proceeds from cart
-    public function checkout(Request $request)
-    {
-        $request->validate([
-            'seller_id' => 'required|exists:users,user_id',
-            'shipping_address' => 'required|string|min:10',
-            'payment_method' => 'required|string',
-            'shipping_cost' => 'required|numeric',
-        ]);
-
-        $user = Auth::user();
-        $sellerId = $request->seller_id;
-        $shippingAddress = $request->shipping_address ?: $user->address;
-        if (empty($shippingAddress)) {
-            return redirect()->route('cart')->with('error', 'Please provide a shipping address.');
-        }
-
-        $cart = Cart::where('user_id', $user->user_id)->first();
-        if (!$cart) {
-            return redirect()->route('cart')->with('error', 'Your cart is empty.');
-        }
-
-        $sellerItems = $cart->items()->whereHas('listing', function($query) use ($sellerId) {
-            $query->where('user_id', $sellerId);
-        })->get();
-        if ($sellerItems->isEmpty()) {
-            return redirect()->route('cart')->with('error', 'No items found for this seller.');
-        }
-
-        $subtotal = $sellerItems->sum('price');
-        $shipping = floatval($request->shipping_cost);
-        $total = $subtotal + $shipping;
-
-        $order = new Order();
-        $order->user_id = $user->user_id;
-        $order->seller_id = $sellerId;
-        $order->total_amount = $total;
-        $order->status = 'invoice_sent';
-        $order->shipping_address = $shippingAddress;
-        $order->payment_method = $request->payment_method;
-        $order->save();
-
-        foreach ($sellerItems as $cartItem) {
-            $orderItem = new OrderItem();
-            $orderItem->order_id = $order->order_id;
-            $orderItem->listing_id = $cartItem->listing_id;
-            $orderItem->price = $cartItem->price;
-            $orderItem->save();
-
-            $listing = Listing::findOrFail($cartItem->listing_id);
-            $listing->status = Listing::STATUS_PLACED;
-            $listing->save();
-
-            $cartItem->delete();
-        }
-
-        return redirect()->route('order.show', ['order_id' => $order->order_id])
-                        ->with('success', 'Order placed successfully!');
-    }
-
     // Show order page
     public function show($id)
     {
@@ -97,5 +37,97 @@ class OrderController extends Controller
             'subtotal' => $subtotal,
             'shipping' => $shipping,
         ]);
+    }
+
+    // Show checkout form with cart items for a specific seller
+    public function showCheckoutForm(Request $request)
+    {
+        $sellerId = $request->query('seller_id');
+        
+        if (!$sellerId) {
+            return redirect()->route('cart.index')->with('error', 'Please select a seller to checkout.');
+        }
+
+        $cart = Cart::where('user_id', Auth::id())->first();
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
+
+        $sellerItems = $cart->items()->whereHas('listing', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->with(['listing.storeItem', 'listing.user'])->get();
+
+        if ($sellerItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'No items found for this seller.');
+        }
+
+        $seller = $sellerItems->first()->listing->user;
+        $subtotal = $sellerItems->sum(function($item) {
+            return $item->listing->price ?? 0;
+        });
+
+        return view('order.check-out-page', [
+            'seller' => $seller,
+            'items' => $sellerItems,
+            'subtotal' => $subtotal,
+        ]);
+    }
+
+    // Process checkout and create order
+    public function processCheckout(Request $request)
+    {
+        $request->validate([
+            'seller_id' => 'required|exists:users,id',
+            'shipping_address' => 'required|string|min:10',
+        ]);
+
+        $user = Auth::user();
+        $sellerId = $request->seller_id;
+        $shippingAddress = $request->shipping_address;
+
+        $cart = Cart::where('user_id', $user->id)->first();
+        if (!$cart) {
+            return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
+        }
+
+        $sellerItems = $cart->items()->whereHas('listing', function($query) use ($sellerId) {
+            $query->where('user_id', $sellerId);
+        })->get();
+
+        if ($sellerItems->isEmpty()) {
+            return redirect()->route('cart.index')->with('error', 'No items found for this seller.');
+        }
+
+        $subtotal = $sellerItems->sum(function($item) {
+            return $item->listing->price ?? 0;
+        });
+        $shipping = 0;
+        $total = $subtotal + $shipping;
+
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->seller_id = $sellerId;
+        $order->total_amount = $total;
+        $order->status = 'invoice_sent';
+        $order->shipping_address = $shippingAddress;
+        $order->payment_method = 'pending';
+        $order->save();
+
+        foreach ($sellerItems as $cartItem) {
+            $orderItem = new OrderItem();
+            $orderItem->order_id = $order->id;
+            $orderItem->listing_id = $cartItem->listing_id;
+            $orderItem->price = $cartItem->listing->price ?? 0;
+            $orderItem->save();
+
+            $listing = Listing::findOrFail($cartItem->listing_id);
+            $listing->status = Listing::STATUS_PLACED;
+            $listing->save();
+
+            $cartItem->delete();
+        }
+
+        return redirect()->route('order.show', ['id' => $order->id])
+                        ->with('success', 'Order placed successfully!');
     }
 }

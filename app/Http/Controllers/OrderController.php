@@ -66,11 +66,15 @@ class OrderController extends Controller
             return $item->listing->price ?? 0;
         });
 
-        return view('order.check-out-page', [
-            'seller' => $seller,
-            'items' => $sellerItems,
-            'subtotal' => $subtotal,
-        ]);
+       return response()
+            ->view('order.check-out-page', [
+                'seller' => $seller,
+                'items' => $sellerItems,
+                'subtotal' => $subtotal,
+            ])
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     // Process checkout and create order

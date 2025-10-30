@@ -29,7 +29,11 @@ class CartController extends Controller
             ];
         }
 
-        return view('cart.cart', compact('cart', 'sellers'));
+        return response()
+            ->view('cart.cart', compact('cart', 'sellers'))
+            ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            ->header('Pragma', 'no-cache')
+            ->header('Expires', '0');
     }
 
     // Redirect to checkout for a specific seller

@@ -14,7 +14,10 @@ class CatalogController extends Controller
      */
     public function catalogView(Request $request)
     {
-        $query = Listing::with(['storeItem', 'user'])->where('status', 'approved');
+        $query = Listing::with(['storeItem', 'user'])
+            ->where('status', 'approved')
+            ->whereNot('status', Listing::STATUS_SOLD)
+            ->whereNot('status', Listing::STATUS_PLACED);
 
         // Predefined attribute values per category + attribute (sync with StoreItemSeeder)
         $attributeValues = [

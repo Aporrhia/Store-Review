@@ -222,6 +222,85 @@
     @endif
 </div>
 
+    <div class="container mx-auto px-4 py-8">
+    <!-- Recommendations Section -->
+    <div id="recommendations-section" class="mt-16">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Recommended for you</h2>
+            <div class="h-1 flex-1 bg-gradient-to-r from-lime-500 to-transparent ml-6 rounded"></div>
+        </div>
+
+    <div id="recommendations-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Skeleton cards matching "More listings" styles -->
+            <div class="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+                <div class="relative">
+                    <div class="aspect-square overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div class="w-full h-full"></div>
+                    </div>
+                    <div class="absolute top-3 right-3">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                            <span class="text-sm font-bold text-gray-900">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <span class="block h-4 bg-gray-100 rounded w-3/4"></span>
+                    </h3>
+                    <div class="space-y-1 text-sm text-gray-600">
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/2"></span></div>
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/3"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+                <div class="relative">
+                    <div class="aspect-square overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div class="w-full h-full"></div>
+                    </div>
+                    <div class="absolute top-3 right-3">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                            <span class="text-sm font-bold text-gray-900">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <span class="block h-4 bg-gray-100 rounded w-3/4"></span>
+                    </h3>
+                    <div class="space-y-1 text-sm text-gray-600">
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/2"></span></div>
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/3"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden animate-pulse">
+                <div class="relative">
+                    <div class="aspect-square overflow-hidden bg-gray-100 flex items-center justify-center">
+                        <div class="w-full h-full"></div>
+                    </div>
+                    <div class="absolute top-3 right-3">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                            <span class="text-sm font-bold text-gray-900">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <span class="block h-4 bg-gray-100 rounded w-3/4"></span>
+                    </h3>
+                    <div class="space-y-1 text-sm text-gray-600">
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/2"></span></div>
+                        <div><span class="block h-3 bg-gray-100 rounded w-1/3"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
 <!-- Tab Functionality Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -259,6 +338,88 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+<!-- Recommendations fetch & render script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const recList = document.getElementById('recommendations-list');
+    if (!recList) return;
+
+    // Current page item id (single item on this page)
+    const itemId = @json($item->id);
+    const csrf = '{{ csrf_token() }}';
+
+    console.log('Recommend: sending itemId=', itemId);
+    fetch('/recommend', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrf,
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({ items: [itemId] })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const recs = data.recommended || [];
+        if (!recs.length) {
+            recList.innerHTML = '<div class="col-span-3 text-center text-gray-500">No recommendations available.</div>';
+            return;
+        }
+
+        // Clear skeletons
+        recList.innerHTML = '';
+
+    // Render up to 3 recommended items (same markup as "More listings" block)
+    // Use /catalog prefix because product detail route is defined as /catalog/{id}
+    const listingPrefix = '{{ url("/catalog") }}';
+    const profilePrefix = '{{ url("/profile") }}';
+        recs.slice(0, 3).forEach(r => {
+            const title = r.title || ('Listing ' + (r.listing_id || ''));
+            const listingId = r.listing_id || '';
+            const img = r.image || '{{ asset("/images/placeholder.png") }}';
+            const price = r.price ? ('$' + r.price) : '';
+
+            const card = document.createElement('div');
+            card.className = 'group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1';
+            card.innerHTML = `
+                <a href="${ listingId ? (listingPrefix + '/' + listingId) : '#'}" class="block">
+                    <div class="relative">
+                        <div class="aspect-square overflow-hidden bg-white flex items-center justify-center">
+                            <img src="${img}" alt="${title}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <div class="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                                <span class="text-sm font-bold text-gray-900">${price}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2 line-clamp-2">
+                            <a href="${ listingId ? (listingPrefix + '/' + listingId) : '#'}" class="hover:text-lime-600 transition-colors">${title}</a>
+                        </h3>
+
+                        <div class="space-y-1 text-sm text-gray-600">
+                            <div>${ r.category || '' }</div>
+                            <div>Brand: ${ r.brand || 'N/A' }</div>
+                            <div class="flex items-center gap-2">
+                                <span>Seller:</span>
+                                ${ r.seller_id ? (`<a href="${ profilePrefix + '/' + r.seller_id }" class="text-lime-600 hover:text-lime-700 font-medium">${ r.seller_name || 'Seller' }</a>`) : '<span>Unknown</span>' }
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            `;
+
+            recList.appendChild(card);
+        });
+    })
+    .catch(err => {
+        console.error('Recommend fetch error', err);
+        recList.innerHTML = '<div class="col-span-3 text-center text-gray-500">Unable to load recommendations.</div>';
+    });
+});
+</script>
 <style>
 .line-clamp-2 {
     display: -webkit-box;

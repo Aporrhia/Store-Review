@@ -57,7 +57,7 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $request->validate([
-            'listing_id' => 'required|exists:store_items,id',
+            'listing_id' => 'required|exists:listings,id',
         ]);
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
         $item = $cart->items()->where('listing_id', $request->listing_id)->first();

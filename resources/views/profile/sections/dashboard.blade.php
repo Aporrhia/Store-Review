@@ -36,7 +36,7 @@
         <div class="rounded-lg border border-gray-200 bg-gray-50 p-6 flex flex-col justify-center items-center">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">Account Status</h3>
             <div class="flex items-center gap-2 mb-2">
-                <span class="inline-block px-3 py-1 rounded-full bg-yellow-200 text-yellow-800 font-semibold">Gold</span>
+                <span class="inline-block px-3 py-1 rounded-full {{ $user->getStatusColor() }} font-semibold">{{ $user->getUserStatus() }}</span>
             </div>
             <p class="text-sm text-gray-500">Status levels: Bronze, Silver, Gold, Diamond</p>
         </div>

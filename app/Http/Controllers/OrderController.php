@@ -18,7 +18,7 @@ class OrderController extends Controller
             abort(404);
         }
 
-        $order = Order::with(['items.listing.storeItem', 'user', 'seller'])
+        $order = Order::with(['items.listing.storeItem', 'user', 'seller', 'messages.user'])
                     ->findOrFail($id);
 
         if (Auth::id() != $order->user_id && Auth::id() != $order->seller_id) {
@@ -179,5 +179,47 @@ class OrderController extends Controller
 
         return redirect()->route('order.show', ['id' => $order->id])
                         ->with('error', 'Cannot change order status at this time.');
+    }
+
+    // Send message in order
+    public function sendMessage(Request $request, $id)
+    {
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        $order = Order::findOrFail($id);
+
+        // Check if user is buyer or seller
+        if (Auth::id() != $order->user_id && Auth::id() != $order->seller_id) {
+            abort(403, 'Unauthorized');
+        }
+
+        $message = new \App\Models\OrderMessage();
+        $message->order_id = $order->id;
+        $message->user_id = Auth::id();
+        $message->message = $request->message;
+        $message->save();
+
+        return redirect()->route('order.show', ['id' => $order->id])
+                        ->with('success', 'Message sent!');
+    }
+
+    // Get messages for an order (AJAX endpoint)
+    public function getMessages($id)
+    {
+        $order = Order::findOrFail($id);
+
+        // Check if user is buyer or seller
+        if (Auth::id() != $order->user_id && Auth::id() != $order->seller_id) {
+            abort(403, 'Unauthorized');
+        }
+
+        $messages = $order->messages()->with('user')->get();
+
+        return response()->json([
+            'messages' => $messages,
+            'currentUserId' => Auth::id()
+        ]);
     }
 }

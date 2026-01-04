@@ -152,7 +152,7 @@
     <div class="flex gap-1 sm:gap-2 flex-shrink-0">
       <a
         href="{{ route('liked.items') }}"
-        class="flex items-center justify-center rounded-full p-2.5 {{ request()->routeIs('liked.items') ? 'bg-[#84cc16] text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
+        class="{{ isset($likedCount) && $likedCount == 0 ? 'hidden lg:flex' : 'flex' }} items-center justify-center rounded-full p-2.5 {{ request()->routeIs('liked.items') ? 'bg-[#84cc16] text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900' }} transition-colors"
         title="Liked Items"
       >
         <span class="material-symbols-outlined">favorite</span>
@@ -196,7 +196,8 @@
         <a href="{{ route('catalog', ['category' => ['Rackets']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Rackets</a>
         <a href="{{ route('catalog', ['category' => ['Balls']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Balls</a>
         <a href="{{ route('catalog', ['category' => ['Dampeners', 'Overgrips', 'Base Grips']]) }}" class="text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-colors px-4 py-2 rounded-md">Accessories</a>
-  <a href="{{ route('liked.items') }}" class="text-base font-medium {{ request()->routeIs('liked.items') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Liked Items</a>
+        <a href="{{ route('listing.create') }}" class="text-base font-medium {{ request()->routeIs('listing.create') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Listing</a>
+  <a href="{{ route('liked.items') }}" class="text-base font-medium {{ request()->routeIs('liked.items') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Wishlist</a>
   <a href="{{ route('cart.index') }}" class="text-base font-medium {{ request()->routeIs('cart.index') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Cart</a>
         @if(auth()->check())
           <a href="{{ route('profile.me') }}" class="text-base font-medium {{ request()->routeIs('profile.me') ? 'bg-[#84cc16] text-white' : 'text-gray-600 hover:bg-gray-200 hover:text-gray-900' }} transition-colors px-4 py-2 rounded-md">Profile</a>

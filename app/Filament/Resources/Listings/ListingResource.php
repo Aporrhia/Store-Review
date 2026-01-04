@@ -15,7 +15,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ListingResource extends Resource
 {
@@ -53,14 +52,6 @@ class ListingResource extends Resource
             'create' => CreateListing::route('/create'),
             'edit' => EditListing::route('/{record}/edit'),
         ];
-    }
-
-    public static function getRecordRouteBindingEloquentQuery(): Builder
-    {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 
     public static function getNavigationBadge(): ?string

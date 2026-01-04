@@ -85,7 +85,12 @@
                 <!-- Add to Cart Button -->
                 <div class="mb-8">
                     @if(auth()->check())
-                        @if(!$isInCart)
+                        @if(auth()->id() === $item->user_id)
+                            <button class="w-full bg-gray-300 text-gray-500 font-bold py-4 px-8 rounded-lg flex items-center justify-center gap-2 shadow-lg cursor-not-allowed" disabled>
+                                <span class="material-symbols-outlined">inventory</span>
+                                Your Own Listing
+                            </button>
+                        @elseif(!$isInCart)
                             <form method="POST" action="{{ route('cart.add') }}" class="flex flex-col gap-2">
                                 @csrf
                                 <input type="hidden" name="listing_id" value="{{ $item->id }}">

@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Listing::class, 'user_id');
     }
 
+    public function paymentCards()
+    {
+        return $this->hasMany(\App\Models\PaymentCard::class, 'user_id');
+    }
+
     // Comments this user has received from other users
     public function commentReceiver(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

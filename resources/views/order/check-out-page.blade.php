@@ -106,7 +106,7 @@
                                     @if($item->listing->storeItem && $item->listing->storeItem->image_path)
                                         <img src="{{ $item->listing->storeItem->getImageUrl() }}" 
                                              alt="{{ $item->listing->storeItem->title ?? 'Product' }}" 
-                                             class="w-full h-full object-cover">
+                                             class="w-full h-full object-contain">
                                     @else
                                         <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>

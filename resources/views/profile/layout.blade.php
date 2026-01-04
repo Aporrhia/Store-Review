@@ -11,7 +11,9 @@
             <aside class="w-full md:w-1/3 lg:w-1/4 mb-8 md:mb-0">
                 <div class="bg-white p-6 rounded-xl shadow-md">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="size-16 rounded-full bg-cover bg-center" style="background-image: url('{{ $user->profile_photo_url ?? 'https://lh3.googleusercontent.com/aida-public/AB6AXuC93DKUUEzC7lkrBdfWtvmOrAoSa-kYRKKJmoBxVGU24JG6ZH1w_oaTNXsorUpAwYc8XjdpXG_2i0qmYwV2NbZTUH2wyf9lzECPRzvSwE4Pr3Q6_j9rVVcdXRbkkSfcVQH5iiuL2-Rg91CpPejmv7KWmesm3jw-kx6XBxYiv9pq_Y7jZayhLEGpYLdgVWohgy-2BTbCu31r7ayQwvaSPgD7XhbIyNQnIrtaPgYh7kUXgStmFTGBq2cV5oSrtpfwmKyvfTcgwk0SBVs' }}')"></div>
+                        <div class="size-16 rounded-full bg-lime-500 flex items-center justify-center text-white text-2xl font-bold">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                        </div>
                         <div>
                             <h2 class="text-xl font-bold text-gray-800">{{ $user->name }}</h2>
                             <p class="text-sm text-gray-500">{{ $user->email }}</p>

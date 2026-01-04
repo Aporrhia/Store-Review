@@ -39,4 +39,9 @@ class Order extends Model
     {
         return $this->hasMany(\App\Models\OrderItem::class, 'order_id');
     }
+
+    public function messages()
+    {
+        return $this->hasMany(\App\Models\OrderMessage::class, 'order_id')->orderBy('created_at', 'asc');
+    }
 }

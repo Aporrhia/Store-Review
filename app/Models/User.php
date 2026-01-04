@@ -69,4 +69,42 @@ class User extends Authenticatable
     {
         return $this->hasMany(\App\Models\Comment::class, 'comment_writer_id');
     }
+
+    /**
+     * Get the user's status based on order count
+     *
+     * @return string
+     */
+    public function getUserStatus(): string
+    {
+        $orderCount = $this->orders()->count();
+
+        if ($orderCount >= 30) {
+            return 'Diamond';
+        } elseif ($orderCount >= 15) {
+            return 'Gold';
+        } elseif ($orderCount >= 5) {
+            return 'Silver';
+        }
+
+        return 'Bronze';
+    }
+
+    /**
+     * Get the color classes for the user's status badge
+     *
+     * @return string
+     */
+    public function getStatusColor(): string
+    {
+        $status = $this->getUserStatus();
+
+        return match($status) {
+            'Diamond' => 'bg-cyan-200 text-cyan-800',
+            'Gold' => 'bg-yellow-200 text-yellow-800',
+            'Silver' => 'bg-gray-300 text-gray-800',
+            'Bronze' => 'bg-orange-200 text-orange-800',
+            default => 'bg-gray-200 text-gray-800',
+        };
+    }
 }

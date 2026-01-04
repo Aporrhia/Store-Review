@@ -80,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/checkout', [OrderController::class, 'showCheckoutForm'])->name('checkout');
     Route::post('/checkout', [OrderController::class, 'processCheckout'])->name('checkout.process');
     Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+    Route::post('/order/{id}/pay', [OrderController::class, 'payOrder'])->name('order.pay');
+    Route::post('/order/{id}/change-status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
 });
 
 // Payment Card Routes

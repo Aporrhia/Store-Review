@@ -134,4 +134,50 @@ class OrderController extends Controller
         return redirect()->route('order.show', ['id' => $order->id])
                         ->with('success', 'Order placed successfully!');
     }
+
+    // Buyer confirms payment
+    public function payOrder($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if (Auth::id() != $order->user_id) {
+            abort(403);
+        }
+
+        if (in_array($order->status, ['invoice_sent', 'pending'])) {
+            $order->status = 'paid';
+            $order->save();
+            return redirect()->route('order.show', ['id' => $order->id])
+                            ->with('success', 'Payment confirmed! Waiting for seller to ship.');
+        }
+
+        return redirect()->route('order.show', ['id' => $order->id])
+                        ->with('error', 'This order cannot be paid.');
+    }
+
+    // Seller changes order status progressively
+    public function changeStatus($id)
+    {
+        $order = Order::findOrFail($id);
+
+        if (Auth::id() != $order->seller_id) {
+            abort(403);
+        }
+
+        // Only allow status change if payment is received
+        if ($order->status === 'paid') {
+            $order->status = 'shipped';
+            $order->save();
+            return redirect()->route('order.show', ['id' => $order->id])
+                            ->with('success', 'Order marked as shipped!');
+        } elseif ($order->status === 'shipped') {
+            $order->status = 'delivered';
+            $order->save();
+            return redirect()->route('order.show', ['id' => $order->id])
+                            ->with('success', 'Order marked as delivered!');
+        }
+
+        return redirect()->route('order.show', ['id' => $order->id])
+                        ->with('error', 'Cannot change order status at this time.');
+    }
 }

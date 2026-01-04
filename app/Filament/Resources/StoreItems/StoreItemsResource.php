@@ -7,7 +7,7 @@ use App\Filament\Resources\StoreItems\Pages\EditStoreItems;
 use App\Filament\Resources\StoreItems\Pages\ListStoreItems;
 use App\Filament\Resources\StoreItems\Schemas\StoreItemsForm;
 use App\Filament\Resources\StoreItems\Tables\StoreItemsTable;
-use App\Models\StoreItems;
+use App\Models\StoreItem;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class StoreItemsResource extends Resource
 {
-    protected static ?string $model = StoreItems::class;
+    protected static ?string $model = StoreItem::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

@@ -7,7 +7,7 @@ use App\Filament\Resources\Users\Pages\EditUsers;
 use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UsersForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
-use App\Models\Users;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UsersResource extends Resource
 {
-    protected static ?string $model = Users::class;
+    protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

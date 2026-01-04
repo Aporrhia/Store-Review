@@ -7,7 +7,7 @@ use App\Filament\Resources\Orders\Pages\EditOrders;
 use App\Filament\Resources\Orders\Pages\ListOrders;
 use App\Filament\Resources\Orders\Schemas\OrdersForm;
 use App\Filament\Resources\Orders\Tables\OrdersTable;
-use App\Models\Orders;
+use App\Models\Order;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrdersResource extends Resource
 {
-    protected static ?string $model = Orders::class;
+    protected static ?string $model = Order::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

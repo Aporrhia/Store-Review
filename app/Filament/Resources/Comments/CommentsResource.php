@@ -7,7 +7,7 @@ use App\Filament\Resources\Comments\Pages\EditComments;
 use App\Filament\Resources\Comments\Pages\ListComments;
 use App\Filament\Resources\Comments\Schemas\CommentsForm;
 use App\Filament\Resources\Comments\Tables\CommentsTable;
-use App\Models\Comments;
+use App\Models\Comment;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CommentsResource extends Resource
 {
-    protected static ?string $model = Comments::class;
+    protected static ?string $model = Comment::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 

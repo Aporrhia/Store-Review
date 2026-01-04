@@ -18,9 +18,7 @@ class UsersTable
             ->columns([
                 //
             ])
-            ->filters([
-                TrashedFilter::make(),
-            ])
+            ->filters([])
             ->recordActions([
                 EditAction::make(),
             ])

@@ -166,4 +166,19 @@ class ListingController extends Controller
     {
         return view('store-page.listing-success');
     }
+
+    public function destroy($id)
+    {
+        $listing = Listing::findOrFail($id);
+        
+        // Verify that the authenticated user owns this listing
+        if ($listing->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+        
+        $listing->delete();
+        
+        return redirect()->route('profile.listings', ['id' => Auth::id()])
+            ->with('success', 'Listing deleted successfully.');
+    }
 }

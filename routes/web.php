@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/listing/create', [ListingController::class, 'create'])->name('listing.create');
 	Route::post('/listing', [ListingController::class, 'store'])->name('listing.store');
 	Route::get('/listing/success', [ListingController::class, 'success'])->name('listing.success');
+	Route::delete('/listing/{id}', [ListingController::class, 'destroy'])->name('listing.destroy');
 });
 
 // API route for fetching category attributes

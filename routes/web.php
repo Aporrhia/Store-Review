@@ -82,6 +82,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
     Route::post('/order/{id}/pay', [OrderController::class, 'payOrder'])->name('order.pay');
     Route::post('/order/{id}/change-status', [OrderController::class, 'changeStatus'])->name('order.changeStatus');
+    Route::post('/order/{id}/message', [OrderController::class, 'sendMessage'])->name('order.sendMessage');
+    Route::get('/order/{id}/messages', [OrderController::class, 'getMessages'])->name('order.getMessages');
 });
 
 // Payment Card Routes

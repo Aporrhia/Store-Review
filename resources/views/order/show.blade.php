@@ -99,49 +99,42 @@
                 <div class="p-6">
                     <div class="space-y-4">
                         @foreach ($order->items as $item)
-                            <a href="{{ route('listing.details', $item->listing_id) }}" class="block group">
-                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-indigo-50 hover:shadow-md transition-all duration-200 border-2 border-transparent hover:border-indigo-300">
-                                    <div class="flex items-center gap-4 flex-grow">
-                                        <div class="w-20 h-20 bg-white rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden border-2 border-gray-200 group-hover:border-lime-400 transition-colors shadow-sm">
-                                            @if($item->listing->storeItem && $item->listing->storeItem->image_path)
-                                                <img src="{{ $item->listing->storeItem->getImageUrl() }}" 
-                                                     alt="{{ $item->listing->storeItem->title ?? 'Product' }}" 
-                                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200">
-                                            @else
-                                                <svg class="w-10 h-10 text-gray-400 group-hover:text-lime-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-                                                </svg>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl shadow-sm border-2 border-gray-200">
+                                <div class="flex items-center gap-4 flex-grow">
+                                    <div class="w-20 h-20 bg-white rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden border-2 border-gray-200 shadow-sm">
+                                        @if($item->listing->storeItem && $item->listing->storeItem->image_path)
+                                            <img src="{{ $item->listing->storeItem->getImageUrl() }}" 
+                                                 alt="{{ $item->listing->storeItem->title ?? 'Product' }}" 
+                                                 class="w-full h-full object-contain">
+                                        @else
+                                            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                                            </svg>
+                                        @endif
+                                    </div>
+                                    <div class="flex-grow">
+                                        <h3 class="font-semibold text-gray-800 text-lg">
+                                            {{ $item->listing->storeItem->title ?? 'N/A' }}
+                                        </h3>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <p class="text-sm text-gray-500">Listing ID: #{{ $item->listing_id }}</p>
+                                            @if($item->listing->condition)
+                                                <span class="text-gray-400">•</span>
+                                                <span class="text-sm text-gray-600 capitalize">{{ $item->listing->condition }}</span>
                                             @endif
                                         </div>
-                                        <div class="flex-grow">
-                                            <h3 class="font-semibold text-gray-800 group-hover:text-lime-700 text-lg transition-colors">
-                                                {{ $item->listing->storeItem->title ?? 'N/A' }}
-                                            </h3>
-                                            <div class="flex items-center gap-2 mt-1">
-                                                <p class="text-sm text-gray-500">Listing ID: #{{ $item->listing_id }}</p>
-                                                @if($item->listing->condition)
-                                                    <span class="text-gray-400">•</span>
-                                                    <span class="text-sm text-gray-600 capitalize">{{ $item->listing->condition }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <div class="text-right">
-                                            <p class="text-xl font-bold text-[#84cc16] group-hover:text-lime-700 transition-colors">${{ number_format($item->price, 2) }}</p>
-                                        </div>
-                                        <svg class="w-5 h-5 text-gray-400 group-hover:text-[#84cc16] transform group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                        </svg>
                                     </div>
                                 </div>
-                            </a>
+                                <div class="text-right">
+                                    <p class="text-xl font-bold text-[#84cc16]">${{ number_format($item->price, 2) }}</p>
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                 </div>
             </div>
 
-            <!-- Chat/Messaging Placeholder -->
+            <!-- Chat/Messaging System -->
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                 <div class="bg-gradient-to-r from-lime-50 to-green-100 px-6 py-4 border-b border-gray-200">
                     <h2 class="text-xl font-bold text-gray-800 flex items-center">
@@ -152,16 +145,68 @@
                     </h2>
                 </div>
                 <div class="p-6">
-                    <div class="bg-gray-50 rounded-xl p-8 text-center border-2 border-dashed border-lime-300">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-lime-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                        </svg>
-                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Chat Feature Coming Soon</h3>
-                        <p class="text-gray-600 mb-4">Direct messaging with {{ $isBuyer ? 'the seller' : 'the buyer' }} will be available here.</p>
-                        <button disabled class="px-6 py-3 bg-gray-300 text-gray-500 rounded-lg font-semibold cursor-not-allowed">
-                            Start Conversation (Coming Soon)
-                        </button>
+                    <!-- Messages Display -->
+                    <div id="messages-container" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
+                        @forelse($order->messages as $message)
+                            <div class="flex {{ $message->user_id == Auth::id() ? 'justify-end' : 'justify-start' }}">
+                                <div class="max-w-[70%]">
+                                    <div class="flex items-center gap-2 mb-1 {{ $message->user_id == Auth::id() ? 'justify-end' : 'justify-start' }}">
+                                        <span class="text-xs font-semibold text-gray-600">{{ $message->user->name }}</span>
+                                        <span class="text-xs text-gray-500">
+                                            {{ $message->created_at->format('M j, Y g:i A') }}
+                                            @if($message->created_at->diffInDays(now()) < 30)
+                                                ({{ $message->created_at->diffForHumans() }})
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="px-4 py-3 rounded-lg {{ $message->user_id == Auth::id() ? 'bg-lime-500 text-white' : 'bg-gray-100 text-gray-800' }}">
+                                        <p class="text-sm break-words">{{ $message->message }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-8" id="no-messages-placeholder">
+                                <svg class="w-12 h-12 mx-auto mb-3 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                                </svg>
+                                <p class="text-gray-500 text-sm">No messages yet. Start the conversation!</p>
+                            </div>
+                        @endforelse
                     </div>
+
+                    <!-- Message Form -->
+                    <form method="POST" action="{{ route('order.sendMessage', ['id' => $order->id]) }}" class="border-t pt-4" id="message-form">
+                        @csrf
+                        <div class="space-y-3">
+                            <textarea 
+                                name="message" 
+                                id="message-textarea"
+                                rows="3" 
+                                required 
+                                maxlength="1000"
+                                placeholder="Type your message here..."
+                                class="w-full rounded-lg border-gray-300 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 resize-none"
+                            ></textarea>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-500">Max 1000 characters</span>
+                                <button 
+                                    type="submit" 
+                                    class="px-6 py-2 bg-gradient-to-r from-lime-500 to-green-600 hover:from-lime-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center gap-2"
+                                >
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                                    </svg>
+                                    Send Message
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    @if(session('success'))
+                        <div class="mt-3 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -302,7 +347,7 @@
                         @endif
                         
                         @if (!in_array($order->status, ['cancelled', 'delivered']))
-                            <button class="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-lime-600 hover:from-red-600 hover:to-lime-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+                            <button class="w-full px-6 py-4 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                 </svg>
@@ -310,17 +355,115 @@
                             </button>
                         @endif
                     @endif
-
-                    <!-- Common Actions -->
-                    <button class="w-full px-6 py-4 bg-white border-2 border-gray-300 hover:border-lime-400 text-gray-700 hover:text-[#84cc16] font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
-                        </svg>
-                        Print Order
-                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+// Auto-refresh chat messages every 7 seconds
+const orderId = {{ $order->id }};
+let lastMessageCount = {{ $order->messages->count() }};
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    const options = { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true };
+    const formatted = date.toLocaleString('en-US', options);
+    
+    if (diffDays < 30) {
+        const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+        const diffMinutes = Math.round((date - now) / (1000 * 60));
+        const diffHours = Math.round(diffMinutes / 60);
+        
+        let relative;
+        if (Math.abs(diffMinutes) < 60) {
+            relative = rtf.format(diffMinutes, 'minute');
+        } else if (Math.abs(diffHours) < 24) {
+            relative = rtf.format(diffHours, 'hour');
+        } else {
+            relative = rtf.format(-diffDays, 'day');
+        }
+        
+        return `${formatted} (${relative})`;
+    }
+    
+    return formatted;
+}
+
+function updateMessages() {
+    fetch(`/order/${orderId}/messages`)
+        .then(response => response.json())
+        .then(data => {
+            const messages = data.messages;
+            const currentUserId = data.currentUserId;
+            
+            if (messages.length !== lastMessageCount) {
+                const container = document.getElementById('messages-container');
+                const scrolledToBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100;
+                
+                // Remove no-messages placeholder if exists
+                const placeholder = document.getElementById('no-messages-placeholder');
+                if (placeholder) {
+                    placeholder.remove();
+                }
+                
+                // Clear and rebuild messages
+                container.innerHTML = '';
+                
+                messages.forEach(message => {
+                    const isSent = message.user_id === currentUserId;
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `flex ${isSent ? 'justify-end' : 'justify-start'}`;
+                    
+                    messageDiv.innerHTML = `
+                        <div class="max-w-[70%]">
+                            <div class="flex items-center gap-2 mb-1 ${isSent ? 'justify-end' : 'justify-start'}">
+                                <span class="text-xs font-semibold text-gray-600">${message.user.name}</span>
+                                <span class="text-xs text-gray-500">${formatDate(message.created_at)}</span>
+                            </div>
+                            <div class="px-4 py-3 rounded-lg ${isSent ? 'bg-lime-500 text-white' : 'bg-gray-100 text-gray-800'}">
+                                <p class="text-sm break-words">${message.message}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(messageDiv);
+                });
+                
+                lastMessageCount = messages.length;
+                
+                // Auto-scroll to bottom if user was already at bottom
+                if (scrolledToBottom) {
+                    container.scrollTop = container.scrollHeight;
+                }
+            }
+        })
+        .catch(error => console.error('Error fetching messages:', error));
+}
+
+// Clear textarea after successful form submission
+document.getElementById('message-form').addEventListener('submit', function() {
+    setTimeout(() => {
+        document.getElementById('message-textarea').value = '';
+        updateMessages(); // Immediately fetch new messages
+    }, 500);
+});
+
+// Update messages every 7 seconds
+setInterval(updateMessages, 7000);
+
+// Scroll to bottom on page load if there are messages
+window.addEventListener('load', function() {
+    const container = document.getElementById('messages-container');
+    if (container && lastMessageCount > 0) {
+        container.scrollTop = container.scrollHeight;
+    }
+});
+</script>
+
 @endsection

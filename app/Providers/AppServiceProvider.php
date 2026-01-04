@@ -21,13 +21,17 @@ class AppServiceProvider extends ServiceProvider
     {
         \Illuminate\Support\Facades\View::composer('*', function ($view) {
             $cartCount = 0;
+            $likedCount = 0;
             if (auth()->check()) {
                 $cart = \App\Models\Cart::where('user_id', auth()->id())->first();
                 if ($cart) {
                     $cartCount = $cart->items()->count();
                 }
+                
+                $likedCount = \App\Models\LikedItem::where('user_id', auth()->id())->count();
             }
             $view->with('cartCount', $cartCount);
+            $view->with('likedCount', $likedCount);
         });
     }
 }

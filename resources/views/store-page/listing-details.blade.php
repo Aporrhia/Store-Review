@@ -65,7 +65,7 @@
                 </div>
 
                 <!-- Seller Info -->
-                <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+                <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                     <h3 class="font-semibold text-gray-900 mb-2">Seller Information</h3>
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-lime-500 rounded-full flex items-center justify-center">
@@ -82,26 +82,64 @@
                     </div>
                 </div>
 
-                <!-- Product Tabs -->
+                <!-- Add to Cart Button -->
                 <div class="mb-8">
-                    <div class="border-b border-gray-200">
-                        <nav class="-mb-px flex space-x-8">
-                            <button class="tab-button active py-2 px-1 border-b-2 font-medium text-sm" data-tab="description">
-                                Description
+                    @if(auth()->check())
+                        @if(!$isInCart)
+                            <form method="POST" action="{{ route('cart.add') }}" class="flex flex-col gap-2">
+                                @csrf
+                                <input type="hidden" name="listing_id" value="{{ $item->id }}">
+                                <button type="submit" class="w-full bg-lime-500 hover:bg-lime-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+                                    <span class="material-symbols-outlined">shopping_cart</span>
+                                    Add to Cart
+                                </button>
+                            </form>
+                        @else
+                            <button class="w-full bg-gray-300 text-gray-500 font-bold py-4 px-8 rounded-lg flex items-center justify-center gap-2 shadow-lg cursor-not-allowed" disabled>
+                                <span class="material-symbols-outlined">shopping_cart</span>
+                                Already in Cart
                             </button>
-                            <button class="tab-button py-2 px-1 border-b-2 font-medium text-sm" data-tab="specifications">
-                                Specifications
-                            </button>
-                        </nav>
-                    </div>
-                    
-                    <!-- Tab Content -->
-                    <div class="mt-4">
-                        <div id="description-tab" class="tab-content">
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="w-full bg-lime-500 hover:bg-lime-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                            Sign in to Add to Cart
+                        </a>
+                    @endif
+                </div>
+
+                <!-- Product Expandable Sections -->
+                <div class="mb-8 space-y-4">
+                    <!-- Description Section -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                            onclick="toggleSection('description')"
+                            type="button"
+                        >
+                            <h3 class="text-lg font-semibold text-gray-900">Description</h3>
+                            <svg id="description-arrow" class="w-5 h-5 text-gray-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="description-content" class="p-4 bg-white hidden">
                             <p class="text-gray-700 leading-relaxed">{{ $item->storeItem->description ?? 'No description available for this item.' }}</p>
                         </div>
-                        
-                        <div id="specifications-tab" class="tab-content hidden">
+                    </div>
+
+                    <!-- Specifications Section -->
+                    <div class="border border-gray-200 rounded-lg overflow-hidden">
+                        <button 
+                            class="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                            onclick="toggleSection('specifications')"
+                            type="button"
+                        >
+                            <h3 class="text-lg font-semibold text-gray-900">Specifications</h3>
+                            <svg id="specifications-arrow" class="w-5 h-5 text-gray-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="specifications-content" class="px-4 pb-4 bg-white hidden">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="space-y-3">
                                     <div class="flex justify-between py-2 border-b border-gray-100">
@@ -139,33 +177,6 @@
                             @endif
                         </div>
                     </div>
-                </div>
-
-                <!-- Add to Cart Button -->
-                <div class="mt-auto">
-                    @if(auth()->check())
-                        @if(!$isInCart)
-                            <form method="POST" action="{{ route('cart.add') }}" class="flex flex-col gap-2">
-                                @csrf
-                                <input type="hidden" name="listing_id" value="{{ $item->id }}">
-                                <button type="submit" class="w-full bg-lime-500 hover:bg-lime-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
-                                    <span class="material-symbols-outlined">shopping_cart</span>
-                                    Add to Cart
-                                </button>
-                            </form>
-                        @else
-                            <button class="w-full bg-gray-300 text-gray-500 font-bold py-4 px-8 rounded-lg flex items-center justify-center gap-2 shadow-lg cursor-not-allowed" disabled>
-                                <span class="material-symbols-outlined">shopping_cart</span>
-                                Already in Cart
-                            </button>
-                        @endif
-                    @else
-                        <button class="w-full bg-lime-500 hover:bg-lime-600 text-white font-bold py-4 px-8 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl" disabled>
-                            <span class="material-symbols-outlined">shopping_cart</span>
-                            Add to Cart
-                        </button>
-                        <p class="text-xs text-gray-500 text-center mt-2">Sign in to add to cart</p>
-                    @endif
                 </div>
             </div>
         </div>
@@ -301,41 +312,20 @@
     </div>
     </div>
 
-<!-- Tab Functionality Script -->
+<!-- Toggle Section Functionality Script -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
+function toggleSection(sectionId) {
+    const content = document.getElementById(sectionId + '-content');
+    const arrow = document.getElementById(sectionId + '-arrow');
     
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetTab = button.getAttribute('data-tab');
-            
-            // Update button states
-            tabButtons.forEach(btn => {
-                btn.classList.remove('active', 'border-lime-500', 'text-lime-600');
-                btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700');
-            });
-            
-            button.classList.add('active', 'border-lime-500', 'text-lime-600');
-            button.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700');
-            
-            // Update content visibility
-            tabContents.forEach(content => {
-                content.classList.add('hidden');
-            });
-            
-            document.getElementById(targetTab + '-tab').classList.remove('hidden');
-        });
-    });
-    
-    // Set initial active state
-    const activeButton = document.querySelector('.tab-button.active');
-    if (activeButton) {
-        activeButton.classList.add('border-lime-500', 'text-lime-600');
-        activeButton.classList.remove('border-transparent', 'text-gray-500');
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        arrow.style.transform = 'rotate(180deg)';
+    } else {
+        content.classList.add('hidden');
+        arrow.style.transform = 'rotate(0deg)';
     }
-});
+}
 </script>
 
 <!-- Recommendations fetch & render script -->

@@ -12,6 +12,7 @@ use App\Http\Controllers\FooterController;
 use App\Http\Controllers\ListingController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentCardController;
+use App\Http\Controllers\RecommendationController;
 
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -88,3 +89,5 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/payment-cards/{paymentCard}', [PaymentCardController::class, 'update'])->name('payment-cards.update');
     Route::delete('/payment-cards/{paymentCard}', [PaymentCardController::class, 'destroy'])->name('payment-cards.destroy');
 });
+
+Route::post('/recommend', [RecommendationController::class, 'recommend'])->name('recommend');

@@ -14,7 +14,12 @@ Run following commands:
 5. Make a copy of ".env.example" and rename it to ".env"
 6. `php artisan key:generate`
 7. `php artisan migrate` (Create DB and migrate files)
-8. `php artisan serve` To run locally
-9. `php artisan make:filament-user`
+8. `php artisan db:seed` (Seed database with dummy records)
+9. `php artisan serve` To run locally and go to the `http://127.0.0.1:8000`.
 
+## Admin Panel
+To access admin panel, go to the `http://127.0.0.1:8000/admin`.
+Credentials that are required to access the admin panel are:  
+Email address: **admin@example.com**  
+Password: **password**
 ![Login Page](/assets/git_images/login.png)

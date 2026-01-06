@@ -15,6 +15,7 @@ class LikedItemsController extends Controller
         $userId = auth()->user()->id;
         $likedIds = \DB::table('liked_items')
             ->where('user_id', $userId)
+            ->distinct()
             ->pluck('listing_id')
             ->toArray();
 

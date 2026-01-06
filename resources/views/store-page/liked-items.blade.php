@@ -13,11 +13,7 @@
                         @if($items->isEmpty())
                             <div class="text-center text-gray-500 text-lg py-12">No liked items yet.</div>
                         @else
-                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                                @foreach($items as $item)
-                                    @include('store-page.components.product-list-grid', ['item' => $item])
-                                @endforeach
-                            </div>
+                            @include('store-page.components.product-list-grid', ['items' => $items])
                         @endif
                     </div>
                 </div>

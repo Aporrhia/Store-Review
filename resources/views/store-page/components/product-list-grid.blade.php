@@ -2,7 +2,7 @@
 <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
     @forelse($items as $item)
         <div class="group relative">
-            <div class="w-full overflow-hidden rounded-md bg-white bg-center bg-no-repeat aspect-[3/4] flex items-center justify-center">
+            <div class="w-full overflow-hidden rounded-md bg-white bg-center bg-no-repeat aspect-square flex items-center justify-center">
                 <img src="{{ $item->storeItem->getImageUrl() }}" alt="{{ $item->storeItem->title }}" class="w-full h-full object-contain">
             </div>
             <div class="mt-2 sm:mt-4">
